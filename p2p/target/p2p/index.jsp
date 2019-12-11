@@ -190,6 +190,7 @@ h2 {
 	color: #fff;
 }
 </style>
+
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 	<header class="am-header">
@@ -199,7 +200,7 @@ h2 {
 		<div id="tabhead" class="tab-head">
 			<h2 id="tab1" class="selected" name="tab">付 款</h2>
 		</div>
-		<form name=alipayment action=alipay.trade.page.pay.jsp method=post
+		<form name=alipayment action="${pageContext.request.contextPath}/test/fuKuan" method=post
 			  target="_blank">
 			<div id="body1" class="show" name="divcontent">
 				<dl class="content">

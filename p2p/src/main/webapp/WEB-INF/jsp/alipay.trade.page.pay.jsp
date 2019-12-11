@@ -26,10 +26,10 @@
 	//商品描述，可空
 	String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");
 	
-	alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\"," 
-			+ "\"total_amount\":\""+ total_amount +"\"," 
-			+ "\"subject\":\""+ subject +"\"," 
-			+ "\"body\":\""+ body +"\"," 
+	alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
+			+ "\"total_amount\":\""+ total_amount +"\","
+			+ "\"subject\":\""+ subject +"\","
+			+ "\"body\":\""+ body +"\","
 			+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
 	
 	//若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明
