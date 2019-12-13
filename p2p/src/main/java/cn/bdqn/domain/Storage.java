@@ -1,10 +1,13 @@
 package cn.bdqn.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 /**
  *  充值记录表
  */
+@Component
 public class Storage {
     //充值id
     private Integer id;
@@ -25,7 +28,7 @@ public class Storage {
     private Date storageTime;
 
     //充值说明
-    private String explain;
+    private String annotation;
 
     public Integer getId() {
         return id;
@@ -35,11 +38,11 @@ public class Storage {
         this.id = id;
     }
 
-    public User getUserId() {
+    public User getUser() {
         return user;
     }
 
-    public void setUserId(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -75,11 +78,24 @@ public class Storage {
         this.storageTime = storageTime;
     }
 
-    public String getExplain() {
-        return explain;
+    public String getAnnotation() {
+        return annotation;
     }
 
-    public void setExplain(String explain) {
-        this.explain = explain == null ? null : explain.trim();
+    public void setAnnotation(String annotation) {
+        this.annotation = annotation;
+    }
+
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "id=" + id +
+                ", user=" + user +
+                ", orderNumber='" + orderNumber + '\'' +
+                ", state='" + state + '\'' +
+                ", money=" + money +
+                ", storageTime=" + storageTime +
+                ", annotation='" + annotation + '\'' +
+                '}';
     }
 }

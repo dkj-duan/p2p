@@ -11,21 +11,21 @@ public interface StorageMapper {
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id);
+    void deleteByPrimaryKey(Integer id);
 
     /**
      * 添加
      * @param record
      * @return
      */
-    int insert(Storage record);
+    void insert(Storage record);
 
     /**
      * 选择性添加
      * @param record
      * @return
      */
-    int insertSelective(Storage record);
+    void insertSelective(Storage record);
 
     /**
      * 根据id查询信息
@@ -35,11 +35,18 @@ public interface StorageMapper {
     Storage selectByPrimaryKey(Integer id);
 
     /**
-     * 查询全部充值记录
+     * 根据用户id查询全部充值记录
      * @return
      */
-    List<Storage> selectAll();
+    List<Storage> selectByUserId(Integer userId);
 
+
+    /**
+     * 根据充值编码查询充值信息
+     * @param orderNumber
+     * @return
+     */
+    Storage selectByOrderNumber(String orderNumber);
     /**
      *
      * @param record

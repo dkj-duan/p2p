@@ -51,6 +51,10 @@
 
 <!--  选择性添加用户-->
   <insert id="insertSelective" parameterType="cn.bdqn.domain.User" >
+
+    <selectKey keyProperty="userId" keyColumn="user_Id" order="AFTER" resultType="java.lang.Integer">
+      select LAST_INSERT_ID()
+    </selectKey>
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >

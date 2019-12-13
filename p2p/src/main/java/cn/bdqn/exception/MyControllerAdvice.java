@@ -21,7 +21,7 @@ public class MyControllerAdvice {
         }
         ModelAndView mv = new ModelAndView();
         mv.addObject("error",myException.getMessage());
-        mv.setViewName("errot");
+        mv.setViewName("error");
         return mv;
     }
 }
