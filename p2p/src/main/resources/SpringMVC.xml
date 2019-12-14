@@ -42,7 +42,7 @@
         <property name="maxUploadSize" value="#{1024*1024*10}"/>
     </bean>
     <!--配置逻辑视图-->
-    <mvc:view-controller path="/addUlRegister" view-name="register"/>
+    <mvc:view-controller path="/addUlRegister" view-name="register1"/>
     <mvc:view-controller path="/addUlAlipay" view-name="alipay"/>
     <mvc:view-controller path="/addUlLogin" view-name="login"/>
     <!--配置拦截器-->

@@ -12,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -38,13 +37,13 @@ public class UserController {
                 request.getSession(false).removeAttribute("checkCode");
                 request.setAttribute("message","验证码错误~");
                 System.out.println("验证码不对");
-                return "register";
+                return "register1";
             }
             if (!user.getUserPwd().equals(verifyPwd)){
                 request.getSession(false).removeAttribute("checkCode");
                 request.setAttribute("message","两次密码不一致~");
                 System.out.println("两次密码不一致");
-                return "register";
+                return "register1";
             }
             //调用添加方法
             user.setUserRegisterTime(new Date());
@@ -71,7 +70,7 @@ public class UserController {
                 request.getSession(false).removeAttribute("checkCode");
                 request.setAttribute("message","验证码错误~");
                 System.out.println("验证码不对");
-                return "register";
+                return "register1";
             }
             //登录方法
             User user = userService.queryByPhoneAndPwd(userPhone,MD5Util.encode(userPwd));
