@@ -12,6 +12,6 @@
 </head>
 <body>
 
-<jsp:forward page="${pageContext.request.contextPath}/addUlLogin"></jsp:forward>
+<jsp:forward page="/WEB-INF/jsp/login.jsp"></jsp:forward>
 </body>
 </html>
