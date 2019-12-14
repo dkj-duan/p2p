@@ -44,6 +44,7 @@
     <!--配置逻辑视图-->
     <mvc:view-controller path="/addUlRegister" view-name="register"/>
     <mvc:view-controller path="/addUlAlipay" view-name="alipay"/>
+    <mvc:view-controller path="/addUlLogin" view-name="login"/>
     <!--配置拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>

@@ -13,7 +13,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 
     <script>
-        layui.use(["form","element"],function () {
+        layui.use(["form", "element"], function () {
             var form = layui.form;
             var element = layui.element;
             form.render();
@@ -74,11 +74,13 @@
 </div>
 
 <div class="layui-container" style="background: gainsboro; padding-top: 30px; padding-right: 200px;">
-    <form action="${pageContext.request.contextPath}/user//login" method="post" style="padding: 30px; width: 400px " class="ll" >
+    <form action="${pageContext.request.contextPath}/user//login" method="post" style="padding: 30px; width: 400px "
+          class="ll">
         <div class="layui-form-item">
             <label class="layui-form-label">手机号：</label>
             <div class="layui-input-inline">
-                <input  type="text" name="userPhone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off"
+                <input type="text" name="userPhone" required lay-verify="required" placeholder="请输入手机号"
+                       autocomplete="off"
                        class="layui-input">
             </div>
             <div class="layui-form-mid  layui-word-aux">辅助文字</div>
@@ -89,7 +91,8 @@
                 <input type="text" name="checkCode" required lay-verify="required" placeholder="请输入验证码"
                        autocomplete="off" class="layui-input">
             </div>
-            <img style="display: inline" id="imgCheckCodeImg" src="${pageContext.request.contextPath }/checkCodeServlet" />
+            <img style="display: inline" id="imgCheckCodeImg"
+                 src="${pageContext.request.contextPath }/checkCodeServlet"/>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码：</label>
@@ -110,7 +113,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit >注册</button>
+                <button class="layui-btn" lay-submit>注册</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>

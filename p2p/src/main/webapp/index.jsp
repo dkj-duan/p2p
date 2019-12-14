@@ -12,6 +12,6 @@
 </head>
 <body>
 
-<jsp:forward page="/WEB-INF/jsp/register.jsp"></jsp:forward>
+<jsp:forward page="${pageContext.request.contextPath}/WEB-INF/jsp/login.jsp"></jsp:forward>
 </body>
 </html>

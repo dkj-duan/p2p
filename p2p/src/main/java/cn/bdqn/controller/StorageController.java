@@ -62,41 +62,9 @@ public class StorageController {
 
     }
 
-//    @RequestMapping("/addPayment")
-//    public String payment(@SessionAttribute("user")User user, Storage storage, String WIDsubject, Balance balance, ModelMap modelMap)throws Exception{
-//
-//
-//        try{
-//            storage.setUser(user);
-//            storage.setState("已充值");
-//            storage.setStorageTime(new Date());
-//            System.out.println(storage);
-//            storageService.save(storage);
-//
-//            //更新可用资金
-//            balance.setUser(user);
-//            balance.setMoney(balance.getMoney()+storage.getMoney());
-//            balanceService.updateMoney(balance);
-//            //订单
-//            modelMap.addAttribute("WIDout_trade_no",storage.getOrderNumber());
-//            //订单名称
-//            modelMap.addAttribute("WIDsubject",WIDsubject);
-//            //金额
-//            modelMap.addAttribute("WIDtotal_amount",storage.getMoney());
-//            //商品描述
-//            modelMap.addAttribute("WIDbody",storage.getAnnotation());
-//
-//            return "alipay.trade.page.pay";
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            throw new MyException("网络出错了");
-//        }
-//
-//    }
 
     @RequestMapping("/skip")
     public String add(){
-
         return "p2p";
     }
 }
