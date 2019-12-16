@@ -31,18 +31,19 @@
         </property>
     </bean>
 
-    <!--开启springMvc的注解支持-->
-    <mvc:annotation-driven conversion-service="conversionService"/>
 
     <!--开启静态资源的访问-->
     <mvc:default-servlet-handler/>
+    <!--开启springMvc的注解支持-->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
 
     <!--文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="#{1024*1024*10}"/>
     </bean>
     <!--配置逻辑视图-->
-    <mvc:view-controller path="/addUlRegister" view-name="register1"/>
+    <mvc:view-controller path="/addUlRegister" view-name="register"/>
     <mvc:view-controller path="/addUlAlipay" view-name="alipay"/>
     <mvc:view-controller path="/addUlLogin" view-name="login"/>
     <!--配置拦截器-->

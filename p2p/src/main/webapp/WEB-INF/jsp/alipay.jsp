@@ -15,8 +15,7 @@
 		<div id="tabhead" class="tab-head">
 			<h2 id="tab1" class="selected" name="tab">付 款</h2>
 		</div>
-		<form name=alipayment action="${pageContext.request.contextPath}/alipay//addPayment" method=post
-			  target="_blank">
+		<form name=alipayment action="${pageContext.request.contextPath}/alipay//addPayment" method=post>
 			<div id="body1" class="show" name="divcontent">
 				<dl class="content">
 					<dt>商户订单号 ：</dt>

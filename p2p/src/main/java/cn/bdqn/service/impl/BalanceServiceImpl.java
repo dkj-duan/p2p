@@ -6,6 +6,9 @@ import cn.bdqn.service.BalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 资金表
+ */
 @Service("balanceService")
 public class BalanceServiceImpl implements BalanceService {
 

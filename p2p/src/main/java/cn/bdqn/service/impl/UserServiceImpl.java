@@ -24,6 +24,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 根据主键查询用户
+     * @param userId
+     * @return
+     */
+    @Override
+    public User queryByPrimaryKey(Integer userId) {
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    /**
      * 添加用户
      * @param user
      */

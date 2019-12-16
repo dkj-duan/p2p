@@ -21,7 +21,7 @@ public class CheckCodeServlet {
 
     private static final long serialVersionUID = -8030863139248720433L;
 
-    private static int WIDTH = 150;
+    private static int WIDTH = 120;
 
     private static int HEIGHT = 30;
 
@@ -38,14 +38,8 @@ public class CheckCodeServlet {
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, WIDTH, HEIGHT);
 
-        // 2.2 边框
-        graphics.setColor(Color.BLACK);
-        graphics.drawRect(1, 1, WIDTH - 2, HEIGHT - 2);
-
         // 2.3 验证的数字和字母
-        String[] arrs = {"0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9",
-                "A" , "B" , "C" , "D" , "E" , "F" , "G" , "H" , "I" , "J",
-                "a" , "b" , "c" , "d" , "e" , "f" , "g" , "h" , "i" , "j"};
+        String[] arrs = {"0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9"};
 
         int x = 20;
 
@@ -56,24 +50,24 @@ public class CheckCodeServlet {
 
             String str = arrs[index];
 
-            graphics.setColor(Color.RED);
-            graphics.drawString(str, x * (i + 1 ) + 5, 23);
+            graphics.setColor(Color.darkGray);
+            graphics.setFont(Font.getFont("宋体"));
+            graphics.drawString(str, x * i + 5, 23);
 
             sb.append(str);
         }
 
-        // 2.4干扰线
-        for(int i = 0 ; i < 10 ; i++){
-
-            int x1 = new Random().nextInt(WIDTH);
-            int y1 = new Random().nextInt(HEIGHT);
-
-            int x2 = new Random().nextInt(WIDTH);
-            int y2 = new Random().nextInt(HEIGHT);
-
-            graphics.setColor(Color.GREEN);
-            graphics.drawLine(x1, y1, x2, y2);
-        }
+//        // 2.4干扰线
+//        for(int i = 0 ; i < 10 ; i++){
+//
+//            int x1 = new Random().nextInt(WIDTH);
+//            int y1 = new Random().nextInt(HEIGHT);
+//            int x2 = new Random().nextInt(WIDTH);
+//            int y2 = new Random().nextInt(HEIGHT);
+//
+//            graphics.setColor(Color.GREEN);
+//            graphics.drawLine(x1, y1, x2, y2);
+//        }
 
         // 3、将生成好的验证码保存到session中
         HttpSession session = req.getSession();

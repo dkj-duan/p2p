@@ -18,6 +18,13 @@ public interface UserService {
 
 
     /**
+     * 根据主键查询用户
+     * @param userId
+     * @return
+     */
+    public User queryByPrimaryKey(Integer userId);
+
+    /**
      * 添加用户
      * @param user
      */
@@ -29,6 +36,7 @@ public interface UserService {
      * @param record
      */
     public void updateByPrimaryKeySelective(User record);
+
 
 
 }

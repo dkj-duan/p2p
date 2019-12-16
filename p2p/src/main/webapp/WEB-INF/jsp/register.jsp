@@ -24,10 +24,9 @@
             $('.rand-code').click(function () {
                 $("#login-rand-image").attr("src","${pageContext.request.contextPath }/checkCodeServlet?time=" + new Date().getTime());
             });
-
-            $("#tab").click(function () {
-                location.href = "${pageContext.request.contextPath }/addUlRegister"
-            });
+            $("#tab1").click(function () {
+               location.href = "${pageContext.request.contextPath }/addUlLogin"
+            })
         });
     </script>
 
@@ -46,48 +45,7 @@
          style="background:url(${pageContext.request.contextPath}/img/WechatIMG144.jpg);">
         <div class="car-center">
             <div class="data-show ">
-                <form id="form1" class="form-login show" method="post" action="${pageContext.request.contextPath}/user//login">
-                    <div class="password-login">
-                        <h2>密码登录</h2>
-                        <ul>
-                            <li>
-                                <input class="mobile" value="${userPhone}" type="text" placeholder="手机号" maxlength="48" name="userPhone"
-                                       id="login_username" autocomplete="off">
-                                <div class="error-info mobile-error"></div>
-                            </li>
-                            <li class="rand_code_show">
-                                <input  class="code" autocomplete="off" name="checkCode" id="captcha_code" type="text"
-                                       placeholder="图形验证码">
-                                <div class="error-info code-error"></div>
-                                <a href="#" class="rand-code">
-                                    <img id="login-rand-image" align="absmiddle" src="${pageContext.request.contextPath }/checkCodeServlet" name="randImage"
-                                         alt="验证码">
-                                </a>
-                                <div class="error-info mobile-error">${massage.yanZheng}</div>
-                            </li>
-                            <li class="last-li">
-                                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="密码"
-                                       type="password" name="userPwd" data-is="isEmail">
-                                <div class="error-info password-error last-error">${massage.pwd}</div>
-                            </li>
-                        </ul>
-                        <div class="button-block">
-                            <button>立即登录</button>
-                        </div>
-                        <div class="forget-password">
-                            <a href="/user/findpwd/index">忘记密码?</a>
-                            <span id="tab" tab="1">注册</span>
-                        </div>
-                        <div class="reg-agree">
-                            <label for=""><span class="agree">登录注册即表明您已阅读并同意<a
-                                    href="/agreement/contract/currency/name/user.rrd_reg"
-                                    target="_blank">《人人贷注册服务协议》</a><a
-                                    href="/agreement/contract/currency/name/user.rrd_privacy"
-                                    target="_blank">《人人贷隐私权政策》</a></span></label>
-                        </div>
-                    </div>
-                </form>
-                <form style="display: none" id="from" class="form-login show" method="post" action="${pageContext.request.contextPath}/user//register">
+                <form id="from" class="form-login show" method="post" action="${pageContext.request.contextPath}/user//register">
                     <div class="password-login">
                         <h2>账号注册</h2>
                         <ul>
@@ -98,7 +56,7 @@
                             </li>
                             <li class="rand_code_show">
                                 <input  class="code" autocomplete="off" name="checkCode" id="captcha_code" type="text"
-                                       placeholder="图形验证码">
+                                        placeholder="图形验证码">
                                 <div class="error-info code-error"></div>
                                 <a href="#" class="rand-code">
                                     <img id="login-rand-image" align="absmiddle" src="${pageContext.request.contextPath }/checkCodeServlet" name="randImage"
@@ -109,12 +67,11 @@
                             <li >
                                 <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="密码"
                                        type="password" name="userPwd" data-is="isEmail">
-                                <div class="error-info password-error last-error"></div>
                             </li>
                             <li class="last-li">
-                                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="密码"
-                                       type="password" name="userPwd" data-is="isEmail">
-                                <div class="error-info password-error last-error"></div>
+                                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="确认密码"
+                                       type="password" name="verifyPwd" data-is="isEmail">
+                                <div class="error-info password-error last-error">${massage.pwd}</div>
                             </li>
                         </ul>
                         <div class="button-block">

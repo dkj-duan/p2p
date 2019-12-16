@@ -27,24 +27,25 @@ public class StorageController {
     private BalanceService balanceService;
     @RequestMapping("/addPayment")
     public String payment(@SessionAttribute("user")User user,String WIDout_trade_no,String WIDsubject,Double WIDtotal_amount,String WIDbody, ModelMap modelMap)throws Exception{
-
-
         try{
-            Storage storage = new Storage();
-            storage.setUser(user);
-            storage.setState("已充值");
-            storage.setStorageTime(new Date());
-            storage.setAnnotation(WIDbody);
-            storage.setMoney(WIDtotal_amount);
-            storage.setOrderNumber(WIDout_trade_no);
-            System.out.println(storage);
-            storageService.save(storage);
-            //根据用户id查询用户可用资金
-            Balance balance = balanceService.queryByUserId(user.getUserId());
-            //更新可用资金
-            balance.setUser(user);
-            balance.setMoney(balance.getMoney()+storage.getMoney());
-            balanceService.updateMoney(balance);
+            Storage storage = storageService.queryByOrderNumber(WIDout_trade_no);
+            if (storage==null) {
+                storage = new Storage();
+                storage.setUser(user);
+                storage.setState("已充值");
+                storage.setStorageTime(new Date());
+                storage.setAnnotation(WIDbody);
+                storage.setMoney(WIDtotal_amount);
+                storage.setOrderNumber(WIDout_trade_no);
+                System.out.println(storage);
+                storageService.save(storage);
+                //根据用户id查询用户可用资金
+                Balance balance = balanceService.queryByUserId(user.getUserId());
+                //更新可用资金
+                balance.setUser(user);
+                balance.setMoney(balance.getMoney() + storage.getMoney());
+                balanceService.updateMoney(balance);
+            }
             //订单
             modelMap.addAttribute("WIDout_trade_no",WIDout_trade_no);
             //订单名称
