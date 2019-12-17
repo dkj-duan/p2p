@@ -1,4 +1,4 @@
-<%--
+<%@ page import="cn.bdqn.utils.DateUtil" %><%--
   Created by IntelliJ IDEA.
   User: 段康家
   Date: 2019/12/17
@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>U享服务-12月-20191214期-人人贷官网</title>
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/css/favicon-rrd.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_nm_4d3716e.css">
@@ -30,10 +30,13 @@
             charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-            $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)")
+
+
+
+            $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
             $(".jqLi").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
+                $(this).css("border-bottom", "2px solid royalblue");
                 $(".jqLi1").css("border-bottom", "");
                 $(".fuWu").show();
                 layui.use("table", function () {
@@ -45,7 +48,7 @@
             });
 
             $(".jqLi1").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
+                $(this).css("border-bottom", "2px solid royalblue");
                 $(".jqLi").css("border-bottom", "");
                 $(".fuWu").hide();
                 $.post(
@@ -99,6 +102,44 @@
                 );
             });
             $("#touXiang").css({"border-radius":"15px 15px 15px 15px","display": "inline-block"});
+
+            $(".input_i").on("input propertychange",function(){
+                var values = $(this).val();
+                if (values<=${balance.money}){
+                    if (values<=${product.balance}){
+                        if ((!values<${product.minMoney})){
+                            $(".sub").attr("type","submit");
+                            $(".mo1").html(" ");
+
+                        }else {
+                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
+                            $(".sub").attr("type","button");
+                        }
+                        if (values%100==0){
+                            $(".mo1").html(" ");
+                            $(".sub").attr("type","submit");
+                            if (values>${product.maxMoney}){
+                                $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
+                                $(".sub").attr("type","button");
+                            }else {
+                                $(".sub").attr("type","submit");
+                                $(".mo1").html(" ");
+                            }
+                        }else {
+                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
+                            $(".sub").attr("type", "button");
+                        }
+                    }else {
+                        $(".mo1").html("投资金额大于剩余投注金额");
+                        $(".sub").attr("type", "button");
+                    }
+                }else {
+                    $(".mo1").html("账户余额不足,请去充值~");
+                    $(".sub").attr("type", "button");
+                }
+
+
+            });
         });
     </script>
 </head>
@@ -180,7 +221,7 @@
 </div>
 
 <div class="s">
-    <span class="span-span">U想服务</span>
+    <span class="span-span">${product.productName}</span>
     <hr/>
     <!--数据详细信息-->
     <div class="xiangXi">
@@ -193,20 +234,25 @@
             <li>服务期限</li>
         </ul>
         <ul class="_money">
-            <li class="li">${product.balance}<span id="span-yuan">元</span></li>
-            <li>剩余可投注金额</li>
+            <li class="li">${product.sumMoney}<span id="span-yuan">元</span></li>
+            <li>投资金额</li>
         </ul>
     </div>
 
     <div class="touZi">
-        <form id="form" action="" method="post">
+        <form id="form" action="${pageContext.request.contextPath}/bid//invest" method="post">
             <ul>
-                <li>账户余额 <span class="mo">0.00</span> 元</li>
-                <li><input class="input_i" type="text" placeholder="最低起投100元,最大起投1000元"/></li>
-                <li>剩余可借出金额10000</li>
-                <li><input class="sub" type="submit" value="投注"/></li>
+                <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
+<%--                产品id--%>
+                <input type="hidden" name="productId" value="${product.id}"/>
+                <li>
+                    <input class="input_i" type="text" name="bidMoney" autocomplete="off" placeholder="最低起投${product.minMoney}元,最大起投${product.maxMoney}元"/>
+                    <br/>
+                    <span class="mo1"></span>
+                </li>
+                <li>剩余可借出金额 <span class="mo">${product.balance}</span> 元 </li>
+                <li><input class="sub" type="submit" value="投注"  /></li>
             </ul>
-
         </form>
 
     </div>
@@ -229,10 +275,10 @@
                 ${product.describe}
             </li>
             <li><span>服务期限：</span>${product.period}个月</li>
-            <li><span>服务期限结束日:</span>sadfdsmf</li>
+            <li><span>服务期限结束日:</span>${finish}</li>
             <li><span>最大起投:</span>${product.maxMoney}元</li>
             <li><span>最小起投:</span>${product.minMoney}元</li>
-            <li><span>产品发布时间:</span>${product.publishTime}</li>
+            <li><span>产品发布时间:</span><fmt:formatDate value="${product.publishTime}" pattern="yyyy-MM-dd"></fmt:formatDate> </li>
         </ul>
     </div>
 </div>

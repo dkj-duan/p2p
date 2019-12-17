@@ -12,10 +12,10 @@ public class Earnings {
     private User user;
 
     //产品对象
-    private Product product;
+    private Integer productId;
 
     //投标对象
-    private Bid bid;
+    private Integer bidId;
 
     //收益时间
     private Date earningsTime;
@@ -42,20 +42,20 @@ public class Earnings {
         this.user = user;
     }
 
-    public Product getProduct() {
-        return product;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
-    public Bid getBid() {
-        return bid;
+    public Integer getBidId() {
+        return bidId;
     }
 
-    public void setBid(Bid bid) {
-        this.bid = bid;
+    public void setBidId(Integer bidId) {
+        this.bidId = bidId;
     }
 
     public Date getEarningsTime() {

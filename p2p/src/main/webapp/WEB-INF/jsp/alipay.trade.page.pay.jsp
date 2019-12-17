@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <title>付款</title>
 </head>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>

@@ -10,7 +10,7 @@ public class Bid {
     private Integer id;
 
     //产品对象
-    private Product product;
+    private Integer productId;
 
     //用户对象
     private User user;
@@ -32,12 +32,12 @@ public class Bid {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public Integer getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     public User getUser() {

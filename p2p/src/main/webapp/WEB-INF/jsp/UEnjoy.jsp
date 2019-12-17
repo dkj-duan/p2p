@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>U享服务-12月-20191214期-人人贷官网</title>
-    <link rel="shortcut icon" type="image/x-icon" href="css/favicon-rrd.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_nm_4d3716e.css">

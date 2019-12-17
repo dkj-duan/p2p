@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <title>登录/注册 - 人人贷官网</title>
-    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/css/favicon-rrd.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_nm_4d3716e.css">

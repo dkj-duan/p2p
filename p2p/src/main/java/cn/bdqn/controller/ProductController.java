@@ -1,11 +1,15 @@
 package cn.bdqn.controller;
 
 
+import cn.bdqn.domain.Balance;
 import cn.bdqn.domain.Product;
 import cn.bdqn.domain.User;
 import cn.bdqn.exception.MyException;
+import cn.bdqn.service.BalanceService;
 import cn.bdqn.service.ProductService;
+import cn.bdqn.service.StorageService;
 import cn.bdqn.service.UserService;
+import cn.bdqn.utils.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +36,9 @@ public class ProductController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BalanceService balanceService;
     /**
      * 根据类型分页查询
      * @param modelMap
@@ -123,12 +131,17 @@ public class ProductController {
      * @throws Exception
      */
     @RequestMapping("/selectById")
-    public String selectById(Integer id,ModelMap modelMap)throws Exception{
+    public String selectById(@SessionAttribute("user") User user, Integer id, ModelMap modelMap)throws Exception{
 
         try {
             //根据id查询产品信息
             Product product = productService.queryByPrimaryKey(id);
+            //根据用户id查询用户可用资金
+            Balance balance = balanceService.queryByUserId(user.getUserId());
+            String finish = DateUtil.addDate(product.getPublishTime(), product.getPeriod()*30);
             modelMap.addAttribute("product",product);
+            modelMap.addAttribute("balance",balance);
+            modelMap.addAttribute("finish",finish);
             return "particular";
         }catch (Exception e){
             e.printStackTrace();

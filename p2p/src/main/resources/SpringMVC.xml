@@ -47,12 +47,14 @@
     <mvc:view-controller path="/addUlAlipay" view-name="alipay"/>
     <mvc:view-controller path="/addUlLogin" view-name="login"/>
     <!--配置拦截器-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/user/view"/>
-            <mvc:exclude-mapping path="/user/login"/>
-            <mvc:exclude-mapping path="/addUlRegister"/>
-            <bean class="cn.bdqn.interceptor.NyInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="/user/login"/>-->
+<!--            <mvc:exclude-mapping path="/user/register"/>-->
+<!--            <mvc:exclude-mapping path="/addUlRegister"/>-->
+<!--            <mvc:exclude-mapping path="/addUlLogin"/>-->
+<!--            <bean class="cn.bdqn.interceptor.MyInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 </beans>
