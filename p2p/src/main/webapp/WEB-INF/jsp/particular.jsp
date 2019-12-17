@@ -1,20 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
   User: 段康家
-  Date: 2019/12/16
-  Time: 10:43
+  Date: 2019/12/17
+  Time: 15:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html lang="en">
 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>U享服务-12月-20191214期-人人贷官网</title>
-    <link rel="shortcut icon" type="image/x-icon" href="css/favicon-rrd.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/css/favicon-rrd.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_nm_4d3716e.css">
@@ -22,45 +22,90 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_wdg_9509b0e.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/autoinvest_wdg_b047393.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detail_bde29bb.css">
-
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/particular.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js">
-
     </script>
-    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
-    <style type="text/css">
-        .fn-clear li {
-            padding-bottom: 20px;
-            padding-top: 20px;
-        }
-
-        .cover {
-            padding-top: 20px;
-        }
-
-        #shang, #xia {
-            position: absolute;
-            top: 41%;
-            font-size: 30px;
-            color: white;
-        }
-
-        #shang {
-            left: 12.4%;
-        }
-    </style>
-
+    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"
+            charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-            $(function () {
-                $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
-            })
+            $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)")
 
+            $(".jqLi").click(function () {
+                $(this).css("border-bottom", "2px solid royalblue")
+                $(".jqLi1").css("border-bottom", "");
+                $(".fuWu").show();
+                layui.use("table", function () {
+                    var table = layui.table;
+                    table.render({
+                        elem: '#layui_table_id', //指定表格元素
+                    });
+                });
+            });
+
+            $(".jqLi1").click(function () {
+                $(this).css("border-bottom", "2px solid royalblue")
+                $(".jqLi").css("border-bottom", "");
+                $(".fuWu").hide();
+                $.post(
+                    "${pageContext.request.contextPath}/user//ajax",
+                    "",
+                    function (date) {
+                        layui.use("table", function () {
+                            var table = layui.table;
+                            var s =date;
+                            table.render({
+                                elem: '#layui_table_id', //指定表格元素
+                                data: s,
+                                cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                ,
+                                skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                ,
+                                even: true //隔行换色
+                                ,
+                                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                    layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                    ,
+                                    groups: 5 //只显示 1 个连续页码
+                                    ,
+                                    first: "首页" //不显示首页
+                                    ,
+                                    last: "尾页" //不显示尾页
+
+                                },
+                                limit: "5",
+                                method: 'post' //提交方式
+                                ,
+                                cols: [
+                                    [{
+                                        field: 'userName',
+                                        width: 300,
+                                        title: '用户名'
+                                    }, {
+                                        field: 'userPhone',
+                                        width: 400,
+                                        title: '手机号'
+                                    }, {
+                                        field: 'userRegisterTime',
+                                        width: 510,
+                                        title: "注册时间"
+                                    }]
+                                ]
+                            });
+                        });
+                    },
+                    "JSON"
+                );
+            });
+            $("#touXiang").css({"border-radius":"15px 15px 15px 15px","display": "inline-block"});
+        });
     </script>
-
 </head>
 
 <body>
+<div id="test1">
+</div>
 <!--[if lt IE 9]>
 <div style='border: 4px solid #FFF500; background: #FDFDC8; text-align: center; clear: both; height: 75px; position: fixed; z-index:999999999; right: 2px; bottom: 2px; left: 2px; padding:0 8px;'>
     <div style='position: absolute; right: 3px; top: 3px; font-weight: bold;z-index:999999999'><a href='#'
@@ -77,6 +122,7 @@
     </div>
 </div>
 <![endif]-->
+
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -113,8 +159,7 @@
         <ul class="site-nav">
             <li class="user-item fn-clear" num="">
                 <div class="denglu">
-                    <img width="30px" height="30px" id="touXiang"
-                         src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
+                    <img width="30px" height="30px" id="touXiang" src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
                     <a target="_self" rel="nofollow" href="/login">我的账户</a>
                 </div>
             </li>
@@ -134,55 +179,62 @@
     </div>
 </div>
 
-<div id="uplanIndex">
-    <div class="wdg-index-banner">
-        <div class="banner-box">
-            <a class="banner-img-box" href="/pc/newUser.html" target="_self" title="新人专区">
-                <img class="banner-img" src="${pageContext.request.contextPath}/img/PCLB (1).jpg" alt="新人专区">
-            </a>
-        </div>
-        <!--<div class="uc-amount-box">-->
-        <!--<p class="uc-amount">-->
-        <!--11-->
-        <!--</p>-->
-        <!--</div>-->
+<div class="s">
+    <span class="span-span">U想服务</span>
+    <hr/>
+    <!--数据详细信息-->
+    <div class="xiangXi">
+        <ul class="liLv">
+            <li class="li li1">${product.rate}<span id="span-yuan">%</span></li>
+            <li>普通利率</li>
+        </ul>
+        <ul class="qiXian">
+            <li class="li">${product.period}<span id="span-yuan">个月</span></li>
+            <li>服务期限</li>
+        </ul>
+        <ul class="_money">
+            <li class="li">${product.balance}<span id="span-yuan">元</span></li>
+            <li>剩余可投注金额</li>
+        </ul>
     </div>
-    <div id="loanRiskTips"></div>
-    <div class="mt10 container_12_1080">
-        <div class="compliance-uplan">
 
-            <div class="uplan-list">
-                <ul class="fn-clear">
+    <div class="touZi">
+        <form id="form" action="" method="post">
+            <ul>
+                <li>账户余额 <span class="mo">0.00</span> 元</li>
+                <li><input class="input_i" type="text" placeholder="最低起投100元,最大起投1000元"/></li>
+                <li>剩余可借出金额10000</li>
+                <li><input class="sub" type="submit" value="投注"/></li>
+            </ul>
 
-                    <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}&type=${type}">
-                        <i id="shang" class="layui-icon layui-icon-prev"></i>
-                    </a>
-                    <c:forEach items="${products.list}" var="pro">
-                        <li>
-                            <a class="cover" href="https://www.renrendai.com/uplan-32338.html" target="_blank">
-                                <p class="time">
-                                    <span class="month"><em>${pro.period}个月服务周期</em></span>
-                                </p>
-                                <p class="rate mtop">
-                                    <span class="num"><i class="fu">${pro.rate}</i><em>%</em></span>
-                                    <span class="nian">普通利率</span>
-                                </p>
-                                <p class="name">
-                                    <em>查看详情</em>
-                                </p>
-                            </a>
-                        </li>
-                    </c:forEach>
-                    <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}&type=${type}">
-                        <i id="xia" class="layui-icon layui-icon-next"></i>
-                    </a>
-                </ul>
+        </form>
 
-            </div>
-        </div>
     </div>
 </div>
 
+<div id="xinXi">
+    <ul class="tou">
+        <li class="jqLi">
+            <a id="a" href="#" onclick="return false">服务介绍</a>
+        </li>
+        <li class="jqLi1">
+            <a href="#" onclick="return false">出借记录</a>
+        </li>
+    </ul>
+    <table class="layui-table" id="layui_table_id"></table>
+    <div class="fuWu">
+        <ul class="ul1">
+            <li><span>期数：</span>${product.productName}</li>
+            <li><span class="jieShao">服务介绍:</span>
+                ${product.describe}
+            </li>
+            <li><span>服务期限：</span>${product.period}个月</li>
+            <li><span>服务期限结束日:</span>sadfdsmf</li>
+            <li><span>最大起投:</span>${product.maxMoney}元</li>
+            <li><span>最小起投:</span>${product.minMoney}元</li>
+            <li><span>产品发布时间:</span>${product.publishTime}</li>
+        </ul>
+    </div>
 </div>
 
 <!--底部导航栏-->
@@ -308,12 +360,12 @@
 
 </div>
 
-
 <!--侧边栏-->
 <div class="fixed-download-link">
     <div class="download-link-wrap">
-        <a class="calc" href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
-                                                       alt="人人贷回报计算">
+        <a class="calc" href="/calculator/prodType/Loanplan" target="_blank"> <img
+                src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
+                alt="人人贷回报计算">
             <div class="hover">
                 回报计算
             </div>

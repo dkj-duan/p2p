@@ -3,6 +3,8 @@ package cn.bdqn.mapper;
 import cn.bdqn.domain.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户接口
  */
@@ -50,4 +52,11 @@ public interface UserMapper {
      * @return
      */
     void updateByPrimaryKey(User record);
+
+
+    /**
+     * 查询全部用户
+     * @return
+     */
+    List<User> selectAll();
 }

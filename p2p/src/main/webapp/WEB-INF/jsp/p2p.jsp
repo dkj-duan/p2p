@@ -25,7 +25,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
     <script type="text/javascript">
-        layui.use('carousel', function () {
+        layui.use(['carousel','laypage'], function () {
             var carousel = layui.carousel;
             //建造实例
             carousel.render({
@@ -37,17 +37,21 @@
                 anim: 'fade' //切换动画方式
             });
         });
+
+
         $(function () {
             $(".index-uplan-box").css({
                 "border-bottom": "none"
             });
             $("#touXiang").css({"border-radius":"15px 15px 15px 15px","display": "inline-block"});
         });
+
     </script>
 </head>
 
 <body>
 
+</div>
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -84,14 +88,14 @@
         <ul class="site-nav">
             <li class="user-item fn-clear" num="">
                 <div class="denglu">
-
                     <a target="_self" rel="nofollow" href="/login">
-                        <img width="30px" height="30px" id="touXiang" src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}" />我的账户
+                        <img width="30px" height="30px" id="touXiang"
+                             src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/> 我的账户
                     </a>
                 </div>
             </li>
             <li class="channel-item ">
-                <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
+                <a rel="nofollow" href="/disclosure/,information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
                 <a href="/credit" target="_blank">我要借款/还款</a>
@@ -100,7 +104,7 @@
                 <a href="/uplan.html">我要出借</a>
             </li>
             <li class="channel-item active-channel">
-                <a href="/">首页</a>
+                <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>
     </div>
@@ -140,10 +144,10 @@
                     <i></i> </a>
             </li>
             <li>
-                <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/newbee_3_f69a139.png">
+                <a href="#" > <img src="${pageContext.request.contextPath}/img/newbee_3_f69a139.png">
                     <div class="label-box">
                         <em>数据披露</em>
-                        <p class="label-desc">累计出借人数1,044,466<br>累计出借人赚取1,154,321万元</p>
+                        <p class="label-desc">平台累计注册${userList.size()}人<br>累计出借人赚取1,154,321万元</p>
                     </div>
                 </a>
             </li>
@@ -198,7 +202,7 @@
                 </div>
             </div>
             <div class="p-join pt7">
-                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}" target="_blank" <c:if test="${pro.state==1}">onclick="return true" </c:if>
+                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}"  <c:if test="${pro.state==1}">onclick="return true" </c:if>
                    <c:if test="${pro.state==2}">onclick="return false" </c:if>
                 >
                     <c:if test="${pro.state==1}">授权借出</c:if>
@@ -260,7 +264,7 @@
                 </div>
             </div>
             <div class="p-join pt7">
-                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}" target="_blank"
+                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}"
                    <c:if test="${pro.state==1}">onclick="return true" </c:if>
                    <c:if test="${pro.state==2}">onclick="return false" </c:if>
                 >

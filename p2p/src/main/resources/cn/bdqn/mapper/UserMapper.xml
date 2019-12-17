@@ -18,6 +18,12 @@
     user_Id, user_Phone, user_Pwd, user_Name, user_Card, user_register_time, user_login_time,
     user_img
   </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_user
+  </select>
 <!--  根据主键id查询用户-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

@@ -10,12 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -153,6 +155,13 @@ public class UserController {
         }
     }
 
+    /**
+     *
+     * @param userId
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/selectById")
     public String selectById(Integer userId,ModelMap modelMap)throws Exception{
 
@@ -167,6 +176,15 @@ public class UserController {
             e.printStackTrace();
             throw new MyException("网络错误~");
         }
+    }
 
+
+    @RequestMapping("/ajax")
+    @ResponseBody
+    public List<User> selectAll(){
+
+        List<User> users = userService.queryAll();
+        System.out.println(users);
+        return users;
     }
 }

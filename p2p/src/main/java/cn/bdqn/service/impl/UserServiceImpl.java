@@ -6,6 +6,8 @@ import cn.bdqn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -49,5 +51,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateByPrimaryKeySelective(User record) {
         userMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+     * 查询全部
+     * @return
+     */
+    @Override
+    public List<User> queryAll() {
+        return userMapper.selectAll();
     }
 }

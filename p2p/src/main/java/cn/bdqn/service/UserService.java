@@ -2,6 +2,8 @@ package cn.bdqn.service;
 
 import cn.bdqn.domain.User;
 
+import java.util.List;
+
 /**
  * 用户接口类
  */
@@ -38,5 +40,10 @@ public interface UserService {
     public void updateByPrimaryKeySelective(User record);
 
 
+    /**
+     * 查询全部
+     * @return
+     */
+    public List<User> queryAll();
 
 }

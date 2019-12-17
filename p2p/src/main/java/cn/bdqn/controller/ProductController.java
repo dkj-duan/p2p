@@ -2,16 +2,22 @@ package cn.bdqn.controller;
 
 
 import cn.bdqn.domain.Product;
+import cn.bdqn.domain.User;
 import cn.bdqn.exception.MyException;
 import cn.bdqn.service.ProductService;
+import cn.bdqn.service.UserService;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品信息控制器
@@ -23,6 +29,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
     /**
      * 根据类型分页查询
      * @param modelMap
@@ -41,9 +49,12 @@ public class ProductController {
             PageHelper.startPage(1,5);
             //类型2薪享
             PageInfo<Product> products2 = new PageInfo<>(productService.queryByAll(2));
+
+            List<User> userList = userService.queryAll();
             //放在作用域中
             modelMap.addAttribute("products1",products1);
             modelMap.addAttribute("products2",products2);
+            modelMap.addAttribute("userList",userList);
             return "p2p";
         }catch (Exception e){
             e.printStackTrace();
@@ -75,6 +86,34 @@ public class ProductController {
             throw new MyException("网络异常!");
         }
     }
+
+//    /**
+//     * 根据类型查看
+//     * @param type
+//     * @param modelMap
+//     * @param pageNum
+//     * @return
+//     * @throws Exception
+//     */
+//    @RequestMapping("/selectByTypeAjax")
+//    @ResponseBody
+//    public Map<String,Object> selectByTypeAjax(Integer type, ModelMap modelMap, String pageNum)throws Exception{
+//        try{
+//            if (pageNum==null){
+//                pageNum = "1";
+//            }
+//            PageHelper.startPage(Integer.parseInt(pageNum),6);
+//            PageInfo<Product> products = new PageInfo<>(productService.queryByAll(type));
+//            Map<String,Object> map = new HashMap<>();
+//            map.put("products",products);
+//            map.put("type",type);
+//            modelMap.addAttribute("map",map);
+//            return map;
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            throw new MyException("网络异常!");
+//        }
+//    }
 
     /**
      * 跳转到产品详细信息页面
