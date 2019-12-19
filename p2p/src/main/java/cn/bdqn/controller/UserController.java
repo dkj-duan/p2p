@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,11 +75,12 @@ public class UserController {
             //调用添加方法
             user.setUserRegisterTime(new Date());
             user.setUserPwd(MD5Util.encode(user.getUserPwd()));
+            user.setUserImg("moren.jpg");
             //添加用户的方法
             userService.save(user);
             //创建用户资金表
             balance.setUser(user);
-            balance.setMoney(0.0);
+            balance.setMoney(new BigDecimal(0));
             balanceService.save(balance);
             //设置request作用域
             request.getSession(false).removeAttribute("checkCode");
@@ -163,15 +165,13 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/selectById")
-    public String selectById(Integer userId,ModelMap modelMap)throws Exception{
+    public String selectById(@SessionAttribute("user")User user,ModelMap modelMap)throws Exception{
 
         try{
-            //根据id查询用户
-            User user = userService.queryByPrimaryKey(userId);
-
-            modelMap.addAttribute("requestUser",user);
-
-            return "";
+            //根据id查询用户可用资金
+            Balance balance = balanceService.queryByUserId(user.getUserId());
+            modelMap.addAttribute("balance",balance);
+            return "user";
         }catch (Exception e){
             e.printStackTrace();
             throw new MyException("网络错误~");

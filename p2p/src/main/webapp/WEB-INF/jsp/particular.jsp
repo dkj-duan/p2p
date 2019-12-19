@@ -31,15 +31,13 @@
     <script type="text/javascript">
         $(function () {
 
-
-
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
             $(".jqLi").click(function () {
                 $(this).css("border-bottom", "2px solid royalblue");
                 $(".jqLi1").css("border-bottom", "");
                 $(".fuWu").show();
-                layui.use("table", function () {
+                layui.use(["table", "util"], function () {
                     var table = layui.table;
                     table.render({
                         elem: '#layui_table_id', //指定表格元素
@@ -52,12 +50,12 @@
                 $(".jqLi").css("border-bottom", "");
                 $(".fuWu").hide();
                 $.post(
-                    "${pageContext.request.contextPath}/user//ajax",
-                    "",
+                    "${pageContext.request.contextPath}/bid/ajax",
+                    "productId=${product.id}",
                     function (date) {
                         layui.use("table", function () {
                             var table = layui.table;
-                            var s =date;
+                            var s = date;
                             table.render({
                                 elem: '#layui_table_id', //指定表格元素
                                 data: s,
@@ -84,15 +82,24 @@
                                     [{
                                         field: 'userName',
                                         width: 300,
-                                        title: '用户名'
+                                        title: '用户名',
+                                        templet: function (data) {
+
+                                            return data.user.userName;
+                                        }
                                     }, {
                                         field: 'userPhone',
                                         width: 400,
-                                        title: '手机号'
+                                        title: '手机号',
+                                        templet: function (data) {
+                                            return data.user.userPhone;
+                                        }
                                     }, {
-                                        field: 'userRegisterTime',
+                                        field: 'bidTime',
                                         width: 510,
-                                        title: "注册时间"
+                                        title: "投标时间",
+                                        templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
+
                                     }]
                                 ]
                             });
@@ -101,39 +108,46 @@
                     "JSON"
                 );
             });
-            $("#touXiang").css({"border-radius":"15px 15px 15px 15px","display": "inline-block"});
 
-            $(".input_i").on("input propertychange",function(){
+            $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
+
+            $(".input_i").on("input propertychange", function () {
                 var values = $(this).val();
-                if (values<=${balance.money}){
-                    if (values<=${product.balance}){
-                        if ((!values<${product.minMoney})){
-                            $(".sub").attr("type","submit");
-                            $(".mo1").html(" ");
-
-                        }else {
-                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
-                            $(".sub").attr("type","button");
-                        }
-                        if (values%100==0){
-                            $(".mo1").html(" ");
-                            $(".sub").attr("type","submit");
-                            if (values>${product.maxMoney}){
-                                $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
-                                $(".sub").attr("type","button");
-                            }else {
-                                $(".sub").attr("type","submit");
-                                $(".mo1").html(" ");
-                            }
-                        }else {
+                if (values <=${balance.money}) {
+                    if (values <=${product.balance}) {
+                        if ((!values <${product.minMoney})) {
+                            $(".sub").attr("type", "submit");
+                            var yue = ${product.rate}/12*values*${product.period};
+                            $(".mo1").html("可获取" + yue + "元");
+                        } else {
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                             $(".sub").attr("type", "button");
                         }
-                    }else {
+                        if (values % 100 == 0) {
+                            $(".mo1").html(" ");
+                            $(".sub").attr("type", "submit");
+                            var yue = ${product.rate}/12*values*${product.period};
+                            $(".mo1").html("可获取" + yue + "元");
+                            if (values >${product.maxMoney}) {
+                                $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
+                                $(".sub").attr("type", "button");
+                            } else {
+                                $(".sub").attr("type", "submit");
+                                $(".mo1").html(" ");
+                                var yue = ${product.rate}/100/
+                                12;
+                                var monoy = yue * values *${product.period};
+                                $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
+                            }
+                        } else {
+                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
+                            $(".sub").attr("type", "button");
+                        }
+                    } else {
                         $(".mo1").html("投资金额大于剩余投注金额");
                         $(".sub").attr("type", "button");
                     }
-                }else {
+                } else {
                     $(".mo1").html("账户余额不足,请去充值~");
                     $(".sub").attr("type", "button");
                 }
@@ -145,8 +159,6 @@
 </head>
 
 <body>
-<div id="test1">
-</div>
 <!--[if lt IE 9]>
 <div style='border: 4px solid #FFF500; background: #FDFDC8; text-align: center; clear: both; height: 75px; position: fixed; z-index:999999999; right: 2px; bottom: 2px; left: 2px; padding:0 8px;'>
     <div style='position: absolute; right: 3px; top: 3px; font-weight: bold;z-index:999999999'><a href='#'
@@ -163,7 +175,6 @@
     </div>
 </div>
 <![endif]-->
-
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -200,8 +211,9 @@
         <ul class="site-nav">
             <li class="user-item fn-clear" num="">
                 <div class="denglu">
-                    <img width="30px" height="30px" id="touXiang" src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
-                    <a target="_self" rel="nofollow" href="/login">我的账户</a>
+                    <img width="30px" height="30px" id="touXiang"
+                         src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
+                                            <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
                 </div>
             </li>
             <li class="channel-item ">
@@ -240,21 +252,26 @@
     </div>
 
     <div class="touZi">
-        <form id="form" action="${pageContext.request.contextPath}/bid//invest" method="post">
-            <ul>
-                <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
-<%--                产品id--%>
-                <input type="hidden" name="productId" value="${product.id}"/>
-                <li>
-                    <input class="input_i" type="text" name="bidMoney" autocomplete="off" placeholder="最低起投${product.minMoney}元,最大起投${product.maxMoney}元"/>
-                    <br/>
-                    <span class="mo1"></span>
-                </li>
-                <li>剩余可借出金额 <span class="mo">${product.balance}</span> 元 </li>
-                <li><input class="sub" type="submit" value="投注"  /></li>
-            </ul>
-        </form>
-
+        <c:if test="${product.state==2}">
+            <img src="${pageContext.request.contextPath}/img/READY%20(1).png"/>
+        </c:if>
+        <c:if test="${product.state==1}">
+            <form id="form" action="${pageContext.request.contextPath}/bid//invest" method="post">
+                <ul>
+                    <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
+                        <%--                产品id--%>
+                    <input type="hidden" name="productId" value="${product.id}"/>
+                    <li>
+                        <input class="input_i" type="text" name="bidMoney" autocomplete="off"
+                               placeholder="最低起投${product.minMoney}元,最大起投${product.maxMoney}元"/>
+                        <br/>
+                        <span class="mo1"></span>
+                    </li>
+                    <li>剩余可借出金额 <span class="mo">${product.balance}</span> 元</li>
+                    <li><input class="sub" type="submit" value="投注"/></li>
+                </ul>
+            </form>
+        </c:if>
     </div>
 </div>
 
@@ -264,7 +281,7 @@
             <a id="a" href="#" onclick="return false">服务介绍</a>
         </li>
         <li class="jqLi1">
-            <a href="#" onclick="return false">出借记录</a>
+                <a href="#" onclick="return false">出借记录</a>
         </li>
     </ul>
     <table class="layui-table" id="layui_table_id"></table>
@@ -278,9 +295,11 @@
             <li><span>服务期限结束日:</span>${finish}</li>
             <li><span>最大起投:</span>${product.maxMoney}元</li>
             <li><span>最小起投:</span>${product.minMoney}元</li>
-            <li><span>产品发布时间:</span><fmt:formatDate value="${product.publishTime}" pattern="yyyy-MM-dd"></fmt:formatDate> </li>
+            <li><span>产品发布时间:</span><fmt:formatDate value="${product.publishTime}"
+                                                    pattern="yyyy-MM-dd"></fmt:formatDate></li>
         </ul>
     </div>
+
 </div>
 
 <!--底部导航栏-->

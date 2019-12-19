@@ -4,20 +4,18 @@
   <resultMap id="BaseResultMap" type="cn.bdqn.domain.Bid" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="product_id" property="productId" jdbcType="INTEGER" />
-    <result column="user_Id" property="userId" jdbcType="INTEGER" />
     <result column="bid_money" property="bidMoney" jdbcType="DOUBLE" />
     <result column="bid_time" property="bidTime" jdbcType="TIMESTAMP" />
     <result column="bid_state" property="bidState" jdbcType="INTEGER" />
 
   </resultMap>
 
-    <resultMap id="joint" type="cn.bdqn.domain.Storage">
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="product_id" property="productId" jdbcType="INTEGER" />
-        <result column="user_Id" property="userId" jdbcType="INTEGER" />
-        <result column="bid_money" property="bidMoney" jdbcType="DOUBLE" />
-        <result column="bid_time" property="bidTime" jdbcType="TIMESTAMP" />
-        <result column="bid_state" property="bidState" jdbcType="INTEGER" />
+    <resultMap id="joint" type="cn.bdqn.domain.Bid">
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="product_id" property="productId" jdbcType="INTEGER" />
+      <result column="bid_money" property="bidMoney"/>
+      <result column="bid_time" property="bidTime" jdbcType="TIMESTAMP" />
+      <result column="bid_state" property="bidState" jdbcType="INTEGER" />
         <association property="user" javaType="cn.bdqn.domain.User">
             <id column="userId" property="userId" jdbcType="INTEGER" />
             <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
@@ -70,11 +68,14 @@
   </delete>
 <!--    添加-->
   <insert id="insert" parameterType="cn.bdqn.domain.Bid" >
-    insert into t_bid (id, product_id, user_Id,
+    <selectKey keyProperty="id" keyColumn="id" order="AFTER" resultType="java.lang.Integer">
+      select LAST_INSERT_ID()
+    </selectKey>
+    insert into t_bid ( product_id, user_Id,
       bid_money, bid_time, bid_state
       )
-    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER},
-      #{bidMoney,jdbcType=DOUBLE}, #{bidTime,jdbcType=TIMESTAMP}, #{bidState,jdbcType=INTEGER}
+    values ( #{productId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER},
+      #{bidMoney}, #{bidTime,jdbcType=TIMESTAMP}, #{bidState,jdbcType=INTEGER}
       )
   </insert>
 
@@ -112,7 +113,7 @@
         #{user.userId,jdbcType=INTEGER},
       </if>
       <if test="bidMoney != null" >
-        #{bidMoney,jdbcType=DOUBLE},
+        #{bidMoney},
       </if>
       <if test="bidTime != null" >
         #{bidTime,jdbcType=TIMESTAMP},
@@ -133,7 +134,7 @@
         user_Id = #{user.userId,jdbcType=INTEGER},
       </if>
       <if test="bidMoney != null" >
-        bid_money = #{bidMoney,jdbcType=DOUBLE},
+        bid_money = #{bidMoney},
       </if>
       <if test="bidTime != null" >
         bid_time = #{bidTime,jdbcType=TIMESTAMP},
@@ -150,7 +151,7 @@
     update t_bid
     set product_id = #{productId,jdbcType=INTEGER},
       user_Id = #{user.userId,jdbcType=INTEGER},
-      bid_money = #{bidMoney,jdbcType=DOUBLE},
+      bid_money = #{bidMoney},
       bid_time = #{bidTime,jdbcType=TIMESTAMP},
       bid_state = #{bidState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}

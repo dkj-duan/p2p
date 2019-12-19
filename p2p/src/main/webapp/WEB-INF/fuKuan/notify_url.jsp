@@ -31,6 +31,7 @@
 		for (int i = 0; i < values.length; i++) {
 			valueStr = (i == values.length - 1) ? valueStr + values[i]
 					: valueStr + values[i] + ",";
+			System.out.println(valueStr);
 		}
 		//乱码解决，这段代码在出现乱码时使用
 		valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");

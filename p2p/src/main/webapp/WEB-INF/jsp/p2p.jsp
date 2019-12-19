@@ -88,9 +88,10 @@
         <ul class="site-nav">
             <li class="user-item fn-clear" num="">
                 <div class="denglu">
-                    <a target="_self" rel="nofollow" href="/login">
-                        <img width="30px" height="30px" id="touXiang"
-                             src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/> 我的账户
+                    <img width="30px" height="30px" id="touXiang"
+                         src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
+                    <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">
+                        我的账户
                     </a>
                 </div>
             </li>
@@ -202,9 +203,7 @@
                 </div>
             </div>
             <div class="p-join pt7">
-                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}"  <c:if test="${pro.state==1}">onclick="return true" </c:if>
-                   <c:if test="${pro.state==2}">onclick="return false" </c:if>
-                >
+                <a href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}">
                     <c:if test="${pro.state==1}">授权借出</c:if>
                     <c:if test="${pro.state==2}">已满标</c:if>
                 </a>

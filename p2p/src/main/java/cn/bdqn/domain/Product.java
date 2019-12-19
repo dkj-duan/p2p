@@ -1,5 +1,6 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -28,16 +29,16 @@ public class Product {
     private String identifying;
 
     //产品募捐金额
-    private Double sumMoney;
+    private BigDecimal sumMoney;
 
     //产品余额
-    private Double balance;
+    private BigDecimal balance;
 
     //最少起投数
-    private Double minMoney;
+    private BigDecimal minMoney;
 
     //最大起投数
-    private Double maxMoney;
+    private BigDecimal maxMoney;
 
     //产品状态,1.未满标，2.满标
     private Integer state;
@@ -104,35 +105,35 @@ public class Product {
         this.identifying = identifying == null ? null : identifying.trim();
     }
 
-    public Double getSumMoney() {
+    public BigDecimal getSumMoney() {
         return sumMoney;
     }
 
-    public void setSumMoney(Double sumMoney) {
+    public void setSumMoney(BigDecimal sumMoney) {
         this.sumMoney = sumMoney;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public Double getMinMoney() {
+    public BigDecimal getMinMoney() {
         return minMoney;
     }
 
-    public void setMinMoney(Double minMoney) {
+    public void setMinMoney(BigDecimal minMoney) {
         this.minMoney = minMoney;
     }
 
-    public Double getMaxMoney() {
+    public BigDecimal getMaxMoney() {
         return maxMoney;
     }
 
-    public void setMaxMoney(Double maxMoney) {
+    public void setMaxMoney(BigDecimal maxMoney) {
         this.maxMoney = maxMoney;
     }
 

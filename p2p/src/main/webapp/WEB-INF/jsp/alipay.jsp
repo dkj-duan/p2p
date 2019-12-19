@@ -31,12 +31,12 @@
 					<hr class="one_line">
 					<dt>付款金额 ：</dt>
 					<dd>
-						<input id="WIDtotal_amount" name="WIDtotal_amount" />
+						<input id="WIDtotal_amount" autocomplete="off" name="WIDtotal_amount" readonly="readonly" />
 					</dd>
 					<hr class="one_line">
 					<dt>商品描述：</dt>
 					<dd>
-						<input id="WIDbody" name="WIDbody" />
+						<input id="WIDbody" autocomplete="off" name="WIDbody" />
 					</dd>
 					<hr class="one_line">
 					<dt></dt>
@@ -85,7 +85,7 @@
 		sNow += String(vNow.getMilliseconds());
 		document.getElementById("WIDout_trade_no").value =  sNow;
 		document.getElementById("WIDsubject").value = "充值";
-		document.getElementById("WIDtotal_amount").value = "100";
+		document.getElementById("WIDtotal_amount").value = ${money};
 	}
 	GetDateNow();
 </script>

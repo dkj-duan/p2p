@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Controller
@@ -26,7 +27,7 @@ public class StorageController {
     @Autowired
     private BalanceService balanceService;
     @RequestMapping("/addPayment")
-    public String payment(@SessionAttribute("user")User user,String WIDout_trade_no,String WIDsubject,Double WIDtotal_amount,String WIDbody, ModelMap modelMap)throws Exception{
+    public String payment(@SessionAttribute("user")User user, String WIDout_trade_no, String WIDsubject, BigDecimal WIDtotal_amount, String WIDbody, ModelMap modelMap)throws Exception{
         try{
             Storage storage = storageService.queryByOrderNumber(WIDout_trade_no);
             if (storage==null) {
@@ -43,7 +44,7 @@ public class StorageController {
                 Balance balance = balanceService.queryByUserId(user.getUserId());
                 //更新可用资金
                 balance.setUser(user);
-                balance.setMoney(balance.getMoney() + storage.getMoney());
+                balance.setMoney(balance.getMoney().add( storage.getMoney()));
                 balanceService.updateMoney(balance);
             }
             //订单
@@ -63,9 +64,24 @@ public class StorageController {
 
     }
 
+    /**
+     * 打开充值页面
+     * @param money
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/addUlAlipay")
+    public String addUlAlipay(String money,ModelMap modelMap)throws Exception{
 
-    @RequestMapping("/skip")
-    public String add(){
-        return "p2p";
+        try {
+            modelMap.addAttribute("money",money);
+            return "alipay";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("出错了");
+        }
+
     }
+
 }

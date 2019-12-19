@@ -4,15 +4,15 @@
   <resultMap id="BaseResultMap" type="cn.bdqn.domain.Product" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="product_Name" property="productName" jdbcType="VARCHAR" />
-    <result column="rate" property="rate" jdbcType="DOUBLE" />
+    <result column="rate" property="rate"  />
     <result column="period" property="period" jdbcType="INTEGER" />
     <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="identifying" property="identifying" jdbcType="VARCHAR" />
-    <result column="sum_money" property="sumMoney" jdbcType="DOUBLE" />
-    <result column="balance" property="balance" jdbcType="DOUBLE" />
-    <result column="min_money" property="minMoney" jdbcType="DOUBLE" />
-    <result column="max_money" property="maxMoney" jdbcType="DOUBLE" />
+    <result column="sum_money" property="sumMoney" />
+    <result column="balance" property="balance"  />
+    <result column="min_money" property="minMoney"  />
+    <result column="max_money" property="maxMoney"  />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -57,10 +57,10 @@
       identifying, sum_money, balance,
       min_money, max_money, state,
       finish_time, `describe`)
-    values (#{id,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{rate,jdbcType=DOUBLE},
+    values (#{id,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{rate},
       #{period,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER},
-      #{identifying,jdbcType=VARCHAR}, #{sumMoney,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE},
-      #{minMoney,jdbcType=DOUBLE}, #{maxMoney,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER},
+      #{identifying,jdbcType=VARCHAR}, #{sumMoney}, #{balance },
+      #{minMoney }, #{maxMoney }, #{state,jdbcType=INTEGER},
       #{finishTime,jdbcType=TIMESTAMP}, #{describe,jdbcType=LONGVARCHAR})
   </insert>
 <!--    选择性插入-->
@@ -118,7 +118,7 @@
         #{productName,jdbcType=VARCHAR},
       </if>
       <if test="rate != null" >
-        #{rate,jdbcType=DOUBLE},
+        #{rate },
       </if>
       <if test="period != null" >
         #{period,jdbcType=INTEGER},
@@ -133,16 +133,16 @@
         #{identifying,jdbcType=VARCHAR},
       </if>
       <if test="sumMoney != null" >
-        #{sumMoney,jdbcType=DOUBLE},
+        #{sumMoney },
       </if>
       <if test="balance != null" >
-        #{balance,jdbcType=DOUBLE},
+        #{balance },
       </if>
       <if test="minMoney != null" >
-        #{minMoney,jdbcType=DOUBLE},
+        #{minMoney },
       </if>
       <if test="maxMoney != null" >
-        #{maxMoney,jdbcType=DOUBLE},
+        #{maxMoney },
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
@@ -164,7 +164,7 @@
         product_Name = #{productName,jdbcType=VARCHAR},
       </if>
       <if test="rate != null" >
-        rate = #{rate,jdbcType=DOUBLE},
+        rate = #{rate},
       </if>
       <if test="period != null" >
         period = #{period,jdbcType=INTEGER},
@@ -179,16 +179,16 @@
         identifying = #{identifying,jdbcType=VARCHAR},
       </if>
       <if test="sumMoney != null" >
-        sum_money = #{sumMoney,jdbcType=DOUBLE},
+        sum_money = #{sumMoney},
       </if>
       <if test="balance != null" >
-        balance = #{balance,jdbcType=DOUBLE},
+        balance = #{balance},
       </if>
       <if test="minMoney != null" >
-        min_money = #{minMoney,jdbcType=DOUBLE},
+        min_money = #{minMoney},
       </if>
       <if test="maxMoney != null" >
-        max_money = #{maxMoney,jdbcType=DOUBLE},
+        max_money = #{maxMoney},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
@@ -207,15 +207,15 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.bdqn.domain.Product" >
     update t_product
     set product_Name = #{productName,jdbcType=VARCHAR},
-      rate = #{rate,jdbcType=DOUBLE},
+      rate = #{rate},
       period = #{period,jdbcType=INTEGER},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
       `type` = #{type,jdbcType=INTEGER},
       identifying = #{identifying,jdbcType=VARCHAR},
-      sum_money = #{sumMoney,jdbcType=DOUBLE},
-      balance = #{balance,jdbcType=DOUBLE},
-      min_money = #{minMoney,jdbcType=DOUBLE},
-      max_money = #{maxMoney,jdbcType=DOUBLE},
+      sum_money = #{sumMoney},
+      balance = #{balance},
+      min_money = #{minMoney},
+      max_money = #{maxMoney},
       state = #{state,jdbcType=INTEGER},
       finish_time = #{finishTime,jdbcType=TIMESTAMP},
       `describe` = #{describe,jdbcType=LONGVARCHAR}
@@ -226,15 +226,15 @@
   <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Product" >
     update t_product
     set product_Name = #{productName,jdbcType=VARCHAR},
-      rate = #{rate,jdbcType=DOUBLE},
+      rate = #{rate},
       period = #{period,jdbcType=INTEGER},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
       `type` = #{type,jdbcType=INTEGER},
       identifying = #{identifying,jdbcType=VARCHAR},
-      sum_money = #{sumMoney,jdbcType=DOUBLE},
-      balance = #{balance,jdbcType=DOUBLE},
-      min_money = #{minMoney,jdbcType=DOUBLE},
-      max_money = #{maxMoney,jdbcType=DOUBLE},
+      sum_money = #{sumMoney},
+      balance = #{balance},
+      min_money = #{minMoney},
+      max_money = #{maxMoney},
       state = #{state,jdbcType=INTEGER},
       finish_time = #{finishTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

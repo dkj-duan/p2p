@@ -2,6 +2,7 @@ package cn.bdqn.domain;
 
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ public class Storage {
     private String state;
 
     //充值金额
-    private Double money;
+    private BigDecimal money;
 
     //充值时间
     private Date storageTime;
@@ -62,11 +63,11 @@ public class Storage {
         this.state = state == null ? null : state.trim();
     }
 
-    public Double getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Double money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 

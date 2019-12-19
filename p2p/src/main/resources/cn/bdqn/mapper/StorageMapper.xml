@@ -14,7 +14,7 @@
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
         <result column="state" property="state" jdbcType="VARCHAR" />
-        <result column="money" property="money" jdbcType="DOUBLE" />
+        <result column="money" property="money"    />
         <result column="storage_time" property="storageTime" jdbcType="TIMESTAMP" />
         <result column="annotation" property="annotation" jdbcType="VARCHAR" />
         <association property="user" javaType="cn.bdqn.domain.User">
@@ -117,7 +117,7 @@
         #{state,jdbcType=VARCHAR},
       </if>
       <if test="money != null" >
-        #{money,jdbcType=DOUBLE},
+        #{money   },
       </if>
       <if test="storageTime != null" >
         #{storageTime,jdbcType=TIMESTAMP},

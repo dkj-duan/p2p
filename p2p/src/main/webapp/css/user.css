@@ -1,0 +1,128 @@
+
+.span-span{
+    display: inline-block;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-left: 20px;
+    color: #000000;
+}
+.s{
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    background: white;
+}
+.s:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.xiangXi{
+    float: left;
+    padding-left: 10%;
+    padding-right: 10%;
+    border-right: 1px solid gainsboro;
+}
+.xiangXi:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.xiangXi ul{
+    float: left;
+    margin: 70px;
+}
+.xiangXi ul li{
+    margin-bottom: 20px;
+}
+.li{
+    color: #000000;
+    font-size:45px ;
+}
+.li1{
+    color: #FF721F;
+}
+#span-yuan{
+    font-size: 15px;
+}
+.touZi{
+    padding-left: 5%;
+    float: left;
+}
+#form input{
+    width: 300px;
+    border-radius: 3px 3px 3px 3px;
+    border: 1px solid gainsboro ;
+}
+.input_i{
+    height: 40px;
+    padding-left: 10px;
+}
+#form ul{
+    margin-left:40px ;
+}
+#form ul li{
+    margin: 20px;
+}
+.sub{
+    border: none;
+    color: white;
+    height: 45px;
+    background: #FF721F;
+}
+.mo{
+    color: #FF721F;
+}
+
+#xinXi{
+    width: 80%;
+    margin: auto;
+}
+
+#xinXi:after{
+    content:"";
+    display:block;
+    clear:both;
+
+}
+.tou{
+    border-bottom: 1px solid gainsboro;
+    background: white;
+    margin-top: 20px;
+}
+.tou:after{
+    content:"";
+    display:block;
+    clear:both;
+
+}
+.tou li{
+    float: left;
+    margin-left: 13%;
+    font-size:20px ;
+    margin-top:30px ;
+    padding: 0px 10px 20px 10px;
+}
+.tou li a:link,.tou li a:visited{
+    color: darkgray;
+}
+.fuWu{
+    background: white;
+
+}
+.jieShao{
+    display: block;
+    margin-bottom: 10px;
+}
+.ul1{
+    padding: 50px;
+}
+.ul1 li{
+    padding: 30px;
+    color: #2B2B2B;
+    font-size:18px ;
+}
+.ul1 span{
+    color: gray;
+    font-size:20px ;
+}

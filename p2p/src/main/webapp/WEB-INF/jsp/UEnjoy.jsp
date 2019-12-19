@@ -54,8 +54,8 @@
         $(function () {
             $(function () {
                 $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
-            })
-
+            });
+            });
     </script>
 
 </head>
@@ -115,7 +115,7 @@
                 <div class="denglu">
                     <img width="30px" height="30px" id="touXiang"
                          src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
-                    <a target="_self" rel="nofollow" href="/login">我的账户</a>
+                    <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
                 </div>
             </li>
             <li class="channel-item ">
@@ -150,7 +150,6 @@
     <div id="loanRiskTips"></div>
     <div class="mt10 container_12_1080">
         <div class="compliance-uplan">
-
             <div class="uplan-list">
                 <ul class="fn-clear">
 
@@ -159,7 +158,7 @@
                     </a>
                     <c:forEach items="${products.list}" var="pro">
                         <li>
-                            <a class="cover" href="https://www.renrendai.com/uplan-32338.html" target="_blank">
+                            <a class="cover" href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}">
                                 <p class="time">
                                     <span class="month"><em>${pro.period}个月服务周期</em></span>
                                 </p>

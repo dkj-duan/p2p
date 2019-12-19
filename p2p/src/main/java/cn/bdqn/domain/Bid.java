@@ -1,5 +1,6 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class Bid {
     private User user;
 
     //投标金额
-    private Double bidMoney;
+    private BigDecimal bidMoney;
 
     //投标时间
     private Date bidTime;
@@ -48,11 +49,11 @@ public class Bid {
         this.user = user;
     }
 
-    public Double getBidMoney() {
+    public BigDecimal getBidMoney() {
         return bidMoney;
     }
 
-    public void setBidMoney(Double bidMoney) {
+    public void setBidMoney(BigDecimal bidMoney) {
         this.bidMoney = bidMoney;
     }
 

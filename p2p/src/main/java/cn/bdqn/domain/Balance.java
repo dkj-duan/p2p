@@ -1,6 +1,8 @@
 package cn.bdqn.domain;
 
 
+import java.math.BigDecimal;
+
 /**
  * 资金表
  */
@@ -13,7 +15,7 @@ public class Balance {
     private User user;
 
     //可用资金
-    private Double money;
+    private BigDecimal money;
 
     public Integer getId() {
         return id;
@@ -31,11 +33,11 @@ public class Balance {
         this.user = user;
     }
 
-    public Double getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Double money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 }

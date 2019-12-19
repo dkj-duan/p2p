@@ -1,5 +1,6 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,7 +22,7 @@ public class Earnings {
     private Date earningsTime;
 
     //收益金额
-    private Double earningsMoney;
+    private BigDecimal earningsMoney;
 
     //收益状态
     private Integer earningsState;
@@ -66,11 +67,11 @@ public class Earnings {
         this.earningsTime = earningsTime;
     }
 
-    public Double getEarningsMoney() {
+    public BigDecimal getEarningsMoney() {
         return earningsMoney;
     }
 
-    public void setEarningsMoney(Double earningsMoney) {
+    public void setEarningsMoney(BigDecimal earningsMoney) {
         this.earningsMoney = earningsMoney;
     }
 
