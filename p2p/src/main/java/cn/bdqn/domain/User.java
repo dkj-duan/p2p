@@ -93,4 +93,18 @@ public class User {
     public void setUserImg(String userImg) {
         this.userImg = userImg == null ? null : userImg.trim();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userPhone='" + userPhone + '\'' +
+                ", userPwd='" + userPwd + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userCard='" + userCard + '\'' +
+                ", userRegisterTime=" + userRegisterTime +
+                ", userLoginTime=" + userLoginTime +
+                ", userImg='" + userImg + '\'' +
+                '}';
+    }
 }

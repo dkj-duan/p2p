@@ -43,7 +43,7 @@
     select
     <include refid="lianJie" />
     from t_bid as b,t_user as u
-    where id = #{id,jdbcType=INTEGER}
+    where b.user_Id = u.user_Id and id = #{id,jdbcType=INTEGER}
   </select>
 <!--    根据用户id查询全部-->
     <select id="selectAll" resultMap="joint">

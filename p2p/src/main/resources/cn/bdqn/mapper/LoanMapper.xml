@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.LoanMapper" >
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Loan" >
+    <id column="loan_id" property="loanId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="sc_id" property="scId" jdbcType="INTEGER" />
+    <result column="loan_money" property="loanMoney" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    loan_id, user_id, sc_id, loan_money
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_loan
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_loan
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.bdqn.domain.Loan" >
+    insert into t_loan (loan_id, user_id, sc_id, 
+      loan_money)
+    values (#{loanId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{scId,jdbcType=INTEGER}, 
+      #{loanMoney,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Loan" >
+    insert into t_loan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loanId != null" >
+        loan_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="scId != null" >
+        sc_id,
+      </if>
+      <if test="loanMoney != null" >
+        loan_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loanId != null" >
+        #{loanId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="scId != null" >
+        #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null" >
+        #{loanMoney,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Loan" >
+    update t_loan
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="scId != null" >
+        sc_id = #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null" >
+        loan_money = #{loanMoney,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Loan" >
+    update t_loan
+    set user_id = #{userId,jdbcType=INTEGER},
+      sc_id = #{scId,jdbcType=INTEGER},
+      loan_money = #{loanMoney,jdbcType=DOUBLE}
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </update>
+</mapper>

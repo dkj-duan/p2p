@@ -46,6 +46,6 @@ public class BalanceServiceImpl implements BalanceService {
     public void updateMoney(Balance balance) {
 
         //更新的方法
-        balanceMapper.updateByPrimaryKey(balance);
+        balanceMapper.updateMoney(balance);
     }
 }

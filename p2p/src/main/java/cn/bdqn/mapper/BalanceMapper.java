@@ -32,5 +32,13 @@ public interface BalanceMapper {
      */
     void updateByPrimaryKeySelective(Balance record);
 
+
     void updateByPrimaryKey(Balance record);
+
+
+    /**
+     * 更新可用余额
+     * @param balance
+     */
+    public void updateMoney(Balance balance);
 }

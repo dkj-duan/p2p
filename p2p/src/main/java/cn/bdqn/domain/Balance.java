@@ -40,4 +40,13 @@ public class Balance {
     public void setMoney(BigDecimal money) {
         this.money = money;
     }
+
+    @Override
+    public String toString() {
+        return "Balance{" +
+                "id=" + id +
+                ", user=" + user +
+                ", money=" + money +
+                '}';
+    }
 }

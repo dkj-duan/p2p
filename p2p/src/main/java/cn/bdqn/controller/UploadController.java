@@ -26,6 +26,7 @@ public class UploadController {
                 file.mkdirs();
             }
 
+
         }catch (Exception e){
             throw new MyException("文件上传失败~");
         }

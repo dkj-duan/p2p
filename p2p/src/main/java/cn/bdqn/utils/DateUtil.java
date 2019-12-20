@@ -21,4 +21,14 @@ public class DateUtil {
         return dateFormat.format(new Date(time));
     }
 
+    /**
+     * 时间转字符串
+     * @param date
+     * @return
+     */
+    public static String date2String(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // 日期格式
+        return dateFormat.format(date);
+    }
+
 }

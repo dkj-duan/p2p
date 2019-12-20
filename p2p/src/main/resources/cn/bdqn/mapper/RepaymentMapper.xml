@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.RepaymentMapper" >
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Repayment" >
+    <id column="rep_id" property="repId" jdbcType="INTEGER" />
+    <result column="sc_id" property="scId" jdbcType="INTEGER" />
+    <result column="due_time" property="dueTime" jdbcType="DATE" />
+    <result column="nex_time" property="nexTime" jdbcType="DATE" />
+    <result column="practical_time" property="practicalTime" jdbcType="DATE" />
+    <result column="repay_money" property="repayMoney" jdbcType="DOUBLE" />
+    <result column="surplus_monry" property="surplusMonry" jdbcType="DOUBLE" />
+    <result column="repay_user_id" property="repayUserId" jdbcType="INTEGER" />
+    <result column="payee_user_id" property="payeeUserId" jdbcType="INTEGER" />
+    <result column="periods" property="periods" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rep_id, sc_id, due_time, nex_time, practical_time, repay_money, surplus_monry, repay_user_id, 
+    payee_user_id, periods, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_repayment
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_repayment
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.bdqn.domain.Repayment" >
+    insert into t_repayment (rep_id, sc_id, due_time, 
+      nex_time, practical_time, repay_money, 
+      surplus_monry, repay_user_id, payee_user_id, 
+      periods, state)
+    values (#{repId,jdbcType=INTEGER}, #{scId,jdbcType=INTEGER}, #{dueTime,jdbcType=DATE}, 
+      #{nexTime,jdbcType=DATE}, #{practicalTime,jdbcType=DATE}, #{repayMoney,jdbcType=DOUBLE}, 
+      #{surplusMonry,jdbcType=DOUBLE}, #{repayUserId,jdbcType=INTEGER}, #{payeeUserId,jdbcType=INTEGER}, 
+      #{periods,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Repayment" >
+    insert into t_repayment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repId != null" >
+        rep_id,
+      </if>
+      <if test="scId != null" >
+        sc_id,
+      </if>
+      <if test="dueTime != null" >
+        due_time,
+      </if>
+      <if test="nexTime != null" >
+        nex_time,
+      </if>
+      <if test="practicalTime != null" >
+        practical_time,
+      </if>
+      <if test="repayMoney != null" >
+        repay_money,
+      </if>
+      <if test="surplusMonry != null" >
+        surplus_monry,
+      </if>
+      <if test="repayUserId != null" >
+        repay_user_id,
+      </if>
+      <if test="payeeUserId != null" >
+        payee_user_id,
+      </if>
+      <if test="periods != null" >
+        periods,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repId != null" >
+        #{repId,jdbcType=INTEGER},
+      </if>
+      <if test="scId != null" >
+        #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        #{dueTime,jdbcType=DATE},
+      </if>
+      <if test="nexTime != null" >
+        #{nexTime,jdbcType=DATE},
+      </if>
+      <if test="practicalTime != null" >
+        #{practicalTime,jdbcType=DATE},
+      </if>
+      <if test="repayMoney != null" >
+        #{repayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="surplusMonry != null" >
+        #{surplusMonry,jdbcType=DOUBLE},
+      </if>
+      <if test="repayUserId != null" >
+        #{repayUserId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeUserId != null" >
+        #{payeeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="periods != null" >
+        #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Repayment" >
+    update t_repayment
+    <set >
+      <if test="scId != null" >
+        sc_id = #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        due_time = #{dueTime,jdbcType=DATE},
+      </if>
+      <if test="nexTime != null" >
+        nex_time = #{nexTime,jdbcType=DATE},
+      </if>
+      <if test="practicalTime != null" >
+        practical_time = #{practicalTime,jdbcType=DATE},
+      </if>
+      <if test="repayMoney != null" >
+        repay_money = #{repayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="surplusMonry != null" >
+        surplus_monry = #{surplusMonry,jdbcType=DOUBLE},
+      </if>
+      <if test="repayUserId != null" >
+        repay_user_id = #{repayUserId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeUserId != null" >
+        payee_user_id = #{payeeUserId,jdbcType=INTEGER},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Repayment" >
+    update t_repayment
+    set sc_id = #{scId,jdbcType=INTEGER},
+      due_time = #{dueTime,jdbcType=DATE},
+      nex_time = #{nexTime,jdbcType=DATE},
+      practical_time = #{practicalTime,jdbcType=DATE},
+      repay_money = #{repayMoney,jdbcType=DOUBLE},
+      surplus_monry = #{surplusMonry,jdbcType=DOUBLE},
+      repay_user_id = #{repayUserId,jdbcType=INTEGER},
+      payee_user_id = #{payeeUserId,jdbcType=INTEGER},
+      periods = #{periods,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </update>
+</mapper>

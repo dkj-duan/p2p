@@ -61,4 +61,19 @@ public class EarningsServiceImpl implements EarningsService {
     public List<Earnings> queryByProductId(Integer productId) {
         return earningsMapper.selectByProductId(productId);
     }
+
+    @Override
+    public List<Earnings> queryByTypeAndUserId(Integer type, Integer userId) {
+        return earningsMapper.selectByTypeAndUserId(type,userId);
+    }
+
+    @Override
+    public List<Earnings> queryByEarningsState() {
+        return earningsMapper.selectByEarningsState();
+    }
+
+    @Override
+    public void updateEarningsState(Integer id) {
+        earningsMapper.updateEarningsState(id);
+    }
 }

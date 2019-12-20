@@ -26,6 +26,14 @@
         u.user_img
    </sql>
 
+
+
+<!--    更新可用余额-->
+    <update id="updateMoney" parameterType="cn.bdqn.domain.Balance">
+        update t_balance
+        set money = money + #{money}
+        where user_Id = #{user.userId}
+    </update>
 <!--    根据用户id查询余额-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

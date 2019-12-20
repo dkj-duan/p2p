@@ -53,57 +53,115 @@
                     "${pageContext.request.contextPath}/bid/ajax",
                     "productId=${product.id}",
                     function (date) {
-                        layui.use("table", function () {
-                            var table = layui.table;
-                            var s = date;
-                            table.render({
-                                elem: '#layui_table_id', //指定表格元素
-                                data: s,
-                                cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                ,
-                                skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                ,
-                                even: true //隔行换色
-                                ,
-                                page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                    layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                    ,
-                                    groups: 5 //只显示 1 个连续页码
-                                    ,
-                                    first: "首页" //不显示首页
-                                    ,
-                                    last: "尾页" //不显示尾页
 
-                                },
-                                limit: "5",
-                                method: 'post' //提交方式
-                                ,
-                                cols: [
-                                    [{
-                                        field: 'userName',
-                                        width: 300,
-                                        title: '用户名',
-                                        templet: function (data) {
+                        if (date != null && date.length > 0) {
+                            layui.use("table", function () {
+                                var table = layui.table;
+                                var s = date;
+                                table.render({
+                                    elem: '#layui_table_id', //指定表格元素
+                                    data: s,
+                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                    ,
+                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                    ,
+                                    even: true //隔行换色
+                                    ,
+                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                        ,
+                                        groups: 5 //只显示 1 个连续页码
+                                        ,
+                                        first: "首页" //不显示首页
+                                        ,
+                                        last: "尾页" //不显示尾页
+                                    },
+                                    limit: "5",
+                                    method: 'post' //提交方式
+                                    ,
+                                    cols: [
+                                        [{
+                                            field: 'userName',
+                                            width: 300,
+                                            title: '用户名',
+                                            templet: function (data) {
 
-                                            return data.user.userName;
-                                        }
-                                    }, {
-                                        field: 'userPhone',
-                                        width: 400,
-                                        title: '手机号',
-                                        templet: function (data) {
-                                            return data.user.userPhone;
-                                        }
-                                    }, {
-                                        field: 'bidTime',
-                                        width: 510,
-                                        title: "投标时间",
-                                        templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
+                                                return data.user.userName;
+                                            }
+                                        }, {
+                                            field: 'userPhone',
+                                            width: 400,
+                                            title: '手机号',
+                                            templet: function (data) {
+                                                var newStr;
+                                                if (data.user.userPhone.length === 2) {
+                                                    newStr = data.user.userPhone.substr(0, 1) + '*';
+                                                } else if (data.user.userPhone.length > 2) {
+                                                    var char = '';
+                                                    for (var i = 0, len = data.user.userPhone.length - 7; i < len; i++) {
+                                                        char += '*';
+                                                    }
+                                                    newStr = data.user.userPhone.substr(0, 3) + char + data.user.userPhone.substr(3 + char.length);
+                                                } else {
+                                                    newStr = data.user.userPhone;
+                                                }
 
-                                    }]
-                                ]
+                                                return newStr;
+                                            }
+                                        }, {
+                                            field: 'bidTime',
+                                            width: 510,
+                                            title: "投标时间",
+                                            templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
+
+                                        }]
+                                    ]
+                                });
                             });
-                        });
+                        } else {
+                            layui.use("table", function () {
+                                var table = layui.table;
+                                var s = [{"message": "当前没有人有投标"}];
+                                table.render({
+                                    elem: '#layui_table_id', //指定表格元素
+                                    data: s,
+                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                    ,
+                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                    ,
+                                    even: true //隔行换色
+                                    ,
+                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                        ,
+                                        groups: 5 //只显示 1 个连续页码
+                                        ,
+                                        first: "首页" //不显示首页
+                                        ,
+                                        last: "尾页" //不显示尾页
+                                    },
+                                    limit: "5",
+                                    method: 'post' //提交方式
+                                    ,
+                                    cols: [
+                                        [{
+                                            field: 'message',
+                                            width: 300,
+                                            title: '提示'
+                                        }, {
+                                            field: 'message',
+                                            width: 400,
+                                            title: '提示'
+                                        }, {
+                                            field: 'message',
+                                            width: 510,
+                                            title: '提示'
+                                        }]
+                                    ]
+                                });
+                            });
+                        }
+
                     },
                     "JSON"
                 );
@@ -213,7 +271,7 @@
                 <div class="denglu">
                     <img width="30px" height="30px" id="touXiang"
                          src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
-                                            <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
+                    <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
                 </div>
             </li>
             <li class="channel-item ">
@@ -281,7 +339,7 @@
             <a id="a" href="#" onclick="return false">服务介绍</a>
         </li>
         <li class="jqLi1">
-                <a href="#" onclick="return false">出借记录</a>
+            <a href="#" onclick="return false">出借记录</a>
         </li>
     </ul>
     <table class="layui-table" id="layui_table_id"></table>

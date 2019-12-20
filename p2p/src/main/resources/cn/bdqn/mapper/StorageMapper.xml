@@ -41,7 +41,7 @@
     select
     <include refid="Base_Column_List" />
     from t_storage
-    where id = #{id,jdbcType=INTEGER}
+    where st.user_Id = u.user_Id and id = #{id,jdbcType=INTEGER}
   </select>
 <!--根据用户id查询-->
     <select id="selectByUserId" resultMap="joint">

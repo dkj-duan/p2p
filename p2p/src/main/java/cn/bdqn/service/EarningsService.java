@@ -1,6 +1,7 @@
 package cn.bdqn.service;
 
 import cn.bdqn.domain.Earnings;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -68,4 +69,25 @@ public interface EarningsService {
      * @return
      */
     List<Earnings> queryByProductId(Integer productId);
+
+
+    /**
+     * 根据用户id和产品id查询
+     * @param type
+     * @param userId
+     * @return
+     */
+    public List<Earnings> queryByTypeAndUserId(Integer type,Integer userId);
+
+
+    /**
+     * 查询未收益的订单
+     * @return
+     */
+    public List<Earnings> queryByEarningsState();
+
+    /**
+     * 修改收益状态
+     */
+    public void updateEarningsState(Integer id);
 }
