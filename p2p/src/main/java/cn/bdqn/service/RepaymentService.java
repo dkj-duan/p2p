@@ -1,14 +1,13 @@
-package cn.bdqn.mapper;
+package cn.bdqn.service;
 
 import cn.bdqn.domain.Repayment;
 
 import java.util.List;
 
-
 /**
- * 还款接口
+ * 还款业务借款
  */
-public interface RepaymentMapper {
+public interface RepaymentService {
 
 
     /**
@@ -34,7 +33,7 @@ public interface RepaymentMapper {
      * @param repId
      * @return
      */
-    Repayment selectByPrimaryKey(Integer repId);
+    Repayment queryByPrimaryKey(Integer repId);
 
 
     /**
@@ -42,7 +41,7 @@ public interface RepaymentMapper {
      * @param userId
      * @return
      */
-    public List<Repayment> selectByUserId(Integer userId);
+    public List<Repayment> queryByUserId(Integer userId);
 
 
     /**
@@ -50,7 +49,7 @@ public interface RepaymentMapper {
      * @param RepayUserId
      * @return
      */
-    public List<Repayment> selectByRepayUserId(Integer RepayUserId);
+    public List<Repayment> queryByRepayUserId(Integer RepayUserId);
 
     /**
      * 选择性更新对象

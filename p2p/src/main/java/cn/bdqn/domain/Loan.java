@@ -1,5 +1,7 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
+
 /**
  * 散标投资表
  */
@@ -7,14 +9,17 @@ public class Loan {
     //id
     private Integer loanId;
 
-    //投标用户
+    //借款人id
+    private Integer loanUserId;
+
+    //出借用户
     private User user;
 
     //散标对象
     private Scattered scattered;
 
     //借出的钱数
-    private Double loanMoney;
+    private BigDecimal loanMoney;
 
     public Integer getLoanId() {
         return loanId;
@@ -40,11 +45,18 @@ public class Loan {
         this.scattered = scattered;
     }
 
-    public Double getLoanMoney() {
+    public BigDecimal getLoanMoney() {
         return loanMoney;
     }
 
-    public void setLoanMoney(Double loanMoney) {
+    public void setLoanMoney(BigDecimal loanMoney) {
         this.loanMoney = loanMoney;
+    }
+    public Integer getLoanUserId() {
+        return loanUserId;
+    }
+
+    public void setLoanUserId(Integer loanUserId) {
+        this.loanUserId = loanUserId;
     }
 }

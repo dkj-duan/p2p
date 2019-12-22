@@ -1,15 +1,20 @@
-package cn.bdqn.mapper;
+package cn.bdqn.service;
 
 import cn.bdqn.domain.Loan;
 
 import java.util.List;
 
-
 /**
- * 投散标记录表
+ * 投注散标业务接口
  */
-public interface LoanMapper {
+public interface LoanService {
 
+    /**
+     * 根据散标id查询
+     * @param scId
+     * @return
+     */
+    public List<Loan> queryByScId(Integer scId);
 
     /**
      * 根据id删除
@@ -34,22 +39,14 @@ public interface LoanMapper {
      * @param loanId
      * @return
      */
-    Loan selectByPrimaryKey(Integer loanId);
+    Loan queryByPrimaryKey(Integer loanId);
 
     /**
      * 根据用户id查询
      * @param userId
      * @return
      */
-    public List<Loan> selectByUserId(Integer userId);
-
-
-    /**
-     * 根据散标id查询
-     * @param scId
-     * @return
-     */
-    public List<Loan> selectByScId(Integer scId);
+    public List<Loan> queryByUserId(Integer userId);
 
     /**
      * 选择性更新

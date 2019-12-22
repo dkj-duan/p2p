@@ -50,10 +50,9 @@
                 $(".jqLi").css("border-bottom", "");
                 $(".fuWu").hide();
                 $.post(
-                    "${pageContext.request.contextPath}/bid/ajax",
-                    "productId=${product.id}",
+                    "${pageContext.request.contextPath}/loan/selectByScId",
+                    "scId=${scattered.scId}",
                     function (date) {
-
                         if (date != null && date.length > 0) {
                             layui.use("table", function () {
                                 var table = layui.table;
@@ -109,11 +108,9 @@
                                                 return newStr;
                                             }
                                         }, {
-                                            field: 'bidTime',
+                                            field: 'loanMoney',
                                             width: 510,
-                                            title: "投标时间",
-                                            templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
-
+                                            title: "出借钱数"
                                         }]
                                     ]
                                 });
@@ -179,11 +176,14 @@
             $(".input_i").on("input propertychange", function () {
                 var values = $(this).val();
                 if (values <=${balance.money}) {
-                    if (values <=${product.balance}) {
-                        if ((!values <${product.minMoney})) {
+
+                    //判断投资金额是否大于剩余金额
+                    if (values <=${scattered.residueMoney}) {
+                        if ((!values <100)) {
                             $(".sub").attr("type", "submit");
-                            var yue = ${product.rate}/12*values*${product.period};
-                            $(".mo1").html("可获取" + yue + "元");
+                            var yue = ${scattered.rate}/100/12;
+                            var monoy = yue * values *${scattered.periods};
+                            $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
                         } else {
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                             $(".sub").attr("type", "button");
@@ -191,18 +191,9 @@
                         if (values % 100 == 0) {
                             $(".mo1").html(" ");
                             $(".sub").attr("type", "submit");
-                            var yue = ${product.rate}/12*values*${product.period};
-                            $(".mo1").html("可获取" + yue + "元");
-                            if (values >${product.maxMoney}) {
-                                $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
-                                $(".sub").attr("type", "button");
-                            } else {
-                                $(".sub").attr("type", "submit");
-                                $(".mo1").html(" ");
-                                var yue = ${product.rate}/100/12;
-                                var monoy = yue * values *${product.period};
-                                $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
-                            }
+                            var yue = ${scattered.rate}/100/12;
+                            var monoy = yue * values *${scattered.periods};
+                            $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
                         } else {
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                             $(".sub").attr("type", "button");
@@ -211,6 +202,7 @@
                         $(".mo1").html("投资金额大于剩余投注金额");
                         $(".sub").attr("type", "button");
                     }
+
                 } else {
                     $(".mo1").html("账户余额不足,请去充值~");
                     $(".sub").attr("type", "button");
@@ -221,22 +213,7 @@
 </head>
 
 <body>
-<!--[if lt IE 9]>
-<div style='border: 4px solid #FFF500; background: #FDFDC8; text-align: center; clear: both; height: 75px; position: fixed; z-index:999999999; right: 2px; bottom: 2px; left: 2px; padding:0 8px;'>
-    <div style='position: absolute; right: 3px; top: 3px; font-weight: bold;z-index:999999999'><a href='#'
-                                                                                                  onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>关闭</a>
-    </div>
-    <div style='width: 740px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
-        <div style='width: 675px; float: left;'>
-            <div style='font-size: 16px; font-weight: bold; margin-top: 12px;'>您使用的是已经过时的IE浏览器</div>
-            <div style='font-size: 13px; margin-top: 6px; line-height: 16px;'>为了让您在人人贷有最佳的使用体验，请升级到 <a
-                    href="http://windows.microsoft.com/en-US/internet-explorer/download-ie">最新版本IE浏览器</a>, 或者使用其他高级浏览器如
-                <a href="https://www.google.com/intl/en/chrome/browser/">Chrome(谷歌浏览器)</a> 或 <a
-                        href="http://www.mozilla.org/en-US/firefox/new">Firefox(火狐浏览器)</a></div>
-        </div>
-    </div>
-</div>
-<![endif]-->
+
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -295,41 +272,46 @@
 </div>
 
 <div class="s">
-    <span class="span-span">${product.productName}</span>
+    <span class="span-span">${scattered.user.userName}</span>
     <hr/>
     <!--数据详细信息-->
     <div class="xiangXi">
         <ul class="liLv">
-            <li class="li li1">${product.rate}<span id="span-yuan">%</span></li>
+            <li class="li li1">${scattered.rate}<span id="span-yuan">%</span></li>
             <li>普通利率</li>
         </ul>
         <ul class="qiXian">
-            <li class="li">${product.period}<span id="span-yuan">个月</span></li>
+            <li class="li">${scattered.periods}<span id="span-yuan">个月</span></li>
             <li>服务期限</li>
         </ul>
         <ul class="_money">
-            <li class="li">${product.sumMoney}<span id="span-yuan">元</span></li>
-            <li>投资金额</li>
+            <li class="li">${scattered.rentMoney}<span id="span-yuan">元</span></li>
+            <li>借款金额</li>
         </ul>
     </div>
 
     <div class="touZi">
-        <c:if test="${product.state==2}">
+        <c:if test="${scattered.state==2}">
             <img src="${pageContext.request.contextPath}/img/READY%20(1).png"/>
         </c:if>
-        <c:if test="${product.state==1}">
-            <form id="form" action="${pageContext.request.contextPath}/bid//invest" method="post">
+        <c:if test="${scattered.state==1}">
+            <form id="form" action="${pageContext.request.contextPath}/repayment//addRepayment" method="post">
                 <ul>
                     <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
-                        <%--                产品id--%>
-                    <input type="hidden" name="productId" value="${product.id}"/>
+                        <%--                散标id--%>
+                    <input type="hidden" name="scId" value="${scattered.scId}"/>
+<%--                    还款人id--%>
+                    <input type="hidden" name="repayUserId" value="${scattered.user.userId}" >
+<%--                  剩余期数  --%>
+                    <input type="hidden" name="periods" value="${scattered.periods}" >
                     <li>
-                        <input class="input_i" type="text" name="bidMoney" autocomplete="off"
-                               placeholder="最低起投${product.minMoney}元,最大起投${product.maxMoney}元"/>
+<%--                        出借金额--%>
+                        <input class="input_i" type="text" name="loanMoney" autocomplete="off"
+                               placeholder="最低起投100元"/>
                         <br/>
                         <span class="mo1"></span>
                     </li>
-                    <li>剩余可借出金额 <span class="mo">${product.balance}</span> 元</li>
+                    <li>剩余可借出金额 <span class="mo">${scattered.residueMoney}</span> 元</li>
                     <li><input class="sub" type="submit" value="投注"/></li>
                 </ul>
             </form>
@@ -349,16 +331,12 @@
     <table class="layui-table" id="layui_table_id"></table>
     <div class="fuWu">
         <ul class="ul1">
-            <li><span>期数：</span>${product.productName}</li>
+            <li><span>借款人：</span>${scattered.user.userName}</li>
             <li><span class="jieShao">服务介绍:</span>
-                ${product.describe}
+                ${scattered.annotation}
             </li>
-            <li><span>服务期限：</span>${product.period}个月</li>
-            <li><span>服务期限结束日:</span>${finish}</li>
-            <li><span>最大起投:</span>${product.maxMoney}元</li>
-            <li><span>最小起投:</span>${product.minMoney}元</li>
-            <li><span>产品发布时间:</span><fmt:formatDate value="${product.publishTime}"
-                                                    pattern="yyyy-MM-dd"></fmt:formatDate></li>
+            <li><span>服务期限：</span>${scattered.periods}个月</li>
+
         </ul>
     </div>
 

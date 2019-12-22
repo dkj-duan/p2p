@@ -3,12 +3,10 @@ package cn.bdqn.controller;
 
 import cn.bdqn.domain.Balance;
 import cn.bdqn.domain.Product;
+import cn.bdqn.domain.Scattered;
 import cn.bdqn.domain.User;
 import cn.bdqn.exception.MyException;
-import cn.bdqn.service.BalanceService;
-import cn.bdqn.service.ProductService;
-import cn.bdqn.service.StorageService;
-import cn.bdqn.service.UserService;
+import cn.bdqn.service.*;
 import cn.bdqn.utils.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
@@ -39,6 +37,9 @@ public class ProductController {
 
     @Autowired
     private BalanceService balanceService;
+
+    @Autowired
+    private ScatteredService scatteredService;
     /**
      * 根据类型分页查询
      * @param modelMap
@@ -57,12 +58,16 @@ public class ProductController {
             PageHelper.startPage(1,5);
             //类型2薪享
             PageInfo<Product> products2 = new PageInfo<>(productService.queryByAll(2));
-
+            //散标
+            PageHelper .startPage(1,5);
+            PageInfo<Scattered> scattered = new PageInfo<>(scatteredService.queryAll());
+            //查询全部注册用户
             List<User> userList = userService.queryAll();
             //放在作用域中
             modelMap.addAttribute("products1",products1);
             modelMap.addAttribute("products2",products2);
             modelMap.addAttribute("userList",userList);
+            modelMap.addAttribute("scattered",scattered);
             return "p2p";
         }catch (Exception e){
             e.printStackTrace();

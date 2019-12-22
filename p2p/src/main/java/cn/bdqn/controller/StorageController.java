@@ -13,10 +13,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/alipay/")
@@ -26,6 +28,8 @@ public class StorageController {
     private StorageService storageService;
     @Autowired
     private BalanceService balanceService;
+
+
     @RequestMapping("/addPayment")
     public String payment(@SessionAttribute("user")User user, String WIDout_trade_no, String WIDsubject, BigDecimal WIDtotal_amount, String WIDbody, ModelMap modelMap)throws Exception{
         try{
@@ -82,6 +86,20 @@ public class StorageController {
             throw new MyException("出错了");
         }
 
+    }
+
+
+    @RequestMapping("/selectByUsrId")
+    @ResponseBody
+    public List<Storage> selectByUserId(Integer userId)throws Exception{
+        try {
+            //根据用户id查询用户充值记录
+            List<Storage> storages = storageService.queryByUserId(userId);
+            return storages;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("查询出错");
+        }
     }
 
 }

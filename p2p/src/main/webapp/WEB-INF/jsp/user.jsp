@@ -431,8 +431,8 @@
                 $(".jqLi1").css("border-bottom", "");
                 $(".jqLi2").css("border-bottom", "");
                 $.post(
-                    "${pageContext.request.contextPath}/bid/ajax",
-                    "",
+                    "${pageContext.request.contextPath}/alipay//selectByUsrId",
+                    "userId=${user.userId}",
                     function (date) {
                         if (date != null && date.length > 0) {
                             layui.use("table", function () {
@@ -461,47 +461,30 @@
                                     ,
                                     cols: [
                                         [{
-                                            field: 'productName',
+                                            field: 'orderNumber',
                                             width: 240,
-                                            title: '服务期数',
-                                            templet: function (data) {
-
-                                                return data.product.productName;
-                                            }
+                                            title: '充值单号'
                                         }, {
-                                            field: 'rate',
+                                            field: 'money',
                                             width: 241,
-                                            title: '利率',
+                                            title: '充值金额',
                                             templet: function (data) {
-                                                return data.product.rate;
+                                                return data.money+"元";
                                             }
                                         }, {
-                                            field: 'bidMoney',
+                                            field: 'state',
                                             width: 242,
-                                            title: '出借本金',
-                                            templet: function (data) {
-                                                return data.bid.bidMoney;
-                                            }
+                                            title: '充值状态',
                                         }, {
-                                            field: 'earningsMoney',
+                                            field: 'storageTime',
                                             width: 242,
-                                            title: '利息',
-                                            templet: function (data) {
-                                                return (data.earningsMoney-data.bid.bidMoney).toFixed(2) ;;
-                                            }
+                                            title: '充值时间',
+                                            templet: "<a >{{layui.util.toDateString(d.storageTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
                                         }
                                             , {
-                                            field: 'earningsState',
+                                            field: 'annotation',
                                             width: 242,
-                                            title: '状态',
-                                            templet: function (data) {
-                                                if (data.earningsState==1){
-                                                    return "未收益"
-                                                }else {
-                                                    return "已收益"
-                                                }
-
-                                            }
+                                            title: '充值说明'
                                         }
 
                                         ]
@@ -511,7 +494,7 @@
                         } else {
                             layui.use("table", function () {
                                 var table = layui.table;
-                                var s = [{"message": "你暂时没有投标"}];
+                                var s = [{"message": "暂时没有充值记录"}];
                                 table.render({
                                     elem: '#layui_table_id', //指定表格元素
                                     data: s,

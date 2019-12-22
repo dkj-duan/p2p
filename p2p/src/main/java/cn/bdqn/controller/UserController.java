@@ -41,7 +41,7 @@ public class UserController {
     /**
      * 注册用户
      * @param request
-     * @param user
+     * @param users
      * @param sessionCheckCode
      * @param checkCode
      * @param verifyPwd
@@ -50,7 +50,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/register")
-    public String register(HttpServletRequest request, User user, @SessionAttribute(value = "checkCode") String sessionCheckCode, String checkCode, String verifyPwd, Balance balance)throws Exception{
+    public String register(HttpServletRequest request, User users, @SessionAttribute(value = "checkCode") String sessionCheckCode, String checkCode, String verifyPwd, Balance balance)throws Exception{
 
         Map<String,String> map = new HashMap<>();
         try{
@@ -59,32 +59,32 @@ public class UserController {
                 map.put("yanZheng","验证码错误~");
                 request.setAttribute("massage",map);
                 request.setAttribute("checkCode",checkCode);
-                request.setAttribute("userPhone",user.getUserPhone());
+                request.setAttribute("userPhone",users.getUserPhone());
                 System.out.println("验证码不对");
                 return "register";
             }
-            if (!user.getUserPwd().equals(verifyPwd)){
+            if (!users.getUserPwd().equals(verifyPwd)){
                 request.getSession(false).removeAttribute("checkCode");
                 map.put("pwd","两次密码不一致~");
                 request.setAttribute("massage",map);
                 request.setAttribute("checkCode",checkCode);
-                request.setAttribute("userPhone",user.getUserPhone());
+                request.setAttribute("userPhone",users.getUserPhone());
                 System.out.println("两次密码不一致");
                 return "register";
             }
             //调用添加方法
-            user.setUserRegisterTime(new Date());
-            user.setUserPwd(MD5Util.encode(user.getUserPwd()));
-            user.setUserImg("moren.jpg");
+            users.setUserRegisterTime(new Date());
+            users.setUserPwd(MD5Util.encode(users.getUserPwd()));
+            users.setUserImg("moren.jpg");
             //添加用户的方法
-            userService.save(user);
+            userService.save(users);
             //创建用户资金表
-            balance.setUser(user);
+            balance.setUser(users);
             balance.setMoney(new BigDecimal(0));
             balanceService.save(balance);
             //设置request作用域
             request.getSession(false).removeAttribute("checkCode");
-            request.setAttribute("userPhone",user.getUserPhone());
+            request.setAttribute("userPhone",users.getUserPhone());
             return "login";
         }catch (Exception e) {
             e.printStackTrace();
@@ -159,7 +159,7 @@ public class UserController {
 
     /**
      *
-     * @param userId
+     * @param
      * @param modelMap
      * @return
      * @throws Exception
@@ -179,10 +179,13 @@ public class UserController {
     }
 
 
+    /**
+     * 查询充值记录
+     * @return
+     */
     @RequestMapping("/ajax")
     @ResponseBody
     public List<User> selectAll(){
-
         List<User> users = userService.queryAll();
         System.out.println(users);
         return users;

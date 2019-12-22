@@ -1,15 +1,14 @@
-package cn.bdqn.mapper;
+package cn.bdqn.service;
+
 
 import cn.bdqn.domain.Scattered;
 
 import java.util.List;
 
-
 /**
- * 散表
+ * 散标
  */
-public interface ScatteredMapper {
-
+public interface ScatteredService {
     /**
      * 根据id删除
      * @param scId
@@ -36,13 +35,13 @@ public interface ScatteredMapper {
      * @param scId
      * @return
      */
-    Scattered selectByPrimaryKey(Integer scId);
+    Scattered queryByPrimaryKey(Integer scId);
 
     /**
      * 查询全部
      * @return
      */
-    public List<Scattered> selectAll();
+    public List<Scattered> queryAll();
 
 
     /**
@@ -56,6 +55,7 @@ public interface ScatteredMapper {
      * @param record
      */
     void updateByPrimaryKeyWithBLOBs(Scattered record);
+
 
     int updateByPrimaryKey(Scattered record);
 }

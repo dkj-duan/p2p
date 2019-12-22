@@ -55,8 +55,7 @@ public class BidController {
             //减去投标金额
             balance.setMoney(balance.getMoney().subtract(bid.getBidMoney()));
             //更新金额
-            balanceService.updateMoney(balance);
-
+            balanceService.updateByPrimaryKey(balance);
             //根据产品id查询产品
             Product product = productService.queryByPrimaryKey(productId);
             //减去投资金额
@@ -103,6 +102,8 @@ public class BidController {
             throw new MyException("投资失败");
         }
     }
+
+
 
     @RequestMapping("/ajax")
     @ResponseBody

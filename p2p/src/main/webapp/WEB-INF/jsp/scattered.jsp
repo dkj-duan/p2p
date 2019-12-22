@@ -55,7 +55,7 @@
             $(function () {
                 $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
             });
-            });
+        });
     </script>
 
 </head>
@@ -154,15 +154,15 @@
                 <ul class="fn-clear">
 
                     <c:if test="${products.pageNum>1}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}&type=${type}">
+                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}">
                             <i id="shang" class="layui-icon layui-icon-prev"></i>
                         </a>
                     </c:if>
                     <c:forEach items="${products.list}" var="pro">
                         <li>
-                            <a class="cover" href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}">
+                            <a class="cover" href="${pageContext.request.contextPath}/scattered//selectByScId?scId=${pro.scId}">
                                 <p class="time">
-                                    <span class="month"><em>${pro.period}个月服务周期</em></span>
+                                    <span class="month"><em>${pro.periods}个月还款周期</em></span>
                                 </p>
                                 <p class="rate mtop">
                                     <span class="num"><i class="fu">${pro.rate}</i><em>%</em></span>
@@ -175,7 +175,7 @@
                         </li>
                     </c:forEach>
                     <c:if test="${products.pageNum<products.pages}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}&type=${type}">
+                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}">
                             <i id="xia" class="layui-icon layui-icon-next"></i>
                         </a>
                     </c:if>

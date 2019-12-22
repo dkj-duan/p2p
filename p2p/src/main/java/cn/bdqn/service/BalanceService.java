@@ -27,4 +27,10 @@ public interface BalanceService {
      * @param balance
      */
     public void updateMoney(Balance balance);
+
+    /**
+     * 更新资金
+     * @param balance
+     */
+    public void updateByPrimaryKey(Balance balance);
 }

@@ -1,5 +1,7 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
+
 /**
  * 散标表
  */
@@ -12,16 +14,20 @@ public class Scattered {
     private User user;
 
     //借款钱数
-    private Double rentMoney;
+    private BigDecimal rentMoney;
 
     //剩余钱数
-    private Double residueMoney;
+    private BigDecimal residueMoney;
 
     //还款周期
     private Integer periods;
 
+    //利率
+    private double rate;
+
     //散标状态
     private Integer state;
+
     //说明
     private String annotation;
 
@@ -41,19 +47,19 @@ public class Scattered {
         this.user = user;
     }
 
-    public Double getRentMoney() {
+    public BigDecimal getRentMoney() {
         return rentMoney;
     }
 
-    public void setRentMoney(Double rentMoney) {
+    public void setRentMoney(BigDecimal rentMoney) {
         this.rentMoney = rentMoney;
     }
 
-    public Double getResidueMoney() {
+    public BigDecimal getResidueMoney() {
         return residueMoney;
     }
 
-    public void setResidueMoney(Double residueMoney) {
+    public void setResidueMoney(BigDecimal residueMoney) {
         this.residueMoney = residueMoney;
     }
 
@@ -79,5 +85,13 @@ public class Scattered {
 
     public void setAnnotation(String annotation) {
         this.annotation = annotation == null ? null : annotation.trim();
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

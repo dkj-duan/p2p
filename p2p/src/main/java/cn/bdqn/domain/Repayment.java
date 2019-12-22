@@ -1,7 +1,11 @@
 package cn.bdqn.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * 还款表
+ */
 public class Repayment {
 
     //还款id
@@ -20,15 +24,15 @@ public class Repayment {
     private Date practicalTime;
 
     //还款金额
-    private Double repayMoney;
+    private BigDecimal repayMoney;
 
     //剩余还款金额
-    private Double surplusMonry;
+    private BigDecimal surplusMonry;
 
-    //还款日id
+    //还款人id
     private Integer repayUserId;
 
-    //借款人对象
+    //放款人对象
     private User payeeUser;
 
     //还款剩余期数
@@ -69,19 +73,19 @@ public class Repayment {
         this.practicalTime = practicalTime;
     }
 
-    public Double getRepayMoney() {
+    public BigDecimal getRepayMoney() {
         return repayMoney;
     }
 
-    public void setRepayMoney(Double repayMoney) {
+    public void setRepayMoney(BigDecimal repayMoney) {
         this.repayMoney = repayMoney;
     }
 
-    public Double getSurplusMonry() {
+    public BigDecimal getSurplusMonry() {
         return surplusMonry;
     }
 
-    public void setSurplusMonry(Double surplusMonry) {
+    public void setSurplusMonry(BigDecimal surplusMonry) {
         this.surplusMonry = surplusMonry;
     }
 

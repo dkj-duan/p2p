@@ -9,6 +9,7 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html lang="en">
 
 <head>
@@ -148,7 +149,7 @@
                 <a href="#" > <img src="${pageContext.request.contextPath}/img/newbee_3_f69a139.png">
                     <div class="label-box">
                         <em>数据披露</em>
-                        <p class="label-desc">平台累计注册${userList.size()}人<br>累计出借人赚取1,154,321万元</p>
+                        <p class="label-desc">平台累计注册<span style="color:red;font-size: 20px" >${userList.size()}</span>人<br>累计出借人赚取1,154,321万元</p>
                     </div>
                 </a>
             </li>
@@ -284,7 +285,7 @@
             <div class="l-title">
                 <span class="name-text">散标/债权</span>
             </div>
-            <a class="r-more" rel="nofollow" href="#">
+            <a class="r-more" rel="nofollow" href="${pageContext.request.contextPath}/scattered//selectAll">
                 <span class="more-link">查看更多</span>
                 <img class="more-bg" src="${pageContext.request.contextPath}/img/more_2_0e42693.png">
             </a>
@@ -301,83 +302,43 @@
                 <thead>
                 <tr>
                     <th class="rate regular-rate">年利率</th>
-                    <th class="name">借款标题</th>
+                    <th class="name">借款说明</th>
                     <th class="time">期限</th>
                     <th class="money">金额</th>
-                    <th class="progress">投标进度</th>
+                    <th class="progress">剩余金额</th>
                     <th class="action">操作</th>
                 </tr>
                 </thead>
                 <tbody class="data-list">
-                <tr class="even">
-                    <td class="rate">9.60<span>%</span></td>
-                    <td class="name">
-                        <div class="name-line">
-                            <span></span>
-                            <i>NO.5586198</i>
-                        </div>
-                    </td>
-                    <td class="time">36个月</td>
-                    <td class="money"><span>106,400.00</span>元</td>
-                    <td class="progress" data-percent="100">
-                        <div class="percentage-text">
-                            0%
-                        </div>
-                        <div class="outer">
-                            <span class="inner"></span>
-                        </div>
-                    </td>
-                    <td class="action">
-                        <a class="disabled" href="https://www.renrendai.com/loan-5586198.html" target="_blank"
-                           onclick="return false">已满标</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rate">9.60<span>%</span></td>
-                    <td class="name">
-                        <div class="name-line">
-                            <span></span>
-                            <i>NO.5586438</i>
-                        </div>
-                    </td>
-                    <td class="time">36个月</td>
-                    <td class="money"><span>78,800.00</span>元</td>
-                    <td class="progress" data-percent="100">
-                        <div class="percentage-text">
-                            0%
-                        </div>
-                        <div class="outer">
-                            <span class="inner"></span>
-                        </div>
-                    </td>
-                    <td class="action">
-                        <a class="disabled" href="https://www.renrendai.com/loan-5586438.html" target="_blank"
-                           onclick="return false">已满标</a>
-                    </td>
-                </tr>
-                <tr class="even">
-                    <td class="rate">10.20<span>%</span></td>
-                    <td class="name">
-                        <div class="name-line">
-                            <span></span>
-                            <i>NO.5587132</i>
-                        </div>
-                    </td>
-                    <td class="time">36个月</td>
-                    <td class="money"><span>107,500.00</span>元</td>
-                    <td class="progress" data-percent="100">
-                        <div class="percentage-text">
-                            0%
-                        </div>
-                        <div class="outer">
-                            <span class="inner"></span>
-                        </div>
-                    </td>
-                    <td class="action">
-                        <a class="disabled" href="https://www.renrendai.com/loan-5587132.html" target="_blank"
-                           onclick="return false">已满标</a>
-                    </td>
-                </tr>
+                <c:forEach items="${scattered.list}" var="sc">
+                    <tr>
+                        <td class="rate">${sc.rate}<span>%</span></td>
+                        <td class="name">
+                            <c:choose>
+                                <c:when test="${fn:length(sc.annotation)>5}">${fn:substring(sc.annotation,0 ,8 )}......</c:when>
+                                <c:otherwise>${sc.annotation}</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td class="time">${sc.periods}个月</td>
+                        <td class="money"><span>${sc.rentMoney}</span>元</td>
+                        <td class="progress">
+                                ${sc.residueMoney}
+                        </td>
+                        <td class="action">
+                            <a class="disabled" href="${pageContext.request.contextPath}/scattered//selectByScId?scId=${sc.scId}" >
+                                <c:if test="${sc.state==1}">
+                                    未满标
+                                </c:if>
+                                <c:if test="${sc.state==2}">
+                                    还款中
+                                </c:if>
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+
+
+
                 </tbody>
             </table>
         </div>
