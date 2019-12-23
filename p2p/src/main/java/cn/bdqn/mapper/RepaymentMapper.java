@@ -63,4 +63,10 @@ public interface RepaymentMapper {
      * @param record
      */
     void updateByPrimaryKey(Repayment record);
+
+    /**
+     * 根基还款状态查询
+     * @return
+     */
+    public List<Repayment> selectByState();
 }

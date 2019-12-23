@@ -55,6 +55,13 @@
     where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.rep_id = #{repId,jdbcType=INTEGER}
   </select>
 
+<!--  根据状态查询-->
+  <select id="selectByState" resultMap="BaseResultMap">
+    select
+    <include refid="join" />
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.state = 1
+  </select>
 <!--  根据出借人id查询-->
   <select id="selectByUserId" resultMap="BaseResultMap">
     select

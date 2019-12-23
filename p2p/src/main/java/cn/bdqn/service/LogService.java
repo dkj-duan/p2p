@@ -5,7 +5,7 @@ package cn.bdqn.service;
  */
 public interface LogService {
 
-    public void updateEarnings();
+    public void updateEarnings()throws Exception;
 
-    public void updateEarnings2();
+    public void updateEarnings2()throws Exception;
 }

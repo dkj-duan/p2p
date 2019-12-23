@@ -57,4 +57,9 @@ public class RepaymentServiceImpl implements RepaymentService {
 
         repaymentMapper.updateByPrimaryKey(record);
     }
+
+    @Override
+    public List<Repayment> queryByState() {
+        return repaymentMapper.selectByState();
+    }
 }

@@ -130,7 +130,7 @@
     <div class="new-center">
         <ul>
             <li>
-                <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/newbee_1_92baa2b.png">
+                <a href="#" > <img src="${pageContext.request.contextPath}/img/newbee_1_92baa2b.png">
                     <div class="label-box">
                         <em>银行存管</em>
                         <p class="label-desc blank_data">交易资金通过民生银行流转<br>平台无法触碰资金</p>
@@ -138,7 +138,7 @@
                     <i></i> </a>
             </li>
             <li>
-                <a href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/newbee_2_4c56e5c.png">
+                <a href="#"> <img src="${pageContext.request.contextPath}/img/newbee_2_4c56e5c.png">
                     <div class="label-box">
                         <em>多重优势</em>
                         <p class="label-desc risk_data">借款人资质经三重审核<br>逾期率保持行业低水平</p>
