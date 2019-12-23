@@ -96,6 +96,7 @@ public class BidController {
             String finish = DateUtil.addDate(product.getPublishTime(), product.getPeriod()*30);
             modelMap.addAttribute("balance",balance);
             modelMap.addAttribute("finish",finish);
+            modelMap.addAttribute("message","恭喜您,投注成功~");
             return "particular";
         }catch (Exception e){
             e.printStackTrace();

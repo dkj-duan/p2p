@@ -26,8 +26,9 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
     <script type="text/javascript">
-        layui.use(['carousel','laypage'], function () {
+        layui.use(['carousel','layer'], function () {
             var carousel = layui.carousel;
+            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
             //建造实例
             carousel.render({
                 elem: '#test1',
@@ -37,6 +38,14 @@
                 ,
                 anim: 'fade' //切换动画方式
             });
+
+            if (${mess!=null}){
+                layer.open(
+                    {offset:"200px",
+                        content:"${mess}"
+                    }
+                );
+            }
         });
 
 
@@ -53,6 +62,9 @@
 <body>
 
 </div>
+<%
+session.removeAttribute("mess");
+%>
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -100,10 +112,10 @@
                 <a rel="nofollow" href="/disclosure/,information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借还款</a>
             </li>
             <li class="channel-item  can-lend">
-                <a href="/uplan.html">我要出借</a>
+                <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
             <li class="channel-item active-channel">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>

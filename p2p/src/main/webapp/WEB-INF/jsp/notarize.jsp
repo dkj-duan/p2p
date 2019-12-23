@@ -38,6 +38,8 @@
                 location.href = "${pageContext.request.contextPath}/addUiRepayment"
             })
 
+
+
         });
     </script>
     <style type="text/css">
@@ -116,10 +118,10 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="/credit" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
             </li>
             <li class="channel-item  can-lend">
-                <a href="/uplan.html">我要出借</a>
+                <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
             <li class="channel-item active-channel">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
@@ -131,7 +133,7 @@
 
 
 <div id="xinXi">
-    <form action="${pageContext.request.contextPath}/repayment//refund" method="post">
+    <form  action="${pageContext.request.contextPath}/repayment//refund" method="post">
         <ul class="ui">
             <li ><span>被还款人：</span>${repay.payeeUser.userName}</li>
             <li><span>还款人手机号：</span>${repay.payeeUser.userPhone}</li>

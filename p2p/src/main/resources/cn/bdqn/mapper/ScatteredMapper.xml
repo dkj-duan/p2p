@@ -118,7 +118,7 @@
         #{periods,jdbcType=INTEGER},
       </if>
       <if test="rate != null" >
-        #{rate,jdbcType=INTEGER},
+        #{rate},
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
@@ -146,7 +146,7 @@
         periods = #{periods,jdbcType=INTEGER},
       </if>
       <if test="rate != null" >
-        rate = #{rate,jdbcType=INTEGER},
+        rate = #{rate},
       </if>
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},

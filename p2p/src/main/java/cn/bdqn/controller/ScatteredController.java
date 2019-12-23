@@ -14,12 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 /**
  * 散标
  */
 @Controller
 @RequestMapping("/scattered/")
+@SessionAttributes(value ={"mess"})
 public class ScatteredController {
 
     @Autowired
@@ -27,6 +29,7 @@ public class ScatteredController {
 
     @Autowired
     private BalanceService balanceService;
+
     /**
      * 分页查询全部散标
      * @param modelMap
@@ -76,4 +79,28 @@ public class ScatteredController {
     }
 
 
+    /**
+     * 添加散标对象
+     * @param user
+     * @param modelMap
+     * @param scattered
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/insert")
+    public String insert(@SessionAttribute("user")User user,ModelMap modelMap,Scattered scattered)throws Exception{
+
+        try{
+            //封装对象
+            scattered.setUser(user);
+            scattered.setRate(10.8);
+            scattered.setResidueMoney(scattered.getRentMoney());
+            scatteredService.insertSelective(scattered);
+            modelMap.addAttribute("mess","恭喜您，申请成功~");
+            return "redirect:/product//selectAll";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("网络错误");
+        }
+    }
 }

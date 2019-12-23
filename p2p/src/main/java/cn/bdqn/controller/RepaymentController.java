@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/repayment/")
+@SessionAttributes(value = {"message"})
 public class RepaymentController {
 
     @Autowired
@@ -53,7 +55,6 @@ public class RepaymentController {
             loan.setScattered(scattered);
             //添加散标投标对象
             loanService.insert(loan);
-
             //更新借款人可用资金
             Balance repayBalance = balanceService.queryByUserId(repayUser.getUserId());
             //增加借款的金额
@@ -115,7 +116,7 @@ public class RepaymentController {
 
             modelMap.addAttribute("scattered",scattered);
             modelMap.addAttribute("balance",balance);
-
+            modelMap.addAttribute("message","恭喜您，投注成功~");
             return "scatteredUI";
 
         } catch (Exception e) {
@@ -137,6 +138,13 @@ public class RepaymentController {
         }
     }
 
+    /**
+     * 根据还款id查询
+     * @param repId
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/selectByRepId")
     public String selectByRepId(Integer repId,ModelMap modelMap)throws Exception{
         try {
@@ -149,6 +157,15 @@ public class RepaymentController {
         }
     }
 
+    /**
+     * 还款的方法
+     * @param user
+     * @param repId
+     * @param pwd
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/refund")
     public String refund(@SessionAttribute("user")User user, Integer repId,String pwd,ModelMap modelMap)throws Exception {
         try {
@@ -187,16 +204,16 @@ public class RepaymentController {
                     //更新还款人可用资金
                     userBalance.setMoney(userBalance.getMoney().subtract(repayment.getRepayMoney()));
                     balanceService.updateByPrimaryKey(userBalance);
-                    modelMap.addAttribute("还款成功~");
+                    modelMap.addAttribute("message","还款成功~");
                     return "redirect:/addUiRepayment";
                 } else {
-                    modelMap.addAttribute("还款失败~,用户资金不足~");
+                    modelMap.addAttribute("message","还款失败~,用户资金不足~");
                     System.out.println("资金不足~");
                     return "redirect:/addUiRepayment";
 
                 }
             } else {
-                modelMap.addAttribute("还款失败~,密码错误~");
+                modelMap.addAttribute("message","还款失败~,密码错误~");
                 System.out.println("密码错误");
                 return "redirect:/addUiRepayment";
             }

@@ -32,6 +32,14 @@
         $(function () {
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
+
+                layui.use('layer', function() { //独立版的layer无需执行这一句
+                    var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+                    if (${message!=null}){
+                        layer.msg("${message}");
+                    }
+                });
+
                 $.post(
                     "${pageContext.request.contextPath}/repayment//selectByUserId",
                     "",
@@ -158,7 +166,6 @@
                     "JSON"
                 );
 
-
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
         });
@@ -211,10 +218,10 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="/credit" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要还款</a>
             </li>
             <li class="channel-item  can-lend">
-                <a href="/uplan.html">我要出借</a>
+                <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
             <li class="channel-item active-channel">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
@@ -223,7 +230,9 @@
     </div>
 </div>
 
-
+<%
+    session.removeAttribute("message");
+%>
 
 <div id="xinXi">
     <table class="layui-table" id="layui_table_id"></table>

@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: 段康家
-  Date: 2019/12/16
-  Time: 10:43
+  Date: 2019/12/19
+  Time: 16:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html lang="en">
 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,42 +22,26 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_wdg_9509b0e.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/autoinvest_wdg_b047393.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detail_bde29bb.css">
-
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js">
-
     </script>
-    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
-    <style type="text/css">
-        .fn-clear li {
-            padding-bottom: 20px;
-            padding-top: 20px;
-        }
-
-        .cover {
-            padding-top: 20px;
-        }
-
-        #shang, #xia {
-            position: absolute;
-            top: 41%;
-            font-size: 30px;
-            color: white;
-        }
-
-        #shang {
-            left: 12.4%;
-        }
-    </style>
-
+    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"
+            charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-            $(function () {
-                $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
+            $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
+            layui.use(['table', 'form'], function () {
+                var table = layui.table;
+                var form = layui.form;
+                form.render();
             });
-            });
-    </script>
 
+
+            $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
+
+        });
+    </script>
 </head>
 
 <body>
@@ -134,59 +118,45 @@
     </div>
 </div>
 
-<div id="uplanIndex">
-    <div class="wdg-index-banner">
-        <div class="banner-box">
-            <a class="banner-img-box" href="/pc/newUser.html" target="_self" title="新人专区">
-                <img class="banner-img" src="${pageContext.request.contextPath}/img/PCLB (1).jpg" alt="新人专区">
-            </a>
-        </div>
-        <!--<div class="uc-amount-box">-->
-        <!--<p class="uc-amount">-->
-        <!--11-->
-        <!--</p>-->
-        <!--</div>-->
-    </div>
-    <div id="loanRiskTips"></div>
-    <div class="mt10 container_12_1080">
-        <div class="compliance-uplan">
-            <div class="uplan-list">
-                <ul class="fn-clear">
 
-                    <c:if test="${products.pageNum>1}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}&type=${type}">
-                            <i id="shang" class="layui-icon layui-icon-prev"></i>
-                        </a>
-                    </c:if>
-                    <c:forEach items="${products.list}" var="pro">
-                        <li>
-                            <a class="cover" href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}">
-                                <p class="time">
-                                    <span class="month"><em>${pro.period}个月服务周期</em></span>
-                                </p>
-                                <p class="rate mtop">
-                                    <span class="num"><i class="fu">${pro.rate}</i><em>%</em></span>
-                                    <span class="nian">普通利率</span>
-                                </p>
-                                <p class="name">
-                                    <em>查看详情</em>
-                                </p>
-                            </a>
-                        </li>
-                    </c:forEach>
-                    <c:if test="${products.pageNum<products.pages}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}&type=${type}">
-                            <i id="xia" class="layui-icon layui-icon-next"></i>
-                        </a>
-                    </c:if>
+<div class="s">
+    <h1 style="margin-left: 46%;margin-bottom: 30px">借款申请</h1>
 
-                </ul>
-
+    <form class="layui-form" action="${pageContext.request.contextPath}/scattered//insert" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">借款金额:</label>
+            <div class="layui-input-block">
+                <input type="text" name="rentMoney" required lay-verify="required" placeholder="请输入借款金额" autocomplete="off"
+                       class="layui-input">
             </div>
         </div>
-    </div>
-</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">借款周期:</label>
+            <div class="layui-input-block">
+                <select name="periods" lay-verify="required">
+                    <option value="1">1个月</option>
+                    <option value="3">3个月</option>
+                    <option value="6">6个月</option>
+                    <option value="12">12个月</option>
+                    <option value="24">24个月</option>
+                    <option value="36">36个月</option>
+                </select>
+            </div>
+        </div>
 
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">借款说明:</label>
+            <div class="layui-input-block">
+                <textarea name="annotation" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <!--底部导航栏-->
@@ -233,7 +203,8 @@
                         <a class="gray" target="_blank" href="https://www.renrendai.com/app-download.html">投资app</a>
                     </li>
                     <li class="fn-left">
-                        <a class="gray" target="_blank" href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
+                        <a class="gray" target="_blank"
+                           href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
                     </li>
                 </ul>
                 <!--<span class="sanjiao icon-show"><i></i></span>-->
@@ -286,8 +257,9 @@
                     <a href="//www.renrendai.com/agreement/contract/currency/cmsId/58ec7c0d090cc9096532d0ca"> <img
                             src="images/danger_0a56ffa.png" class="ser">风险提示<img src="images/right_143d153.png"
                                                                                  class="right"> </a>
-                    <a href="//m.renrendai.com" class="mobile-platform"> <img src="images/mobile_platform_08351bb.png"
-                                                                              class="ser"> 访问手机版 <img
+                    <a href="//m.renrendai.com" class="mobile-platform"> <img
+                            src="images/mobile_platform_08351bb.png"
+                            class="ser"> 访问手机版 <img
                             src="images/right_143d153.png" class="right"> </a>
                 </div>
             </div>
@@ -312,12 +284,12 @@
 
 </div>
 
-
 <!--侧边栏-->
 <div class="fixed-download-link">
     <div class="download-link-wrap">
-        <a class="calc" href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
-                                                       alt="人人贷回报计算">
+        <a class="calc" href="/calculator/prodType/Loanplan" target="_blank"> <img
+                src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
+                alt="人人贷回报计算">
             <div class="hover">
                 回报计算
             </div>

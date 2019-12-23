@@ -29,15 +29,28 @@
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"
             charset="utf-8"></script>
     <script type="text/javascript">
+
         $(function () {
 
+            layui.use("layer",function () {
+                var layer = layui.layer;
+                if (${message!=null}){
+                    layer.open(
+                        {offset:"200px",
+                            content:"${message}"
+                        }
+                    );
+                }
+            });
+
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
+
 
             $(".jqLi").click(function () {
                 $(this).css("border-bottom", "2px solid royalblue");
                 $(".jqLi1").css("border-bottom", "");
                 $(".fuWu").show();
-                layui.use(["table", "util"], function () {
+                layui.use(["table"], function () {
                     var table = layui.table;
                     table.render({
                         elem: '#layui_table_id', //指定表格元素
@@ -221,22 +234,6 @@
 </head>
 
 <body>
-<!--[if lt IE 9]>
-<div style='border: 4px solid #FFF500; background: #FDFDC8; text-align: center; clear: both; height: 75px; position: fixed; z-index:999999999; right: 2px; bottom: 2px; left: 2px; padding:0 8px;'>
-    <div style='position: absolute; right: 3px; top: 3px; font-weight: bold;z-index:999999999'><a href='#'
-                                                                                                  onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>关闭</a>
-    </div>
-    <div style='width: 740px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
-        <div style='width: 675px; float: left;'>
-            <div style='font-size: 16px; font-weight: bold; margin-top: 12px;'>您使用的是已经过时的IE浏览器</div>
-            <div style='font-size: 13px; margin-top: 6px; line-height: 16px;'>为了让您在人人贷有最佳的使用体验，请升级到 <a
-                    href="http://windows.microsoft.com/en-US/internet-explorer/download-ie">最新版本IE浏览器</a>, 或者使用其他高级浏览器如
-                <a href="https://www.google.com/intl/en/chrome/browser/">Chrome(谷歌浏览器)</a> 或 <a
-                        href="http://www.mozilla.org/en-US/firefox/new">Firefox(火狐浏览器)</a></div>
-        </div>
-    </div>
-</div>
-<![endif]-->
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -282,10 +279,10 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要还款</a>
             </li>
             <li class="channel-item  can-lend">
-                <a href="/uplan.html">我要出借</a>
+                <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
             <li class="channel-item active-channel">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>

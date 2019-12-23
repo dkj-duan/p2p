@@ -76,6 +76,7 @@
     <include refid="join"/>
     from t_repayment as r ,t_user as u,t_scattered as s
     where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.repay_user_id = #{RepayUserId,jdbcType=INTEGER}
+    and r.state = 1
   </select>
 
 <!--  根据id删除-->
