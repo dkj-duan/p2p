@@ -12,6 +12,9 @@ public class Loan {
     //借款人id
     private Integer loanUserId;
 
+    //还款人对象
+    private User dueUser;
+
     //出借用户
     private User user;
 
@@ -20,6 +23,15 @@ public class Loan {
 
     //借出的钱数
     private BigDecimal loanMoney;
+
+
+    public User getDueUser() {
+        return dueUser;
+    }
+
+    public void setDueUser(User dueUser) {
+        this.dueUser = dueUser;
+    }
 
     public Integer getLoanId() {
         return loanId;

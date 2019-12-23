@@ -122,7 +122,7 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="/credit" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
             </li>
             <li class="channel-item  can-lend">
                 <a href="/uplan.html">我要出借</a>

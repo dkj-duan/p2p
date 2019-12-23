@@ -1,8 +1,8 @@
-<%@ page import="cn.bdqn.utils.DateUtil" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: 段康家
-  Date: 2019/12/17
-  Time: 15:50
+  Date: 2019/12/19
+  Time: 16:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_wdg_9509b0e.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/autoinvest_wdg_b047393.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detail_bde29bb.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/particular.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js">
     </script>
@@ -30,28 +30,11 @@
             charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
-            $(".jqLi").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue");
-                $(".jqLi1").css("border-bottom", "");
-                $(".fuWu").show();
-                layui.use(["table", "util"], function () {
-                    var table = layui.table;
-                    table.render({
-                        elem: '#layui_table_id', //指定表格元素
-                    });
-                });
-            });
-
-            $(".jqLi1").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue");
-                $(".jqLi").css("border-bottom", "");
-                $(".fuWu").hide();
                 $.post(
-                    "${pageContext.request.contextPath}/loan/selectByScId",
-                    "scId=${scattered.scId}",
+                    "${pageContext.request.contextPath}/repayment//selectByUserId",
+                    "",
                     function (date) {
                         if (date != null && date.length > 0) {
                             layui.use("table", function () {
@@ -69,7 +52,7 @@
                                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                                         layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
                                         ,
-                                        groups: 5 //只显示 1 个连续页码
+                                        groups: 3 //只显示 1 个连续页码
                                         ,
                                         first: "首页" //不显示首页
                                         ,
@@ -81,44 +64,57 @@
                                     cols: [
                                         [{
                                             field: 'userName',
-                                            width: 300,
-                                            title: '用户名',
+                                            width: 150,
+                                            title: '被还款人',
                                             templet: function (data) {
-
-                                                return data.user.userName;
+                                                return data.payeeUser.userName;
                                             }
                                         }, {
-                                            field: 'userPhone',
-                                            width: 400,
-                                            title: '手机号',
-                                            templet: function (data) {
-                                                var newStr;
-                                                if (data.user.userPhone.length === 2) {
-                                                    newStr = data.user.userPhone.substr(0, 1) + '*';
-                                                } else if (data.user.userPhone.length > 2) {
-                                                    var char = '';
-                                                    for (var i = 0, len = data.user.userPhone.length - 7; i < len; i++) {
-                                                        char += '*';
-                                                    }
-                                                    newStr = data.user.userPhone.substr(0, 3) + char + data.user.userPhone.substr(3 + char.length);
-                                                } else {
-                                                    newStr = data.user.userPhone;
-                                                }
-
-                                                return newStr;
-                                            }
+                                            field: 'dueTime',
+                                            width: 150,
+                                            title: '还款日',
+                                            templet: "<a >{{layui.util.toDateString(d.dueTime, 'yyyy-MM-dd')}}</a>"
                                         }, {
-                                            field: 'loanMoney',
-                                            width: 510,
-                                            title: "出借钱数"
-                                        }]
+                                            field: 'nexTime',
+                                            width: 150,
+                                            title: '下一还款日',
+                                            templet: "<a >{{layui.util.toDateString(d.nexTime, 'yyyy-MM-dd')}}</a>"
+
+                                        }, {
+                                            field: 'repayMoney',
+                                            width: 150,
+                                            title: '本期还款金额'
+                                        }, {
+                                            field: 'surplusMonry',
+                                            width: 151,
+                                            title: '剩余还款钱数'
+                                        }, {
+                                            field: 'periods',
+                                            width: 151,
+                                            title: '剩余还款期数'
+                                        }, {
+                                            field: 'practicalTime',
+                                            width: 151,
+                                            title: '实际还款日',
+                                            templet: "<a >{{layui.util.toDateString(d.practicalTime, 'yyyy-MM-dd')}}</a>"
+                                        }, {
+                                            field: 'practicalTime',
+                                            width: 151,
+                                            title: '操作',
+                                            templet:function (data) {
+                                                var id = data.repId
+                                                return "<a href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a>"
+                                            }
+                                        }
+
+                                        ]
                                     ]
                                 });
                             });
                         } else {
                             layui.use("table", function () {
                                 var table = layui.table;
-                                var s = [{"message": "当前没有人有投标"}];
+                                var s = [{"message": "你暂时没有投标"}];
                                 table.render({
                                     elem: '#layui_table_id', //指定表格元素
                                     data: s,
@@ -131,7 +127,7 @@
                                     page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                                         layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
                                         ,
-                                        groups: 5 //只显示 1 个连续页码
+                                        groups: 3 //只显示 1 个连续页码
                                         ,
                                         first: "首页" //不显示首页
                                         ,
@@ -158,62 +154,18 @@
                                 });
                             });
                         }
-
                     },
                     "JSON"
                 );
-            });
+
 
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
-            $("#form").submit(function () {
-                var values = $(".input_i").val();
-                if (values.trim().length<1){
-                    $(".mo1").html("请输入投注金额~");
-                    return false;
-                }
-            });
-            $(".input_i").on("input propertychange", function () {
-                var values = $(this).val();
-                if (values <=${balance.money}) {
-
-                    //判断投资金额是否大于剩余金额
-                    if (values <=${scattered.residueMoney}) {
-                        if ((!values <100)) {
-                            $(".sub").attr("type", "submit");
-                            var yue = ${scattered.rate}/100/12;
-                            var monoy = yue * values *${scattered.periods};
-                            $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
-                        } else {
-                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
-                            $(".sub").attr("type", "button");
-                        }
-                        if (values % 100 == 0) {
-                            $(".mo1").html(" ");
-                            $(".sub").attr("type", "submit");
-                            var yue = ${scattered.rate}/100/12;
-                            var monoy = yue * values *${scattered.periods};
-                            $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
-                        } else {
-                            $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
-                            $(".sub").attr("type", "button");
-                        }
-                    } else {
-                        $(".mo1").html("投资金额大于剩余投注金额");
-                        $(".sub").attr("type", "button");
-                    }
-
-                } else {
-                    $(".mo1").html("账户余额不足,请去充值~");
-                    $(".sub").attr("type", "button");
-                }
-            });
         });
     </script>
 </head>
 
 <body>
-
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -259,7 +211,7 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
+                <a href="/credit" target="_blank">我要借款/还款</a>
             </li>
             <li class="channel-item  can-lend">
                 <a href="/uplan.html">我要出借</a>
@@ -271,77 +223,11 @@
     </div>
 </div>
 
-<div class="s">
-    <span class="span-span">${scattered.user.userName}</span>
-    <hr/>
-    <!--数据详细信息-->
-    <div class="xiangXi">
-        <ul class="liLv">
-            <li class="li li1">${scattered.rate}<span id="span-yuan">%</span></li>
-            <li>普通利率</li>
-        </ul>
-        <ul class="qiXian">
-            <li class="li">${scattered.periods}<span id="span-yuan">个月</span></li>
-            <li>服务期限</li>
-        </ul>
-        <ul class="_money">
-            <li class="li">${scattered.rentMoney}<span id="span-yuan">元</span></li>
-            <li>借款金额</li>
-        </ul>
-    </div>
 
-    <div class="touZi">
-        <c:if test="${scattered.state==2}">
-            <img src="${pageContext.request.contextPath}/img/READY%20(1).png"/>
-        </c:if>
-        <c:if test="${scattered.state==1}">
-            <form id="form" action="${pageContext.request.contextPath}/repayment//addRepayment" method="post">
-                <ul>
-                    <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
-                        <%--                散标id--%>
-                    <input type="hidden" name="scId" value="${scattered.scId}"/>
-<%--                    还款人id--%>
-                    <input type="hidden" name="repayUserId" value="${scattered.user.userId}" >
-<%--                  剩余期数  --%>
-                    <input type="hidden" name="periods" value="${scattered.periods}" >
-                    <li>
-<%--                        出借金额--%>
-                        <input class="input_i" type="text" name="loanMoney" autocomplete="off"
-                               placeholder="最低起投100元"/>
-                        <br/>
-                        <span class="mo1"></span>
-                    </li>
-                    <li>剩余可借出金额 <span class="mo">${scattered.residueMoney}</span> 元</li>
-                    <li><input class="sub" type="submit" value="投注"/></li>
-                </ul>
-            </form>
-        </c:if>
-    </div>
-</div>
 
 <div id="xinXi">
-    <ul class="tou">
-        <li class="jqLi">
-            <a id="a" href="#" onclick="return false">服务介绍</a>
-        </li>
-        <li class="jqLi1">
-            <a href="#" onclick="return false">出借记录</a>
-        </li>
-    </ul>
     <table class="layui-table" id="layui_table_id"></table>
-    <div class="fuWu">
-        <ul class="ul1">
-            <li><span>借款人：</span>${scattered.user.userName}</li>
-            <li><span class="jieShao">服务介绍:</span>
-                ${scattered.annotation}
-            </li>
-            <li><span>服务期限：</span>${scattered.periods}个月</li>
-
-        </ul>
-    </div>
-
 </div>
-
 <!--底部导航栏-->
 <div class="werenrendai-footer">
 
@@ -386,7 +272,8 @@
                         <a class="gray" target="_blank" href="https://www.renrendai.com/app-download.html">投资app</a>
                     </li>
                     <li class="fn-left">
-                        <a class="gray" target="_blank" href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
+                        <a class="gray" target="_blank"
+                           href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
                     </li>
                 </ul>
                 <!--<span class="sanjiao icon-show"><i></i></span>-->
@@ -439,8 +326,9 @@
                     <a href="//www.renrendai.com/agreement/contract/currency/cmsId/58ec7c0d090cc9096532d0ca"> <img
                             src="images/danger_0a56ffa.png" class="ser">风险提示<img src="images/right_143d153.png"
                                                                                  class="right"> </a>
-                    <a href="//m.renrendai.com" class="mobile-platform"> <img src="images/mobile_platform_08351bb.png"
-                                                                              class="ser"> 访问手机版 <img
+                    <a href="//m.renrendai.com" class="mobile-platform"> <img
+                            src="images/mobile_platform_08351bb.png"
+                            class="ser"> 访问手机版 <img
                             src="images/right_143d153.png" class="right"> </a>
                 </div>
             </div>

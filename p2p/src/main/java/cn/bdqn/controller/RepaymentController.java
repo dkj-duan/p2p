@@ -4,15 +4,19 @@ import cn.bdqn.domain.*;
 import cn.bdqn.exception.MyException;
 import cn.bdqn.service.*;
 import cn.bdqn.utils.DateUtil;
+import cn.bdqn.utils.MD5Util;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/repayment/")
@@ -119,4 +123,87 @@ public class RepaymentController {
             throw new MyException("网络错误~");
         }
     }
+
+    @RequestMapping("/selectByUserId")
+    @ResponseBody
+    public List<Repayment> selectByUserId(@SessionAttribute("user")User user)throws Exception{
+
+        try {
+            List<Repayment> repayments = repaymentService.queryByRepayUserId(user.getUserId());
+            return repayments;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("网络错误");
+        }
+    }
+
+    @RequestMapping("/selectByRepId")
+    public String selectByRepId(Integer repId,ModelMap modelMap)throws Exception{
+        try {
+            Repayment repayment = repaymentService.queryByPrimaryKey(repId);
+            modelMap.addAttribute("repay",repayment);
+            return "notarize";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("网络错误");
+        }
+    }
+
+    @RequestMapping("/refund")
+    public String refund(@SessionAttribute("user")User user, Integer repId,String pwd,ModelMap modelMap)throws Exception {
+        try {
+            //判断密码是否争取
+            if (user.getUserPwd().equals(MD5Util.encode(pwd))) {
+                //获得还款对象
+                Repayment repayment = repaymentService.queryByPrimaryKey(repId);
+                //获得被还款的对象
+                User payeeUser = userService.queryByPrimaryKey(repayment.getPayeeUser().getUserId());
+                //获得还款用户资金对象
+                Balance userBalance = balanceService.queryByUserId(user.getUserId());
+                //获得被还款人的资金对象
+                Balance payeeBalance = balanceService.queryByUserId(payeeUser.getUserId());
+                //判断还款人用户资金是否充足
+                if (userBalance.getMoney().compareTo(repayment.getRepayMoney()) == 1) {
+                    //更换还款日
+                    repayment.setDueTime(repayment.getNexTime());
+                    //计算下次还款日期
+                    Date nexTime = DateUtil.string2Date(repayment.getNexTime(), 30);
+                    repayment.setNexTime(nexTime);
+                    //添加实际还款日
+                    repayment.setPracticalTime(new Date());
+                    //计算剩余金额
+                    repayment.setSurplusMonry(repayment.getSurplusMonry().subtract(repayment.getRepayMoney()));
+                    //计算剩余期数
+                    repayment.setPeriods(repayment.getPeriods() - 1);
+                    if (repayment.getPeriods() == 0) {
+                        //更新还款状态
+                        repayment.setState(2);
+                    }
+                    //更新还款对象
+                    repaymentService.updateByPrimaryKey(repayment);
+                    //更新放款人可用资金
+                    payeeBalance.setMoney(payeeBalance.getMoney().add(repayment.getRepayMoney()));
+                    balanceService.updateByPrimaryKey(payeeBalance);
+                    //更新还款人可用资金
+                    userBalance.setMoney(userBalance.getMoney().subtract(repayment.getRepayMoney()));
+                    balanceService.updateByPrimaryKey(userBalance);
+                    modelMap.addAttribute("还款成功~");
+                    return "redirect:/addUiRepayment";
+                } else {
+                    modelMap.addAttribute("还款失败~,用户资金不足~");
+                    System.out.println("资金不足~");
+                    return "redirect:/addUiRepayment";
+
+                }
+            } else {
+                modelMap.addAttribute("还款失败~,密码错误~");
+                System.out.println("密码错误");
+                return "redirect:/addUiRepayment";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MyException("网络错误");
+        }
+    }
+
 }

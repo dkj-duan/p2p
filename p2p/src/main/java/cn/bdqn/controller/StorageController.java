@@ -49,7 +49,7 @@ public class StorageController {
                 //更新可用资金
                 balance.setUser(user);
                 balance.setMoney(balance.getMoney().add( storage.getMoney()));
-                balanceService.updateMoney(balance);
+                balanceService.updateByPrimaryKey(balance);
             }
             //订单
             modelMap.addAttribute("WIDout_trade_no",WIDout_trade_no);

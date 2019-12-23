@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: 段康家
-  Date: 2019/12/16
-  Time: 10:43
+  Date: 2019/12/19
+  Time: 16:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html lang="en">
 
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,61 +22,55 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_wdg_9509b0e.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/autoinvest_wdg_b047393.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/detail_bde29bb.css">
-
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/user.css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js">
-
     </script>
-    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
-    <style type="text/css">
-        .fn-clear li {
-            padding-bottom: 20px;
-            padding-top: 20px;
-        }
-
-        .cover {
-            padding-top: 20px;
-        }
-
-        #shang, #xia {
-            position: absolute;
-            top: 41%;
-            font-size: 30px;
-            color: white;
-        }
-
-        #shang {
-            left: 12.4%;
-        }
-    </style>
-
+    <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"
+            charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-            $(function () {
-                $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
-            });
-            });
-    </script>
+            $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
+            $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
+
+            $(".btn").click(function () {
+                location.href = "${pageContext.request.contextPath}/addUiRepayment"
+            })
+
+        });
+    </script>
+    <style type="text/css">
+        .ui{
+            margin-left: 40%;
+        }
+        .ui li{
+            margin: 30px;
+            color: red;
+
+        }
+        .ui span{
+            color: #0C0C0C;
+            margin-right: 50px;
+        }
+        .subs,.btn{
+            border: none;
+            background: #77bcff;
+            color: white;
+            padding:10px 20px 10px 20px;
+            border-radius: 5px 5px 5px 5px;
+
+        }
+        .subs{
+            margin-left: 3%;
+        }
+        .btn{
+            margin-left: 20%;
+        }
+    </style>
 </head>
 
 <body>
-<!--[if lt IE 9]>
-<div style='border: 4px solid #FFF500; background: #FDFDC8; text-align: center; clear: both; height: 75px; position: fixed; z-index:999999999; right: 2px; bottom: 2px; left: 2px; padding:0 8px;'>
-    <div style='position: absolute; right: 3px; top: 3px; font-weight: bold;z-index:999999999'><a href='#'
-                                                                                                  onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>关闭</a>
-    </div>
-    <div style='width: 740px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
-        <div style='width: 675px; float: left;'>
-            <div style='font-size: 16px; font-weight: bold; margin-top: 12px;'>您使用的是已经过时的IE浏览器</div>
-            <div style='font-size: 13px; margin-top: 6px; line-height: 16px;'>为了让您在人人贷有最佳的使用体验，请升级到 <a
-                    href="http://windows.microsoft.com/en-US/internet-explorer/download-ie">最新版本IE浏览器</a>, 或者使用其他高级浏览器如
-                <a href="https://www.google.com/intl/en/chrome/browser/">Chrome(谷歌浏览器)</a> 或 <a
-                        href="http://www.mozilla.org/en-US/firefox/new">Firefox(火狐浏览器)</a></div>
-        </div>
-    </div>
-</div>
-<![endif]-->
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
     <div class="main-section">
@@ -122,7 +116,7 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
+                <a href="/credit" target="_blank">我要借款/还款</a>
             </li>
             <li class="channel-item  can-lend">
                 <a href="/uplan.html">我要出借</a>
@@ -134,61 +128,23 @@
     </div>
 </div>
 
-<div id="uplanIndex">
-    <div class="wdg-index-banner">
-        <div class="banner-box">
-            <a class="banner-img-box" href="/pc/newUser.html" target="_self" title="新人专区">
-                <img class="banner-img" src="${pageContext.request.contextPath}/img/PCLB (1).jpg" alt="新人专区">
-            </a>
-        </div>
-        <!--<div class="uc-amount-box">-->
-        <!--<p class="uc-amount">-->
-        <!--11-->
-        <!--</p>-->
-        <!--</div>-->
-    </div>
-    <div id="loanRiskTips"></div>
-    <div class="mt10 container_12_1080">
-        <div class="compliance-uplan">
-            <div class="uplan-list">
-                <ul class="fn-clear">
 
-                    <c:if test="${products.pageNum>1}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}&type=${type}">
-                            <i id="shang" class="layui-icon layui-icon-prev"></i>
-                        </a>
-                    </c:if>
-                    <c:forEach items="${products.list}" var="pro">
-                        <li>
-                            <a class="cover" href="${pageContext.request.contextPath}/product//selectById?id=${pro.id}">
-                                <p class="time">
-                                    <span class="month"><em>${pro.period}个月服务周期</em></span>
-                                </p>
-                                <p class="rate mtop">
-                                    <span class="num"><i class="fu">${pro.rate}</i><em>%</em></span>
-                                    <span class="nian">普通利率</span>
-                                </p>
-                                <p class="name">
-                                    <em>查看详情</em>
-                                </p>
-                            </a>
-                        </li>
-                    </c:forEach>
-                    <c:if test="${products.pageNum<products.pages}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}&type=${type}">
-                            <i id="xia" class="layui-icon layui-icon-next"></i>
-                        </a>
-                    </c:if>
 
-                </ul>
-
-            </div>
-        </div>
-    </div>
+<div id="xinXi">
+    <form action="${pageContext.request.contextPath}/repayment//refund" method="post">
+        <ul class="ui">
+            <li ><span>被还款人：</span>${repay.payeeUser.userName}</li>
+            <li><span>还款人手机号：</span>${repay.payeeUser.userPhone}</li>
+            <li><span>还款金额：</span>${repay.repayMoney}</li>
+            <li><input type="hidden" value="${repay.repId}" name="repId"/> </li>
+            <li class="last-li">
+                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="请输入密码"
+                       type="password" name="pwd" data-is="isEmail">
+            </li>
+            <input class="subs" type="submit" value="还款"/><input class="btn" type="button" value="取消"/>
+        </ul>
+    </form>
 </div>
-
-</div>
-
 <!--底部导航栏-->
 <div class="werenrendai-footer">
 
@@ -233,7 +189,8 @@
                         <a class="gray" target="_blank" href="https://www.renrendai.com/app-download.html">投资app</a>
                     </li>
                     <li class="fn-left">
-                        <a class="gray" target="_blank" href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
+                        <a class="gray" target="_blank"
+                           href="https://www.renrendai.com/calculator/prodType/Loanplan">投资计算器</a>
                     </li>
                 </ul>
                 <!--<span class="sanjiao icon-show"><i></i></span>-->
@@ -286,8 +243,9 @@
                     <a href="//www.renrendai.com/agreement/contract/currency/cmsId/58ec7c0d090cc9096532d0ca"> <img
                             src="images/danger_0a56ffa.png" class="ser">风险提示<img src="images/right_143d153.png"
                                                                                  class="right"> </a>
-                    <a href="//m.renrendai.com" class="mobile-platform"> <img src="images/mobile_platform_08351bb.png"
-                                                                              class="ser"> 访问手机版 <img
+                    <a href="//m.renrendai.com" class="mobile-platform"> <img
+                            src="images/mobile_platform_08351bb.png"
+                            class="ser"> 访问手机版 <img
                             src="images/right_143d153.png" class="right"> </a>
                 </div>
             </div>
@@ -312,12 +270,12 @@
 
 </div>
 
-
 <!--侧边栏-->
 <div class="fixed-download-link">
     <div class="download-link-wrap">
-        <a class="calc" href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
-                                                       alt="人人贷回报计算">
+        <a class="calc" href="/calculator/prodType/Loanplan" target="_blank"> <img
+                src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
+                alt="人人贷回报计算">
             <div class="hover">
                 回报计算
             </div>

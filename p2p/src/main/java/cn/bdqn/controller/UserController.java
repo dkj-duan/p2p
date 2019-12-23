@@ -171,6 +171,7 @@ public class UserController {
             //根据id查询用户可用资金
             Balance balance = balanceService.queryByUserId(user.getUserId());
             modelMap.addAttribute("balance",balance);
+            modelMap.addAttribute("mess","充值成功~");
             return "user";
         }catch (Exception e){
             e.printStackTrace();

@@ -30,17 +30,15 @@
             charset="utf-8"></script>
     <script type="text/javascript">
         $(function () {
-
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
-
             $(".jqLi").click(function () {
                 $(this).css("border-bottom", "2px solid royalblue")
                 $(".jqLi1").css("border-bottom", "");
                 $(".jqLi2").css("border-bottom", "");
                 $(".jqLi3").css("border-bottom", "");
                 $.post(
-                    "${pageContext.request.contextPath}/earnings//selectByTypeAndUserId",
-                    "type=3",
+                    "${pageContext.request.contextPath}/loan//selectByUserId",
+                    "",
                     function (date) {
                         if (date != null && date.length > 0) {
                             layui.use("table", function () {
@@ -69,49 +67,38 @@
                                     ,
                                     cols: [
                                         [{
-                                            field: 'productName',
+                                            field: 'userName',
                                             width: 240,
-                                            title: '服务期数',
+                                            title: '借款人用户名',
                                             templet: function (data) {
-
-                                                return data.product.productName;
+                                                return data.dueUser.userName;
+                                            }
+                                        }, {
+                                            field: 'userPhone',
+                                            width: 241,
+                                            title: '借款人手机号',
+                                            templet: function (data) {
+                                                return data.dueUser.userPhone;
+                                            }
+                                        }, {
+                                            field: 'periods',
+                                            width: 242,
+                                            title: '分期数',
+                                            templet: function (data) {
+                                                return data.scattered.periods;
                                             }
                                         }, {
                                             field: 'rate',
-                                            width: 241,
+                                            width: 242,
                                             title: '利率',
                                             templet: function (data) {
-                                                return data.product.rate;
-                                            }
-                                        }, {
-                                            field: 'bidMoney',
-                                            width: 242,
-                                            title: '出借本金',
-                                            templet: function (data) {
-                                                return data.bid.bidMoney;
-                                            }
-                                        }, {
-                                            field: 'earningsMoney',
-                                            width: 242,
-                                            title: '利息',
-                                            templet: function (data) {
-                                                return (data.earningsMoney-data.bid.bidMoney).toFixed(2) ;;
+                                                return data.scattered.rate;
                                             }
                                         }
                                             , {
-                                            field: 'earningsState',
+                                            field: 'loanMoney',
                                             width: 242,
-                                            title: '状态',
-                                            templet: function (data) {
-                                                if (data.earningsState==1){
-                                                    return "未收益"
-                                                }else {
-                                                    return "已收益"
-                                                }
-
-
-
-                                            }
+                                            title: '借出金额'
                                         }
 
                                         ]
@@ -619,10 +606,10 @@
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
-                <a href="/credit" target="_blank">我要借款/还款</a>
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
             </li>
             <li class="channel-item  can-lend">
-                <a href="/uplan.html">我要出借</a>
+                <a href="${pageContext.request.contextPath}/">我要出借</a>
             </li>
             <li class="channel-item active-channel">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
