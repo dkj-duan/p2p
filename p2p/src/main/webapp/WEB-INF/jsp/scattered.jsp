@@ -156,7 +156,7 @@
                 <ul class="fn-clear">
 
                     <c:if test="${products.pageNum>1}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum-1}">
+                        <a href="${pageContext.request.contextPath}/scattered//selectAll?pageNum=${products.pageNum-1}">
                             <i id="shang" class="layui-icon layui-icon-prev"></i>
                         </a>
                     </c:if>
@@ -177,7 +177,7 @@
                         </li>
                     </c:forEach>
                     <c:if test="${products.pageNum<products.pages}">
-                        <a href="${pageContext.request.contextPath}/product//selectByType?pageNum=${products.pageNum+1}">
+                        <a href="${pageContext.request.contextPath}/scattered//selectAll?pageNum=${products.pageNum+1}">
                             <i id="xia" class="layui-icon layui-icon-next"></i>
                         </a>
                     </c:if>

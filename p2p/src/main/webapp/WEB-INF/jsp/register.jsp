@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_nm_4d3716e.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/passport_wdg_05e7e19.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home_425674e.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/layui/css/layui.css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/layui/layui.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js"></script>
 
     <script>
@@ -28,9 +30,62 @@
             $("#tab1").click(function () {
                location.href = "${pageContext.request.contextPath }/addUlLogin"
             })
+
+            var query = false;
+            var red = /^1[3456789]\d{9}$/;
+            $('.mobile').on("input propertychange",function () {
+                var va = $(this).val();
+                if (red.test(va)){
+                    $('#mess').html("");
+                    //判断手机号是否存在
+                    $.post(
+                        "${pageContext.request.contextPath}/user//queryPhone",
+                        "phone="+va,
+                        function (map) {
+                            if (map.query){
+                                query = true;
+                                $('#mess').html("手机号可用~");
+                            }else {
+                                query = false;
+                                $('#mess').html("手机号已经注册~");
+                            }
+                        },
+                        "JSON"
+                    );
+
+                }else {
+                    $('#mess').html("请输入正确的手机号格式~")
+                    query = false;
+                }
+            });
+
+
+
+            $("#from").submit(function () {
+                var pwd = $("#pwd").val();
+                var newPwd = $("#newPwd").val();
+                if (pwd!=null&&pwd!=""&&newPwd!=null&&newPwd!=""&&query==true){
+                    return true;
+                }else {
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "密码不能为空~"
+                            }
+                        )
+                    });
+                    return false;
+                }
+
+            });
         });
     </script>
 
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -52,8 +107,8 @@
                         <ul>
                             <li>
                                 <input class="mobile" type="text" placeholder="手机号" maxlength="48" name="userPhone"
-                                       id="login_username" autocomplete="off">
-                                <div class="error-info mobile-error"></div>
+                                       id="login_username" autocomplete="off" value="${userPhone}">
+                                <div class="error-info mobile-error" id="mess"></div>
                             </li>
                             <li class="rand_code_show">
                                 <input  class="code" autocomplete="off" name="checkCode" id="captcha_code" type="text"
@@ -66,17 +121,17 @@
                                 <div class="error-info mobile-error">${massage.yanZheng}</div>
                             </li>
                             <li >
-                                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="密码"
+                                <input class="login-passwd" autocomplete="off" id="pwd" placeholder="密码"
                                        type="password" name="userPwd" data-is="isEmail">
                             </li>
                             <li class="last-li">
-                                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="确认密码"
+                                <input class="login-passwd" autocomplete="off" id="newPwd" placeholder="确认密码"
                                        type="password" name="verifyPwd" data-is="isEmail">
                                 <div class="error-info password-error last-error">${massage.pwd}</div>
                             </li>
                         </ul>
-                        <div class="button-block">
-                            <button>立即登录</button>
+                        <div class="button-block" style="background:red;">
+                            <button class="btn" style="background:red;">立即注册</button>
                         </div>
                         <div class="forget-password">
                             <a href="/user/findpwd/index">忘记密码?</a>

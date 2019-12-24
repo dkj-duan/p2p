@@ -52,6 +52,8 @@ public class UploadController {
             user.setUserImg(originalFilename);
             //更新用户信息
             userService.updateByPrimaryKeySelective(user);
+            //查询最新的用户信息
+            user = userService.queryByPrimaryKey(user.getUserId());
             //更新最新的session用户信息
             modelMap.addAttribute("user",user);
             map.put("query",true);

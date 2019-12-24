@@ -46,4 +46,11 @@ public interface UserService {
      */
     public List<User> queryAll();
 
+    /**
+     * 根据手机号查询
+     * @param phone
+     * @return
+     */
+    public int queryByPhone(String phone);
+
 }

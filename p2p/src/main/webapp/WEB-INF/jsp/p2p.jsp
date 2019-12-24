@@ -7,9 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%--主页面--%>
 <html lang="en">
@@ -28,7 +28,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"></script>
     <script type="text/javascript">
-        layui.use(['carousel','layer'], function () {
+        layui.use(['carousel', 'layer'], function () {
             var carousel = layui.carousel;
             var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
             //建造实例
@@ -41,10 +41,11 @@
                 anim: 'fade' //切换动画方式
             });
 
-            if (${mess!=null}){
+            if (${mess!=null}) {
                 layer.open(
-                    {offset:"200px",
-                        content:"${mess}"
+                    {
+                        offset: "200px",
+                        content: "${mess}"
                     }
                 );
             }
@@ -55,7 +56,7 @@
             $(".index-uplan-box").css({
                 "border-bottom": "none"
             });
-            $("#touXiang").css({"border-radius":"15px 15px 15px 15px","display": "inline-block"});
+            $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
         });
 
     </script>
@@ -65,7 +66,7 @@
 
 </div>
 <%
-session.removeAttribute("mess");
+    session.removeAttribute("mess");
 %>
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
@@ -144,7 +145,7 @@ session.removeAttribute("mess");
     <div class="new-center">
         <ul>
             <li>
-                <a href="#" > <img src="${pageContext.request.contextPath}/img/newbee_1_92baa2b.png">
+                <a href="#"> <img src="${pageContext.request.contextPath}/img/newbee_1_92baa2b.png">
                     <div class="label-box">
                         <em>银行存管</em>
                         <p class="label-desc blank_data">交易资金通过民生银行流转<br>平台无法触碰资金</p>
@@ -160,10 +161,11 @@ session.removeAttribute("mess");
                     <i></i> </a>
             </li>
             <li>
-                <a href="#" > <img src="${pageContext.request.contextPath}/img/newbee_3_f69a139.png">
+                <a href="#"> <img src="${pageContext.request.contextPath}/img/newbee_3_f69a139.png">
                     <div class="label-box">
                         <em>数据披露</em>
-                        <p class="label-desc">平台累计注册<span style="color:red;font-size: 20px" >${userList.size()}</span>人<br>累计出借人赚取1,154,321万元</p>
+                        <p class="label-desc">平台累计注册<span
+                                style="color:red;font-size: 20px">${userList.size()}</span>人<br>累计出借人赚取1,154,321万元</p>
                     </div>
                 </a>
             </li>
@@ -177,7 +179,7 @@ session.removeAttribute("mess");
     <div class="novice-top">
         <div class="no-top-l">
             <span>U享服务</span>
-            <span class="product-period-intro">12个月服务期限</span>
+            <span class="product-period-intro"></span>
         </div>
         <div class="no-top-r hover">
             <a class="tu" href="#"><img src="${pageContext.request.contextPath}/img/more_2_0e42693.png"></a>
@@ -236,7 +238,7 @@ session.removeAttribute("mess");
     <div class="novice-top">
         <div class="no-top-l">
             <span>薪享服务</span>
-            <span class="product-period-intro">12个月服务期限</span>
+            <span class="product-period-intro"></span>
         </div>
         <div class="no-top-r hover">
             <a class="tu" href="#"><img src="${pageContext.request.contextPath}/img/more_2_0e42693.png"></a>
@@ -339,7 +341,8 @@ session.removeAttribute("mess");
                                 ${sc.residueMoney}
                         </td>
                         <td class="action">
-                            <a class="disabled" href="${pageContext.request.contextPath}/scattered//selectByScId?scId=${sc.scId}" >
+                            <a class="disabled"
+                               href="${pageContext.request.contextPath}/scattered//selectByScId?scId=${sc.scId}">
                                 <c:if test="${sc.state==1}">
                                     未满标
                                 </c:if>
@@ -350,7 +353,6 @@ session.removeAttribute("mess");
                         </td>
                     </tr>
                 </c:forEach>
-
 
 
                 </tbody>
@@ -489,12 +491,13 @@ session.removeAttribute("mess");
 <div class="fixed-download-link">
     <div class="download-link-wrap">
         <a class="calc" href="#" target="_blank"> <img src="${pageContext.request.contextPath}/img/calc_58f7ccc.png"
-                                                                                   alt="人人贷回报计算">
+                                                       alt="人人贷回报计算">
             <div class="hover">
                 回报计算
             </div>
         </a>
-        <a class="help zhiCustomBtn" href="javascript:;"> <img src="${pageContext.request.contextPath}/img/help_8052a76.png" alt="人人贷在线客服">
+        <a class="help zhiCustomBtn" href="javascript:;"> <img
+                src="${pageContext.request.contextPath}/img/help_8052a76.png" alt="人人贷在线客服">
             <div class="hover">
                 在线客服
             </div>

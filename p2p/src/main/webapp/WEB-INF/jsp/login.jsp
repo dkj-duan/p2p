@@ -72,8 +72,8 @@
                                 <div class="error-info password-error last-error">${massage.pwd}</div>
                             </li>
                         </ul>
-                        <div class="button-block">
-                            <button>立即登录</button>
+                        <div class="button-block" style="background: red">
+                            <button style="background: red">立即登录</button>
                         </div>
                         <div class="forget-password">
                             <a href="/user/findpwd/index">忘记密码?</a>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.ScatteredMapper" >
+
+
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Scattered" >
+    <id column="sc_id" property="scId" jdbcType="INTEGER" />
+    <result column="rent_money" property="rentMoney"  />
+    <result column="residue_money" property="residueMoney"  />
+    <result column="periods" property="periods" jdbcType="INTEGER" />
+    <result column="rate" property="rate"/>
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="annotation" property="annotation" />
+    <association property="user" javaType="cn.bdqn.domain.User">
+      <id column="uUser" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    sc_id, user_id, rent_money, residue_money, periods,rate, state
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    annotation
+  </sql>
+
+  <sql id="join">
+    s.sc_id, s.user_id, s.rent_money, s.residue_money, s.periods,s.rate, s.state,s.annotation,
+    u.user_Id as uUser, u.user_Phone, u.user_Pwd, u.user_Name, u.user_Card, u.user_register_time, u.user_login_time,
+    u.user_img
+  </sql>
+
+
+<!--  查询全部-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="join"/>
+    from t_scattered as s,t_user as u
+    where s.user_id = u.user_Id
+  </select>
+
+<!--  根据主键查询-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="join"/>
+    from t_scattered as s,t_user as u
+    where s.user_id = u.user_Id
+    and s.sc_id = #{scId,jdbcType=INTEGER}
+  </select>
+
+<!--  根据主键删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_scattered
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </delete>
+
+<!--  添加用户-->
+  <insert id="insert" parameterType="cn.bdqn.domain.Scattered" >
+    insert into t_scattered (sc_id, user_id, rent_money, 
+      residue_money, periods,rate, state,
+      annotation)
+    values (#{scId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER}, #{rentMoney},
+      #{residueMoney}, #{periods,jdbcType=INTEGER},#{rate}, #{state,jdbcType=INTEGER},
+      #{annotation,jdbcType=LONGVARCHAR})
+  </insert>
+
+
+<!--  选择性添加用户-->
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Scattered" >
+    insert into t_scattered
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scId != null" >
+        sc_id,
+      </if>
+      <if test="user.userId != null" >
+        user_id,
+      </if>
+      <if test="rentMoney != null" >
+        rent_money,
+      </if>
+      <if test="residueMoney != null" >
+        residue_money,
+      </if>
+      <if test="periods != null" >
+        periods,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="annotation != null" >
+        annotation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scId != null" >
+        #{scId,jdbcType=INTEGER},
+      </if>
+      <if test="user.userId != null" >
+        #{user.userId,jdbcType=INTEGER},
+      </if>
+      <if test="rentMoney != null" >
+        #{rentMoney},
+      </if>
+      <if test="residueMoney != null" >
+        #{residueMoney},
+      </if>
+      <if test="periods != null" >
+        #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="annotation != null" >
+        #{annotation,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+<!--  选择性更新-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Scattered" >
+    update t_scattered
+    <set >
+      <if test="user.userId != null" >
+        user_id = #{user.userId,jdbcType=INTEGER},
+      </if>
+      <if test="rentMoney != null" >
+        rent_money = #{rentMoney},
+      </if>
+      <if test="residueMoney != null" >
+        residue_money = #{residueMoney},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="annotation != null" >
+        annotation = #{annotation,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </update>
+
+<!--  更新全部-->
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.bdqn.domain.Scattered" >
+    update t_scattered
+    set user_id = #{user.userId,jdbcType=INTEGER},
+      rent_money = #{rentMoney},
+      residue_money = #{residueMoney},
+      periods = #{periods,jdbcType=INTEGER},
+      rate = #{rate},
+      state = #{state,jdbcType=INTEGER},
+      annotation = #{annotation,jdbcType=LONGVARCHAR}
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Scattered" >
+    update t_scattered
+    set user_id = #{user.userId,jdbcType=INTEGER},
+      rent_money = #{rentMoney },
+      residue_money = #{residueMoney },
+      periods = #{periods,jdbcType=INTEGER},
+      rate = #{rate},
+      state = #{state,jdbcType=INTEGER}
+    where sc_id = #{scId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

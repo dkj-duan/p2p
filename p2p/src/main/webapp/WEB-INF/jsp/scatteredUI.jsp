@@ -33,16 +33,18 @@
 
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
-            layui.use("layer",function () {
+            layui.use("layer", function () {
                 var layer = layui.layer;
-                if (${message!=null}){
+                if (${message!=null}) {
                     layer.open(
-                        {offset:"200px",
-                            content:"${message}"
+                        {
+                            offset: "200px",
+                            content: "${message}"
                         }
                     );
                 }
             });
+
             $(".jqLi").click(function () {
                 $(this).css("border-bottom", "2px solid royalblue");
                 $(".jqLi1").css("border-bottom", "");
@@ -177,21 +179,58 @@
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
             $("#form").submit(function () {
-                var values = $(".input_i").val();
-                if (values.trim().length<1){
-                    $(".mo1").html("请输入投注金额~");
+
+                var repay = $(".repay").val();
+                var user = $(".user").val();
+                if (repay == user) {
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "自己不能借给自己~"
+                            }
+                        )
+                    });
                     return false;
+                } else {
+                    var card = $(".card1").val();
+                    if (card == null || card.trim() == '') {
+                        layui.use("layer", function () {
+                            var layer = layui.layer;
+                            layer.open(
+                                {
+                                    offset: "200px",
+                                    content: "您还未实名认证,请移步去认证~",
+                                    btn: ["确定", "取消"],
+                                    yes: function () {
+                                        location.href = "${pageContext.request.contextPath}/addUiUserInfo"
+                                    },
+                                    btn2: function () {
+                                        layer.closeAll();
+                                    }
+                                }
+                            )
+                        });
+                        return false;
+                    } else {
+                        var values = $(".input_i").val();
+                        if (values.trim().length < 1) {
+                            $(".mo1").html("请输入投注金额~");
+                            return false;
+                        }
+                    }
                 }
             });
             $(".input_i").on("input propertychange", function () {
                 var values = $(this).val();
                 if (values <=${balance.money}) {
-
                     //判断投资金额是否大于剩余金额
                     if (values <=${scattered.residueMoney}) {
-                        if ((!values <100)) {
+                        if ((!values < 100)) {
                             $(".sub").attr("type", "submit");
-                            var yue = ${scattered.rate}/100/12;
+                            var yue = ${scattered.rate}/100/
+                            12;
                             var monoy = yue * values *${scattered.periods};
                             $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
                         } else {
@@ -201,7 +240,8 @@
                         if (values % 100 == 0) {
                             $(".mo1").html(" ");
                             $(".sub").attr("type", "submit");
-                            var yue = ${scattered.rate}/100/12;
+                            var yue = ${scattered.rate}/100/
+                            12;
                             var monoy = yue * values *${scattered.periods};
                             $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
                         } else {
@@ -223,6 +263,7 @@
 </head>
 
 <body>
+
 
 <!--导航栏-->
 <div class="wdg-werenrendai-top-header">
@@ -265,7 +306,7 @@
                     <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
                 </div>
             </li>
-            <li class="channel-item ">
+            <li class="channel-item active-channel ">
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
@@ -274,7 +315,7 @@
             <li class="channel-item  can-lend">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>
@@ -306,16 +347,18 @@
         </c:if>
         <c:if test="${scattered.state==1}">
             <form id="form" action="${pageContext.request.contextPath}/repayment//addRepayment" method="post">
+                <input class="card1" type="hidden" value="${user.userCard}"/>
                 <ul>
                     <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
                         <%--                散标id--%>
                     <input type="hidden" name="scId" value="${scattered.scId}"/>
-<%--                    还款人id--%>
-                    <input type="hidden" name="repayUserId" value="${scattered.user.userId}" >
-<%--                  剩余期数  --%>
-                    <input type="hidden" name="periods" value="${scattered.periods}" >
+                        <%--                    还款人id--%>
+                    <input type="hidden" name="repayUserId" value="${scattered.user.userId}" class="repay"/>
+                    <input type="hidden" class="user" value="${user.userId}"/>
+                        <%--                  剩余期数  --%>
+                    <input type="hidden" name="periods" value="${scattered.periods}"/>
                     <li>
-<%--                        出借金额--%>
+                            <%--                        出借金额--%>
                         <input class="input_i" type="text" name="loanMoney" autocomplete="off"
                                placeholder="最低起投100元"/>
                         <br/>
@@ -330,7 +373,7 @@
 </div>
 
 <%
-   session.removeAttribute("message");
+    session.removeAttribute("message");
 %>
 <div id="xinXi">
     <ul class="tou">

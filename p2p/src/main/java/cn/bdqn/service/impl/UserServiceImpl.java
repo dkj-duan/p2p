@@ -61,4 +61,9 @@ public class UserServiceImpl implements UserService {
     public List<User> queryAll() {
         return userMapper.selectAll();
     }
+
+    @Override
+    public int queryByPhone(String phone) {
+        return userMapper.selectByPhone(phone);
+    }
 }

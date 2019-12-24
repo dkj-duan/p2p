@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.LoanMapper" >
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Loan" >
+    <id column="loan_id" property="loanId" jdbcType="INTEGER" />
+      <result column="loan_user_Id" property="loanUserId"/>
+    <result column="loan_money" property="loanMoney"/>
+
+    <association property="user" javaType="cn.bdqn.domain.User">
+      <id column="uUser" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    </association>
+      <association property="scattered" javaType="cn.bdqn.domain.Scattered">
+        <id column="sc_id" property="scId" jdbcType="INTEGER" />
+        <result column="rent_money" property="rentMoney"  />
+        <result column="residue_money" property="residueMoney"  />
+        <result column="periods" property="periods" jdbcType="INTEGER" />
+        <result column="rate" property="rate"/>
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="annotation" property="annotation" />
+      </association>
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="cn.bdqn.domain.Loan">
+    <id column="loan_id" property="loanId" jdbcType="INTEGER" />
+    <result column="loan_user_Id" property="loanUserId"/>
+    <result column="loan_money" property="loanMoney"/>
+    <result column="user.userId" property="user_id"/>
+    <association property="dueUser" javaType="cn.bdqn.domain.User">
+      <id column="uUser" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    </association>
+    <association property="scattered" javaType="cn.bdqn.domain.Scattered">
+      <id column="sc_id" property="scId" jdbcType="INTEGER" />
+      <result column="rent_money" property="rentMoney"  />
+      <result column="residue_money" property="residueMoney"  />
+      <result column="periods" property="periods" jdbcType="INTEGER" />
+      <result column="rate" property="rate"/>
+      <result column="state" property="state" jdbcType="INTEGER" />
+      <result column="annotation" property="annotation" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    l.loan_id, l.user_id, l.sc_id, l.loan_money
+  </sql>
+
+  <sql id="join">
+    l.loan_id, l.user_id,l.loan_user_Id ,l.sc_id, l.loan_money,
+    u.user_Id as uUser, u.user_Phone, u.user_Pwd, u.user_Name, u.user_Card, u.user_register_time, u.user_login_time,
+    u.user_img,
+    s.sc_id, s.user_id, s.rent_money, s.residue_money, s.periods,s.rate, s.state,s.annotation
+  </sql>
+
+<!--  根据id查询-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="join" />
+    from t_loan as l ,t_user as u,t_scattered as s
+    where l.user_id = u.user_Id and l.sc_id = s.sc_id and l.loan_id = #{loanId,jdbcType=INTEGER}
+  </select>
+
+  <!--  根据散标id查询-->
+  <select id="selectByScId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="join" />
+    from t_loan as l ,t_user as u,t_scattered as s
+    where l.user_id = u.user_Id and l.sc_id = s.sc_id and l.sc_id = #{scId,jdbcType=INTEGER}
+  </select>
+
+<!--  根据用户id查询-->
+  <select id="selectByUserId" resultMap="BaseResultMap1">
+    select
+    <include refid="join"/>
+    from t_loan as l ,t_user as u,t_scattered as s
+    where l.loan_user_Id = u.user_Id and l.sc_id = s.sc_id and l.user_id = #{userId}
+  </select>
+<!--  根据id删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_loan
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </delete>
+
+<!--  添加-->
+  <insert id="insert" parameterType="cn.bdqn.domain.Loan" >
+    insert into t_loan (loan_id, user_id,loan_user_Id, sc_id,
+      loan_money)
+    values (#{loanId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER},#{loanUserId}, #{scattered.scId,jdbcType=INTEGER},
+      #{loanMoney})
+  </insert>
+
+
+<!--  选择性添加-->
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Loan" >
+    insert into t_loan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="loanId != null" >
+        loan_id,
+      </if>
+      <if test="user.userId != null" >
+        user_id,
+      </if>
+        <if test="loanUserId != null" >
+            loan_user_Id,
+        </if>
+      <if test="scattered.scId != null" >
+        sc_id,
+      </if>
+      <if test="loanMoney != null" >
+        loan_money,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="loanId != null" >
+        #{loanId,jdbcType=INTEGER},
+      </if>
+      <if test="user.userId != null" >
+        #{user.userId,jdbcType=INTEGER},
+      </if>
+        <if test="loanUserId != null" >
+            #{loanUserId,jdbcType=INTEGER},
+        </if>
+      <if test="scattered.scId != null" >
+        #{scattered.scId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null" >
+        #{loanMoney},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Loan" >
+    update t_loan
+    <set >
+      <if test="user.userId != null" >
+        user_id = #{user.userId,jdbcType=INTEGER},
+      </if>
+        <if test="loanUserId != null" >
+            loan_user_Id = #{loanUserId,jdbcType=INTEGER},
+        </if>
+      <if test="scattered.scId != null" >
+        sc_id = #{scattered.scId,jdbcType=INTEGER},
+      </if>
+      <if test="loanMoney != null" >
+        loan_money = #{loanMoney},
+      </if>
+    </set>
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Loan" >
+    update t_loan
+    set user_id = #{user.userId,jdbcType=INTEGER},
+    loan_user_Id = #{loanUserId}
+      sc_id = #{scattered.scId,jdbcType=INTEGER},
+      loan_money = #{loanMoney}
+    where loan_id = #{loanId,jdbcType=INTEGER}
+  </update>
+</mapper>

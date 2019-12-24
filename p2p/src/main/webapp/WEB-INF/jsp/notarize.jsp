@@ -14,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>U享服务-12月-20191214期-人人贷官网</title>
+    <title>还款</title>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
@@ -118,13 +118,13 @@
             <li class="channel-item ">
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
-            <li class="channel-item" style="width: 144px;">
-                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要借款/还款</a>
+            <li class="channel-item active-channel" style="width: 144px;">
+                <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要还款</a>
             </li>
             <li class="channel-item  can-lend">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>

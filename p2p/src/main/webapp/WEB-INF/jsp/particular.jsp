@@ -183,12 +183,35 @@
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
             $("#form").submit(function () {
-                var values = $(".input_i").val();
-                if (values.trim().length<1){
-                    $(".mo1").html("请输入投注金额~");
+
+                var card = $(".card1").val();
+                if (card==null||card.trim()==''){
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "您还未实名认证,请移步去认证~",
+                                btn: ["确定","取消"],
+                                yes: function () {
+                                    location.href = "${pageContext.request.contextPath}/addUiUserInfo"
+                                },
+                                btn2:function () {
+                                    layer.closeAll();
+                                }
+                            }
+                        )
+                    });
                     return false;
+                }else {
+                    var values = $(".input_i").val();
+                    if (values.trim().length<1){
+                        $(".mo1").html("请输入投注金额~");
+                        return false;
+                    }
                 }
             });
+
             $(".input_i").on("input propertychange", function () {
                 var values = $(this).val();
                 if (values <=${balance.money}) {
@@ -275,7 +298,7 @@
                     <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
                 </div>
             </li>
-            <li class="channel-item ">
+            <li class="channel-item active-channel">
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
             <li class="channel-item" style="width: 144px;">
@@ -284,7 +307,7 @@
             <li class="channel-item  can-lend">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>
@@ -318,6 +341,7 @@ session.removeAttribute("message");
         </c:if>
         <c:if test="${product.state==1}">
             <form id="form" action="${pageContext.request.contextPath}/bid//invest" method="post">
+                <input type="hidden" class="card1" value="${user.userCard}"/>
                 <ul>
                     <li>账户余额 <span class="mo">${balance.money}</span> 元</li>
                         <%--                产品id--%>

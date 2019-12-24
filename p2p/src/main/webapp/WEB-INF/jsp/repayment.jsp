@@ -218,13 +218,13 @@
             <li class="channel-item ">
                 <a rel="nofollow" href="/disclosure/information/index">信息披露</a>
             </li>
-            <li class="channel-item" style="width: 144px;">
+            <li class="channel-item active-channel" style="width: 144px;">
                 <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要还款</a>
             </li>
-            <li class="channel-item  can-lend">
+            <li class="channel-item  can-lend ">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>

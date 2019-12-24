@@ -1,6 +1,7 @@
 package cn.bdqn.controller;
 
 import cn.bdqn.domain.Balance;
+import cn.bdqn.domain.RegisterUser;
 import cn.bdqn.domain.User;
 import cn.bdqn.exception.MyException;
 import cn.bdqn.service.BalanceService;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 用户控制器
@@ -41,7 +39,6 @@ public class UserController {
     /**
      * 注册用户
      * @param request
-     * @param users
      * @param sessionCheckCode
      * @param checkCode
      * @param verifyPwd
@@ -50,8 +47,10 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/register")
-    public String register(HttpServletRequest request, User users, @SessionAttribute(value = "checkCode") String sessionCheckCode, String checkCode, String verifyPwd, Balance balance)throws Exception{
-
+    public String register(HttpServletRequest request, String userPhone,String userPwd, @SessionAttribute(value = "checkCode") String sessionCheckCode, String checkCode, String verifyPwd, Balance balance)throws Exception{
+        User users = new User();
+        users.setUserPhone(userPhone);
+        users.setUserPwd(userPwd);
         Map<String,String> map = new HashMap<>();
         try{
             if (!checkCode.equalsIgnoreCase(sessionCheckCode)){
@@ -74,6 +73,9 @@ public class UserController {
             }
             //调用添加方法
             users.setUserRegisterTime(new Date());
+            Random random = new Random();
+
+            users.setUserName("Y225"+ random.nextInt(5000));
             users.setUserPwd(MD5Util.encode(users.getUserPwd()));
             users.setUserImg("moren.jpg");
             //添加用户的方法
@@ -190,5 +192,122 @@ public class UserController {
         List<User> users = userService.queryAll();
         System.out.println(users);
         return users;
+    }
+
+
+    /**
+     * 判断原密码是否一致
+     * @param user
+     * @param pwd
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/selectByPwd")
+    @ResponseBody
+    public Map<String,Object> selectPwd(@SessionAttribute("user")User user, String pwd)throws Exception{
+        Map<String,Object> map = new HashMap<>();
+        try{
+            if (user.getUserPwd().equals(MD5Util.encode(pwd))){
+                map.put("query",true);
+            }else {
+                map.put("query",false);
+            }
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("query",false);
+            return map;
+        }
+    }
+
+    /**
+     * 更新密码
+     * @param user
+     * @param pwd
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public Map<String,Object> updatePwd(@SessionAttribute("user")User user,String pwd)throws Exception{
+
+        Map<String,Object> map = new HashMap<>();
+        try {
+            //获得最新的用户信息
+            user = userService.queryByPrimaryKey(user.getUserId());
+            //设置新的密码
+            user.setUserPwd(MD5Util.encode(pwd));
+            //更新密码
+            userService.updateByPrimaryKeySelective(user);
+            map.put("query",true);
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("query",false);
+            return map;
+        }
+    }
+
+
+    /**
+     * 更新用户名和身份证
+     * @param user
+     * @param name
+     * @param card
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/updateCard")
+    @ResponseBody
+    public Map<String,Object> updateCard(@SessionAttribute("user")User user,String name,String card,ModelMap modelMap)throws Exception{
+
+        Map<String,Object> map = new HashMap<>();
+        try{
+            //获得最新的用户信息
+            user = userService.queryByPrimaryKey(user.getUserId());
+            //更新用户的用户名和身份证号
+            user.setUserName(name);
+            user.setUserCard(card);
+            //更新用户信息
+            userService.updateByPrimaryKeySelective(user);
+            //再次查询用户最新信息
+            user = userService.queryByPrimaryKey(user.getUserId());
+            //更新到session作用域中
+            modelMap.addAttribute("user",user);
+            map.put("query",true);
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("query",false);
+            return map;
+        }
+    }
+
+
+    /**
+     * 查询手机号是否存在
+     * @param phone
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/queryPhone")
+    @ResponseBody
+    public Map<String,Object> queryPhone(String phone)throws Exception{
+        Map<String,Object> map = new HashMap<>();
+        try{
+            int count = userService.queryByPhone(phone);
+            if (count==0){
+                map.put("query",true);
+            }else {
+                map.put("query",false);
+            }
+            return map;
+        }catch (Exception e){
+            e.printStackTrace();
+            map.put("query",false);
+            return map;
+        }
+
     }
 }

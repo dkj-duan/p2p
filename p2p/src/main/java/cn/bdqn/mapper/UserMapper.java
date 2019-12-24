@@ -59,4 +59,11 @@ public interface UserMapper {
      * @return
      */
     List<User> selectAll();
+
+    /**
+     * 根据手机号查询
+     * @param phone
+     * @return
+     */
+    public int selectByPhone(String phone);
 }

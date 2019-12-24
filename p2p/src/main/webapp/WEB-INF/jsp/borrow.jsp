@@ -14,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>U享服务-12月-20191214期-人人贷官网</title>
+    <title>申请借款</title>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
@@ -38,8 +38,31 @@
                 form.render();
             });
 
-
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
+
+            $("#fff").submit(function () {
+                var card = $(".card1").val();
+                if (card == null || card.trim() == '') {
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "您还未实名认证,请移步去认证~",
+                                btn: ["确定", "取消"],
+                                yes: function () {
+                                    location.href = "${pageContext.request.contextPath}/addUiUserInfo"
+                                },
+                                btn2: function () {
+                                    layer.closeAll();
+                                }
+                            }
+                        )
+                    });
+                    return false;
+                }
+            });
+
 
         });
     </script>
@@ -109,10 +132,10 @@
             <li class="channel-item" style="width: 144px;">
                 <a href="${pageContext.request.contextPath}/addUiRepayment" target="_blank">我要还款</a>
             </li>
-            <li class="channel-item  can-lend">
+            <li class="channel-item  can-lend active-channel">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>
@@ -123,11 +146,12 @@
 <div class="s">
     <h1 style="margin-left: 46%;margin-bottom: 30px">借款申请</h1>
 
-    <form class="layui-form" action="${pageContext.request.contextPath}/scattered//insert" method="post">
+    <form id="fff" class="layui-form" action="${pageContext.request.contextPath}/scattered//insert" method="post">
         <div class="layui-form-item">
             <label class="layui-form-label">借款金额:</label>
             <div class="layui-input-block">
-                <input type="text" name="rentMoney" required lay-verify="required" placeholder="请输入借款金额" autocomplete="off"
+                <input type="text" name="rentMoney" required lay-verify="required" placeholder="请输入借款金额"
+                       autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -145,6 +169,7 @@
             </div>
         </div>
 
+        <input type="hidden" value="${user.userCard}" class="card1"/>
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">借款说明:</label>
             <div class="layui-input-block">

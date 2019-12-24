@@ -597,7 +597,7 @@
             <h1 class="rrd-logo">人人贷</h1></a>
         <ul class="site-nav">
             <li class="user-item fn-clear" num="">
-                <div class="denglu">
+                <div class="denglu active-channel">
                     <img width="30px" height="30px" id="touXiang"
                          src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
                     <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
@@ -612,7 +612,7 @@
             <li class="channel-item  can-lend">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>

@@ -29,519 +29,171 @@
     </script>
     <script src="${pageContext.request.contextPath}/js/jquery-1.12.4.js" type="text/javascript"
             charset="utf-8"></script>
+
+
     <script type="text/javascript">
         $(function () {
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
-            $(".jqLi").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
-                $(".jqLi1").css("border-bottom", "");
-                $(".jqLi2").css("border-bottom", "");
-                $(".jqLi3").css("border-bottom", "");
-                $.post(
-                    "${pageContext.request.contextPath}/loan//selectByUserId",
-                    "",
-                    function (date) {
-                        if (date != null && date.length > 0) {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = date;
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'userName',
-                                            width: 240,
-                                            title: '借款人用户名',
-                                            templet: function (data) {
-                                                return data.dueUser.userName;
-                                            }
-                                        }, {
-                                            field: 'userPhone',
-                                            width: 241,
-                                            title: '借款人手机号',
-                                            templet: function (data) {
-                                                return data.dueUser.userPhone;
-                                            }
-                                        }, {
-                                            field: 'periods',
-                                            width: 242,
-                                            title: '分期数',
-                                            templet: function (data) {
-                                                return data.scattered.periods;
-                                            }
-                                        }, {
-                                            field: 'rate',
-                                            width: 242,
-                                            title: '利率',
-                                            templet: function (data) {
-                                                return data.scattered.rate;
-                                            }
-                                        }
-                                            , {
-                                            field: 'loanMoney',
-                                            width: 242,
-                                            title: '借出金额'
-                                        }
-
-                                        ]
-                                    ]
-                                });
-                            });
-                        } else {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = [{"message": "你暂时没有投标"}];
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'message',
-                                            width: 300,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 400,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 510,
-                                            title: '提示'
-                                        }]
-                                    ]
-                                });
-                            });
-                        }
-                    },
-                    "JSON"
-                )
-            });
-            $(".jqLi1").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
-                $(".jqLi").css("border-bottom", "");
-                $(".jqLi2").css("border-bottom", "");
-                $(".jqLi3").css("border-bottom", "");
-                $.post(
-                    "${pageContext.request.contextPath}/earnings//selectByTypeAndUserId",
-                    "type=1",
-                    function (date) {
-                        if (date != null && date.length > 0) {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = date;
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'productName',
-                                            width: 240,
-                                            title: '服务期数',
-                                            templet: function (data) {
-
-                                                return data.product.productName;
-                                            }
-                                        }, {
-                                            field: 'rate',
-                                            width: 241,
-                                            title: '利率',
-                                            templet: function (data) {
-                                                return data.product.rate;
-                                            }
-                                        }, {
-                                            field: 'bidMoney',
-                                            width: 242,
-                                            title: '出借本金',
-                                            templet: function (data) {
-                                                return data.bid.bidMoney;
-                                            }
-                                        }, {
-                                            field: 'earningsMoney',
-                                            width: 242,
-                                            title: '利息',
-                                            templet: function (data) {
-                                                return (data.earningsMoney - data.bid.bidMoney).toFixed(2);
-                                                ;
-                                            }
-                                        }
-                                            , {
-                                            field: 'earningsState',
-                                            width: 242,
-                                            title: '状态',
-                                            templet: function (data) {
-                                                if (data.earningsState == 1) {
-                                                    return "未收益"
-                                                } else {
-                                                    return "已收益"
-                                                }
-
-                                            }
-                                        }
-
-                                        ]
-                                    ]
-                                });
-                            });
-                        } else {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = [{"message": "你暂时没有投标"}];
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'message',
-                                            width: 300,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 400,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 510,
-                                            title: '提示'
-                                        }]
-                                    ]
-                                });
-                            });
-                        }
-                    },
-                    "JSON"
-                )
-            });
-            $(".jqLi2").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
-                $(".jqLi").css("border-bottom", "");
-                $(".jqLi1").css("border-bottom", "");
-                $(".jqLi3").css("border-bottom", "");
-                $.post(
-                    "${pageContext.request.contextPath}/earnings//selectByTypeAndUserId",
-                    "type=2",
-                    function (date) {
-                        if (date != null && date.length > 0) {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = date;
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'productName',
-                                            width: 240,
-                                            title: '服务期数',
-                                            templet: function (data) {
-
-                                                return data.product.productName;
-                                            }
-                                        }, {
-                                            field: 'rate',
-                                            width: 241,
-                                            title: '利率',
-                                            templet: function (data) {
-                                                return data.product.rate;
-                                            }
-                                        }, {
-                                            field: 'bidMoney',
-                                            width: 242,
-                                            title: '出借本金',
-                                            templet: function (data) {
-                                                return data.bid.bidMoney;
-                                            }
-                                        }, {
-                                            field: 'earningsMoney',
-                                            width: 242,
-                                            title: '利息',
-                                            templet: function (data) {
-                                                return (data.earningsMoney - data.bid.bidMoney).toFixed(2);
-                                                ;
-                                            }
-                                        }
-                                            , {
-                                            field: 'earningsState',
-                                            width: 242,
-                                            title: '状态',
-                                            templet: function (data) {
-                                                if (data.earningsState == 1) {
-                                                    return "未收益"
-                                                } else {
-                                                    return "已收益"
-                                                }
-
-                                            }
-                                        }
-
-                                        ]
-                                    ]
-                                });
-                            });
-                        } else {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = [{"message": "你暂时没有投标"}];
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'message',
-                                            width: 300,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 400,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 510,
-                                            title: '提示'
-                                        }]
-                                    ]
-                                });
-                            });
-                        }
-                    },
-                    "JSON"
-                )
-            });
-            $(".jqLi3").click(function () {
-                $(this).css("border-bottom", "2px solid royalblue")
-                $(".jqLi").css("border-bottom", "");
-                $(".jqLi1").css("border-bottom", "");
-                $(".jqLi2").css("border-bottom", "");
-                $.post(
-                    "${pageContext.request.contextPath}/alipay//selectByUsrId",
-                    "userId=${user.userId}",
-                    function (date) {
-                        if (date != null && date.length > 0) {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = date;
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 3 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'orderNumber',
-                                            width: 240,
-                                            title: '充值单号'
-                                        }, {
-                                            field: 'money',
-                                            width: 241,
-                                            title: '充值金额',
-                                            templet: function (data) {
-                                                return data.money + "元";
-                                            }
-                                        }, {
-                                            field: 'state',
-                                            width: 242,
-                                            title: '充值状态',
-                                        }, {
-                                            field: 'storageTime',
-                                            width: 242,
-                                            title: '充值时间',
-                                            templet: "<a >{{layui.util.toDateString(d.storageTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
-                                        }
-                                            , {
-                                            field: 'annotation',
-                                            width: 242,
-                                            title: '充值说明'
-                                        }
-
-                                        ]
-                                    ]
-                                });
-                            });
-                        } else {
-                            layui.use("table", function () {
-                                var table = layui.table;
-                                var s = [{"message": "暂时没有充值记录"}];
-                                table.render({
-                                    elem: '#layui_table_id', //指定表格元素
-                                    data: s,
-                                    cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                                    ,
-                                    skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-                                    ,
-                                    even: true //隔行换色
-                                    ,
-                                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                                        layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
-                                        ,
-                                        groups: 5 //只显示 1 个连续页码
-                                        ,
-                                        first: "首页" //不显示首页
-                                        ,
-                                        last: "尾页" //不显示尾页
-                                    },
-                                    limit: "5",
-                                    method: 'post' //提交方式
-                                    ,
-                                    cols: [
-                                        [{
-                                            field: 'message',
-                                            width: 300,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 400,
-                                            title: '提示'
-                                        }, {
-                                            field: 'message',
-                                            width: 510,
-                                            title: '提示'
-                                        }]
-                                    ]
-                                });
-                            });
-                        }
-                    },
-                    "JSON"
-                )
-            });
-
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
             $(".img11").css({"border-radius": "72px 72px 72px 72px", "display": "inline-block"});
-            $("#form").submit(function () {
-                var values = $(".input_i").val();
-                if (values.trim().length <= 0) {
-                    $(".mo1").html("请输入充值金额");
-                    return false;
+            $(".layui-btn").css({"border-radius": "60% 60% 60% 60%", "display": "inline-block"});
+
+            $(".up").click(function () {
+                $("#form1").show("3000");
+            });
+            $(".btn11").click(function () {
+                $("#form1").hide("3000");
+            });
+            $(".ren").click(function () {
+                $("#form11").show("3000");
+            });
+            $(".btn111").click(function () {
+                $("#form11").hide("3000");
+            });
+
+            //修改密码
+            $("#sub1").click(function () {
+                var pwd1 = $("#pwd1").val();
+                var pwd2 = $("#pwd2").val();
+                var pwd3 = $("#pwd3").val();
+                if (pwd1 != null && pwd1.trim() != "" && pwd2 != null && pwd2.trim() != "" && pwd3 != null && pwd3.trim() != "") {
+
+                    if (pwd2 != pwd3) {
+                        layui.use("layer", function () {
+                            var layer = layui.layer;
+                            layer.open(
+                                {
+                                    offset: "200px",
+                                    content: "两次密码不一致~"
+                                }
+                            );
+                        });
+                    } else {
+                        $.post(
+                            "${pageContext.request.contextPath}/user/updatePwd",
+                            "pwd=" + pwd2,
+                            function (query) {
+                                if (query.query) {
+                                    layui.use("layer", function () {
+                                        var layer = layui.layer;
+                                        layer.open(
+                                            {
+                                                offset: "200px",
+                                                content: "修改成功,请重新登录~",
+                                                btn: "确定",
+                                                yes: function () {
+                                                    location.href = "${pageContext.request.contextPath}/"
+                                                }
+                                            }
+                                        );
+                                    });
+                                } else {
+                                    layui.use("layer", function () {
+                                        var layer = layui.layer;
+                                        layer.open(
+                                            {
+                                                offset: "200px",
+                                                content: "修改失败~"
+                                            }
+                                        );
+                                    });
+                                }
+                            },
+                            "JSON"
+                        );
+                    }
                 } else {
-                    return true;
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "密码新密码不能为空~",
+                            }
+                        );
+                    });
                 }
-            })
+            });
+            //判断密码
+            $("#pwd1").blur(function () {
+                var values = $(this).val();
+                $.post(
+                    "${pageContext.request.contextPath}/user/selectByPwd",
+                    "pwd=" + values,
+                    function (query) {
+                        if (query.query) {
+                            $("#sub1").removeAttr("disabled");
+                        } else {
+                            $("#sub1").attr("disabled", "disabled");
+                            layui.use("layer", function () {
+                                var layer = layui.layer;
+                                layer.open(
+                                    {
+                                        offset: "200px",
+                                        content: "原密码错误~"
+                                    }
+                                );
+                            });
+                        }
+                    },
+                    "JSON"
+                );
+
+            });
+            //修改身份号
+            $("#sub11").click(function () {
+                var name = $("#pwd11").val();
+                var card = $("#pwd22").val();
+                if (name != null && name.trim() != "" && card != null && card.trim() != "") {
+                    $.post(
+                        "${pageContext.request.contextPath}/user/updateCard",
+                        "name="+name+"&card="+card,
+                        function (query) {
+                            if (query.query) {
+                                layui.use("layer", function () {
+                                    var layer = layui.layer;
+                                    layer.open(
+                                        {
+                                            offset: "200px",
+                                            content: "修改成功~",
+                                            btn: "确定",
+                                            yes: function () {
+                                                location.href = "${pageContext.request.contextPath}/addUiUserInfo"
+                                            }
+                                        }
+                                    );
+                                });
+                            } else {
+                                layui.use("layer", function () {
+                                    var layer = layui.layer;
+                                    layer.open(
+                                        {
+                                            offset: "200px",
+                                            content: "修改失败~"
+                                        }
+                                    );
+                                });
+                            }
+                        },
+                        "JSON"
+                    );
+
+
+                } else {
+                    layui.use("layer", function () {
+                        var layer = layui.layer;
+                        layer.open(
+                            {
+                                offset: "200px",
+                                content: "姓名身份证号不能为空~",
+                            }
+                        );
+                    });
+                }
+            });
+
         });
 
         layui.use('upload', function () {
@@ -574,8 +226,84 @@
                     }
                 }
             });
+
         });
     </script>
+    <style>
+
+        .sss {
+            position: relative;
+        }
+
+        .layui-btn {
+            position: absolute;
+            top: 75px;
+            left: 44%;
+        }
+
+        .uuu {
+            font-size: 20px;
+        }
+
+        .uuu li {
+            margin: 30px;
+        }
+
+        .login, .time, .card {
+
+            margin-right: 25%;
+        }
+
+        .card {
+            margin-right: 34%;
+        }
+
+        .time {
+            margin-right: 35%;
+        }
+
+        .phone {
+            margin-right: 40%;
+        }
+
+        .up {
+            margin-left: 30%;
+        }
+
+        #form1,#form11 {
+            margin-left: 34%;
+        }
+
+        .input {
+            border-radius: 5px 5px 5px 5px;
+            border: 1px solid rgba(192, 192, 192, 0.8);
+            display: inline-block;
+            margin-bottom: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        #sub1,#sub11 {
+            border-radius: 5px 5px 5px 5px;
+            font-size: 15px;
+            width: 100px;
+            border: none;
+            color: white;
+            margin-left: 20%;
+            padding: 6px;
+            background: #FF7F27;
+        }
+
+        .btn11,.btn111 {
+            border-radius: 5px 5px 5px 5px;
+            padding: 6px;
+            font-size: 15px;
+            width: 100px;
+            border: none;
+            color: white;
+            background: #FF7F27;
+        }
+    </style>
 </head>
 
 <body>
@@ -629,8 +357,8 @@
             <!--首页对logo添加h1标签-->
             <h1 class="rrd-logo">人人贷</h1></a>
         <ul class="site-nav">
-            <li class="user-item fn-clear" num="">
-                <div class="denglu">
+            <li class="user-item fn-clear " num="">
+                <div class="denglu active-channel">
                     <img width="30px" height="30px" id="touXiang"
                          src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
                     <a target="_self" rel="nofollow" href="${pageContext.request.contextPath}/user//selectById">我的账户</a>
@@ -645,7 +373,7 @@
             <li class="channel-item  can-lend">
                 <a href="${pageContext.request.contextPath}/addUiBorrow">我要借款</a>
             </li>
-            <li class="channel-item active-channel">
+            <li class="channel-item ">
                 <a href="${pageContext.request.contextPath}/product//selectAll">首页</a>
             </li>
         </ul>
@@ -667,14 +395,57 @@
     <span style="margin-left: 48%" class="span-span">账户设置</span>
     <hr/>
     <form method="post" enctype="multipart/form-data">
-        <img class="img11" style="width: 100px;height: 100px;margin-left: 42%"
-             src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
-        <span style="font-size: 20px;margin-left: 2%">${user.userName}</span>
-        <button type="button" class="layui-btn" id="test1" name="touXiang" style="background: sandybrown">
-            <i class="layui-icon layui-icon-picture"></i>
-        </button>
-        <hr/>
+        <div class="sss">
+            <img class="img11" style="width: 100px;height: 100px;margin-left: 42%;margin-bottom: 30px"
+                 src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
+            <span style="font-size: 20px;margin-left: 2%">${user.userName}</span>
+            <button type="button" class="layui-btn " id="test1" name="touXiang" style="background: sandybrown">
+                <i class="layui-icon layui-icon-camera"></i>
+            </button>
+        </div>
     </form>
+    <hr/>
+    <ul class="uuu">
+        <li><span class="phone">手机号：</span>${user.userPhone}</li>
+        <hr/>
+        <li><span class="time">注册时间：</span><fmt:formatDate value="${user.userRegisterTime}"
+                                                           pattern="yyyy-MM-dd HH:mm:ss"/></li>
+        <hr/>
+        <li><span class="card">身份证号：</span>
+            <c:if test="${user.userCard==nlll}">
+                暂未实名认证
+                <span class="ren" style="margin-left:40%;cursor:pointer;font-size: 15px ">去认证</span>
+            </c:if>
+            <c:if test="${user.userCard!=nlll}">
+                ${user.userCard}
+            </c:if>
+        </li>
+        <form id="form11" action="" method="post" style="display: none">
+            <span style="margin-left: 40px">姓名：</span><input autocomplete="off" class="input" id="pwd11" type="text"  name="name"/>
+            <br/>
+            <span >身份证号：</span><input class="input" autocomplete="off" id="pwd22" type="text" name="card"/>
+            <br/>
+            <input style="cursor:pointer " class="btn111" type="button" value="取消"/> <input style="cursor:pointer "
+                                                                                           id="sub11" type="button"
+                                                                                           value="修改"/>
+        </form>
+        <hr/>
+        <li><span class="login">登录密码：</span>
+            <span>上次登录时间：<fmt:formatDate value="${user.userLoginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></span>
+            <span class="up" style="cursor:pointer;font-size: 15px ">修改密码</span></li>
+        <form id="form1" action="" method="post" style="display: none">
+            <span style="margin-left: 17px">原密码：</span><input class="input" id="pwd1" type="password" name="pwd"/>
+            <br/>
+            <span style="margin-left: 17px">新密码：</span><input class="input" id="pwd2" type="password" name="newPwd"/>
+            <br/>
+            <span>确认密码：</span><input class="input" type="password" id="pwd3" name="pwd"/>
+            <br/>
+            <input style="cursor:pointer " class="btn11" type="button" value="取消"/> <input style="cursor:pointer "
+                                                                                           id="sub1" type="button"
+                                                                                           value="修改"/>
+        </form>
+        <hr/>
+    </ul>
 
 </div>
 
