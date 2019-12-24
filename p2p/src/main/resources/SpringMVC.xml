@@ -48,6 +48,7 @@
     <mvc:view-controller path="/addUlLogin" view-name="login"/>
     <mvc:view-controller path="/addUiRepayment" view-name="repayment"/>
     <mvc:view-controller path="/addUiBorrow" view-name="borrow"/>
+    <mvc:view-controller path="/addUiUserInfo" view-name="userInfo"/>
     <!--配置拦截器-->
 <!--    <mvc:interceptors>-->
 <!--        <mvc:interceptor>-->

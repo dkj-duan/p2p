@@ -32,6 +32,7 @@
     <script type="text/javascript">
         $(function () {
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
+
             $(".jqLi").click(function () {
                 $(this).css("border-bottom", "2px solid royalblue")
                 $(".jqLi1").css("border-bottom", "");
@@ -215,7 +216,8 @@
                                             width: 242,
                                             title: '利息',
                                             templet: function (data) {
-                                                return (data.earningsMoney-data.bid.bidMoney).toFixed(2) ;;
+                                                return (data.earningsMoney - data.bid.bidMoney).toFixed(2);
+                                                ;
                                             }
                                         }
                                             , {
@@ -223,9 +225,9 @@
                                             width: 242,
                                             title: '状态',
                                             templet: function (data) {
-                                                if (data.earningsState==1){
+                                                if (data.earningsState == 1) {
                                                     return "未收益"
-                                                }else {
+                                                } else {
                                                     return "已收益"
                                                 }
 
@@ -345,7 +347,8 @@
                                             width: 242,
                                             title: '利息',
                                             templet: function (data) {
-                                               return (data.earningsMoney-data.bid.bidMoney).toFixed(2) ;;
+                                                return (data.earningsMoney - data.bid.bidMoney).toFixed(2);
+                                                ;
                                             }
                                         }
                                             , {
@@ -353,9 +356,9 @@
                                             width: 242,
                                             title: '状态',
                                             templet: function (data) {
-                                                if (data.earningsState==1){
+                                                if (data.earningsState == 1) {
                                                     return "未收益"
-                                                }else {
+                                                } else {
                                                     return "已收益"
                                                 }
 
@@ -457,7 +460,7 @@
                                             width: 241,
                                             title: '充值金额',
                                             templet: function (data) {
-                                                return data.money+"元";
+                                                return data.money + "元";
                                             }
                                         }, {
                                             field: 'state',
@@ -527,20 +530,50 @@
                 )
             });
 
-
-
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
+            $(".img11").css({"border-radius": "72px 72px 72px 72px", "display": "inline-block"});
             $("#form").submit(function () {
                 var values = $(".input_i").val();
-                if (values.trim().length<=0){
+                if (values.trim().length <= 0) {
                     $(".mo1").html("请输入充值金额");
                     return false;
-                }else {
+                } else {
                     return true;
                 }
             })
+        });
 
+        layui.use('upload', function () {
+            var upload = layui.upload;
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#test1' //绑定元素
+                , url: '${pageContext.request.contextPath}/upLoad/up' //上传接口
+                , done: function (res) {
+                    if (res.query) {
+                        layui.use("layer", function () {
+                            var layer = layui.layer;
+                            layer.open(
+                                {
+                                    offset: "200px",
+                                    content: "修改成功~",
+                                    btn: "确定",
+                                    yes: function (index, layero) {
+                                        location.href = "${pageContext.request.contextPath}/addUiUserInfo"
+                                    }
+                                }
+                            );
+
+                        });
+                    } else {
+                        layui.use('layer', function () { //独立版的layer无需执行这一句
+                            var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+                            layer.msg("修改失败~");
+                        });
+                    }
+                }
+            });
         });
     </script>
 </head>
@@ -624,56 +657,27 @@
         <ul class="account-menu fn-clear">
             <!--网站拆分，werenrendai.com和we.com展示不同的header-->
 
-            <li class='active'><a href="${pageContext.request.contextPath}/user//selectById">P2P资产</a></li>
-            <li class=' '><a href="${pageContext.request.contextPath}/addUiUserInfo">账户设置</a></li>
+            <li><a href="${pageContext.request.contextPath}/user//selectById">P2P资产</a></li>
+            <li class='active'><a href="${pageContext.request.contextPath}/addUiUserInfo">账户设置</a></li>
         </ul>
     </div>
 </div>
 
 <div class="s">
-    <span class="span-span">${user.userName}</span>
+    <span style="margin-left: 48%" class="span-span">账户设置</span>
     <hr/>
-    <!--数据详细信息-->
-    <div class="xiangXi">
-        <ul class="_money">
-            <li class="li">${balance.money}<span id="span-yuan">元</span></li>
-            <li>账户剩余金额</li>
-        </ul>
-    </div>
+    <form method="post" enctype="multipart/form-data">
+        <img class="img11" style="width: 100px;height: 100px;margin-left: 42%"
+             src="http://localhost:8080/${pageContext.request.contextPath}/upload/${user.userImg}"/>
+        <span style="font-size: 20px;margin-left: 2%">${user.userName}</span>
+        <button type="button" class="layui-btn" id="test1" name="touXiang" style="background: sandybrown">
+            <i class="layui-icon layui-icon-picture"></i>
+        </button>
+        <hr/>
+    </form>
 
-    <div class="touZi">
-        <form id="form" action="${pageContext.request.contextPath}/alipay//addUlAlipay" method="post">
-            <ul>
-                <li><span class="mo">请输入充值金额</span></li>
-                <li><input class="input_i" type="text" autocomplete="off" name="money" placeholder=""/>
-                    <br/>
-                    <span class="mo1"></span>
-                </li>
-                <li><input class="sub" type="submit" value="充值"/></li>
-            </ul>
-
-        </form>
-
-    </div>
 </div>
 
-<div id="xinXi">
-    <ul class="tou">
-        <li class="jqLi" id="jqLi">
-            <a style="cursor:pointer " onclick="return true">散标</a>
-        </li>
-        <li class="jqLi1">
-            <a style="cursor:pointer" onclick="return true">U享</a>
-        </li>
-        <li class="jqLi2">
-            <a style="cursor:pointer" onclick="return true">薪享</a>
-        </li>
-        <li class="jqLi3">
-            <a style="cursor:pointer" onclick="return true">充值记录</a>
-        </li>
-    </ul>
-    <table class="layui-table" id="layui_table_id"></table>
-</div>
 <!--底部导航栏-->
 <div class="werenrendai-footer">
 

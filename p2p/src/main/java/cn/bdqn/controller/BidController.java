@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/bid/")
+@SessionAttributes(value = {"message"})
 public class BidController {
 
     //投资表
