@@ -216,19 +216,18 @@
                 var values = $(this).val();
                 if (values <=${balance.money}) {
                     if (values <=${product.balance}) {
-                        if ((!values <${product.minMoney})) {
+
+                        if (!(values <(${product.minMoney}))) {
                             $(".sub").attr("type", "submit");
-                            var yue = ${product.rate}/12*values*${product.period};
-                            $(".mo1").html("可获取" + yue + "元");
                         } else {
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                             $(".sub").attr("type", "button");
+                            return;
                         }
+
                         if (values % 100 == 0) {
                             $(".mo1").html(" ");
                             $(".sub").attr("type", "submit");
-                            var yue = ${product.rate}/12*values*${product.period};
-                            $(".mo1").html("可获取" + yue + "元");
                             if (values >${product.maxMoney}) {
                                 $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                                 $(".sub").attr("type", "button");
@@ -243,6 +242,7 @@
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
                             $(".sub").attr("type", "button");
                         }
+
                     } else {
                         $(".mo1").html("投资金额大于剩余投注金额");
                         $(".sub").attr("type", "button");
@@ -253,6 +253,7 @@
                 }
             });
         });
+
     </script>
 </head>
 
