@@ -32,12 +32,13 @@
 
         $(function () {
 
-            layui.use("layer",function () {
+            layui.use("layer", function () {
                 var layer = layui.layer;
-                if (${message!=null}){
+                if (${message!=null}) {
                     layer.open(
-                        {offset:"200px",
-                            content:"${message}"
+                        {
+                            offset: "200px",
+                            content: "${message}"
                         }
                     );
                 }
@@ -103,7 +104,7 @@
                                             }
                                         }, {
                                             field: 'userPhone',
-                                            width: 400,
+                                            width: 300,
                                             title: '手机号',
                                             templet: function (data) {
                                                 var newStr;
@@ -121,13 +122,20 @@
 
                                                 return newStr;
                                             }
-                                        }, {
-                                            field: 'bidTime',
-                                            width: 510,
-                                            title: "投标时间",
-                                            templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
+                                        },
+                                            {
+                                                field: 'bidMoney',
+                                                width: 210,
+                                                title: "投注金额"
+                                            }
+                                            ,
+                                            {
+                                                field: 'bidTime',
+                                                width: 400,
+                                                title: "投标时间",
+                                                templet: "<a href='particular.jsp'>{{layui.util.toDateString(d.bidTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
 
-                                        }]
+                                            }]
                                     ]
                                 });
                             });
@@ -185,27 +193,27 @@
             $("#form").submit(function () {
 
                 var card = $(".card1").val();
-                if (card==null||card.trim()==''){
+                if (card == null || card.trim() == '') {
                     layui.use("layer", function () {
                         var layer = layui.layer;
                         layer.open(
                             {
                                 offset: "200px",
                                 content: "您还未实名认证,请移步去认证~",
-                                btn: ["确定","取消"],
+                                btn: ["确定", "取消"],
                                 yes: function () {
                                     location.href = "${pageContext.request.contextPath}/addUiUserInfo"
                                 },
-                                btn2:function () {
+                                btn2: function () {
                                     layer.closeAll();
                                 }
                             }
                         )
                     });
                     return false;
-                }else {
+                } else {
                     var values = $(".input_i").val();
-                    if (values.trim().length<1){
+                    if (values.trim().length < 1) {
                         $(".mo1").html("请输入投注金额~");
                         return false;
                     }
@@ -217,7 +225,7 @@
                 if (values <=${balance.money}) {
                     if (values <=${product.balance}) {
 
-                        if (!(values <(${product.minMoney}))) {
+                        if (!(values < (${product.minMoney}))) {
                             $(".sub").attr("type", "submit");
                         } else {
                             $(".mo1").html("起投必须大于最小起投值并小于最大起投，必须是100的整数");
@@ -234,7 +242,8 @@
                             } else {
                                 $(".sub").attr("type", "submit");
                                 $(".mo1").html(" ");
-                                var yue = ${product.rate}/100/12;
+                                var yue = ${product.rate}/100/
+                                12;
                                 var monoy = yue * values *${product.period};
                                 $(".mo1").html("可获取" + monoy.toFixed(2) + "元");
                             }
@@ -315,7 +324,7 @@
     </div>
 </div>
 <%
-session.removeAttribute("message");
+    session.removeAttribute("message");
 %>
 <div class="s">
     <span class="span-span">${product.productName}</span>

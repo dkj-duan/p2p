@@ -28,6 +28,7 @@ import java.util.List;
 public class BidController {
 
     //投资表
+
     @Autowired
     private BidService bidService;
 
@@ -113,7 +114,6 @@ public class BidController {
     public List<Bid> selectAjax(Integer productId)throws Exception{
 
         try {
-
             //根据产品id查询产品投资人
             List<Bid> bids = bidService.queryByProductId(productId);
             return bids;
