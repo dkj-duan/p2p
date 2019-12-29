@@ -38,7 +38,14 @@
   </sql>
 
 
-<!--  查询全部-->
+  <select id="selectByState" resultMap="BaseResultMap">
+    select
+    <include refid="join"/>
+    from t_scattered as s,t_user as u
+    where s.user_id = u.user_Id and s.state = 1
+  </select>
+
+  <!--  查询全部-->
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="join"/>

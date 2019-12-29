@@ -45,6 +45,11 @@ public class ScatteredServiceImpl implements ScatteredService {
     }
 
     @Override
+    public List<Scattered> queryByState() {
+        return scatteredMapper.selectByState();
+    }
+
+    @Override
     public void updateByPrimaryKeySelective(Scattered record) {
 
         scatteredMapper.updateByPrimaryKeySelective(record);

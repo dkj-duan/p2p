@@ -43,6 +43,11 @@ public interface ScatteredService {
      */
     public List<Scattered> queryAll();
 
+    /**
+     * 根据状态查询
+     * @return
+     */
+    public List<Scattered> queryByState();
 
     /**
      * 选择性更新

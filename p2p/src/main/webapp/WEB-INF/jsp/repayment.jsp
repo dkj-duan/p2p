@@ -105,7 +105,13 @@
                                             field: 'practicalTime',
                                             width: 151,
                                             title: '实际还款日',
-                                            templet: "<a >{{layui.util.toDateString(d.practicalTime, 'yyyy-MM-dd')}}</a>"
+                                            templet:function (values) {
+                                                if (values.practicalTime==null){
+                                                    return "暂无还款";
+                                                }else {
+                                                    return layui.util.toDateString(values.practicalTime, 'yyyy-MM-dd');
+                                                }
+                                            }
                                         }, {
                                             field: 'practicalTime',
                                             width: 151,

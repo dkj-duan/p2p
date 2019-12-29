@@ -60,7 +60,7 @@ public class ProductController {
             PageInfo<Product> products2 = new PageInfo<>(productService.queryByAll(2));
             //散标
             PageHelper .startPage(1,5);
-            PageInfo<Scattered> scattered = new PageInfo<>(scatteredService.queryAll());
+            PageInfo<Scattered> scattered = new PageInfo<>(scatteredService.queryByState());
             //查询全部注册用户
             List<User> userList = userService.queryAll();
             //放在作用域中

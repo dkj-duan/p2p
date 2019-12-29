@@ -44,6 +44,11 @@ public interface ScatteredMapper {
      */
     public List<Scattered> selectAll();
 
+    /**
+     * 根据状态查询
+     * @return
+     */
+    public List<Scattered> selectByState();
 
     /**
      * 选择性更新
