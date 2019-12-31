@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.RepaymentMapper" >
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Repayment" >
+    <id column="rep_id" property="repId" jdbcType="INTEGER" />
+    <result column="due_time" property="dueTime" jdbcType="DATE" />
+    <result column="nex_time" property="nexTime" jdbcType="DATE" />
+    <result column="practical_time" property="practicalTime" jdbcType="DATE" />
+    <result column="repay_money" property="repayMoney"  />
+    <result column="surplus_monry" property="surplusMonry"  />
+    <result column="repay_user_id" property="repayUserId" jdbcType="INTEGER" />
+    <result column="periods" property="periods" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+<!--    散标对象映射-->
+    <association property="scattered" javaType="cn.bdqn.domain.Scattered">
+      <id column="sc_id" property="scId" jdbcType="INTEGER" />
+      <result column="rent_money" property="rentMoney"  />
+      <result column="residue_money" property="residueMoney"  />
+      <result column="periods" property="periods" jdbcType="INTEGER" />
+      <result column="rate" property="rate"/>
+      <result column="state" property="state" jdbcType="INTEGER" />
+      <result column="annotation" property="annotation" />
+    </association>
+<!--    放款人对象映射-->
+    <association property="payeeUser" javaType="cn.bdqn.domain.User">
+      <id column="uUser" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    rep_id, sc_id, due_time, nex_time, practical_time, repay_money, surplus_monry, repay_user_id, 
+    payee_user_id, periods, state
+  </sql>
+
+  <sql id="join">
+    r.rep_id, r.sc_id, r.due_time, r.nex_time, r.practical_time, r.repay_money, r.surplus_monry, r.repay_user_id,
+    r.payee_user_id, r.periods, r.state,
+     s.sc_id, s.user_id, s.rent_money, s.residue_money, s.periods, s.state,s.annotation,
+     u.user_Id as uUser, u.user_Phone, u.user_Pwd, u.user_Name, u.user_Card, u.user_register_time, u.user_login_time,
+    u.user_img
+  </sql>
+
+<!--  根据id查询-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="join" />
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.rep_id = #{repId,jdbcType=INTEGER}
+  </select>
+
+<!--  根据状态查询-->
+  <select id="selectByState" resultMap="BaseResultMap">
+    select
+    <include refid="join" />
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.state = 1
+  </select>
+<!--  根据出借人id查询-->
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="join"/>
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.payee_user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+<!--  根据还款人id查询-->
+  <select id="selectByRepayUserId" resultMap="BaseResultMap">
+    select
+    <include refid="join"/>
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.repay_user_id = #{RepayUserId,jdbcType=INTEGER}
+    and r.state = 1
+  </select>
+
+<!--  根据id删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_repayment
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </delete>
+
+<!--  添加一个对象-->
+  <insert id="insert" parameterType="cn.bdqn.domain.Repayment" >
+    insert into t_repayment (rep_id, sc_id, due_time, 
+      nex_time, practical_time, repay_money, 
+      surplus_monry, repay_user_id, payee_user_id, 
+      periods, state)
+    values (#{repId,jdbcType=INTEGER}, #{scattered.scId,jdbcType=INTEGER}, #{dueTime,jdbcType=DATE},
+      #{nexTime,jdbcType=DATE}, #{practicalTime,jdbcType=DATE}, #{repayMoney},
+      #{surplusMonry}, #{repayUserId,jdbcType=INTEGER}, #{payeeUser.userId,jdbcType=INTEGER},
+      #{periods,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
+  </insert>
+
+<!--  选择性添加-->
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Repayment" >
+    insert into t_repayment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="repId != null" >
+        rep_id,
+      </if>
+      <if test="scattered.scId != null" >
+        sc_id,
+      </if>
+      <if test="dueTime != null" >
+        due_time,
+      </if>
+      <if test="nexTime != null" >
+        nex_time,
+      </if>
+      <if test="practicalTime != null" >
+        practical_time,
+      </if>
+      <if test="repayMoney != null" >
+        repay_money,
+      </if>
+      <if test="surplusMonry != null" >
+        surplus_monry,
+      </if>
+      <if test="repayUserId != null" >
+        repay_user_id,
+      </if>
+      <if test="payeeUser.userId != null" >
+        payee_user_id,
+      </if>
+      <if test="periods != null" >
+        periods,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="repId != null" >
+        #{repId,jdbcType=INTEGER},
+      </if>
+      <if test="scattered.scId != null" >
+        #{scattered.scId,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        #{dueTime,jdbcType=DATE},
+      </if>
+      <if test="nexTime != null" >
+        #{nexTime,jdbcType=DATE},
+      </if>
+      <if test="practicalTime != null" >
+        #{practicalTime,jdbcType=DATE},
+      </if>
+      <if test="repayMoney != null" >
+        #{repayMoney},
+      </if>
+      <if test="surplusMonry != null" >
+        #{surplusMonry},
+      </if>
+      <if test="repayUserId != null" >
+        #{repayUserId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeUser.userId != null" >
+        #{payeeUser.userId,jdbcType=INTEGER},
+      </if>
+      <if test="periods != null" >
+        #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+<!--  选择性更新-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Repayment" >
+    update t_repayment
+    <set >
+      <if test="scattered.scId != null" >
+        sc_id = #{scattered.scId,jdbcType=INTEGER},
+      </if>
+      <if test="dueTime != null" >
+        due_time = #{dueTime,jdbcType=DATE},
+      </if>
+      <if test="nexTime != null" >
+        nex_time = #{nexTime,jdbcType=DATE},
+      </if>
+      <if test="practicalTime != null" >
+        practical_time = #{practicalTime,jdbcType=DATE},
+      </if>
+      <if test="repayMoney != null" >
+        repay_money = #{repayMoney},
+      </if>
+      <if test="surplusMonry != null" >
+        surplus_monry = #{surplusMonry},
+      </if>
+      <if test="repayUserId != null" >
+        repay_user_id = #{repayUserId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeUser.userId != null" >
+        payee_user_id = #{payeeUser.userId,jdbcType=INTEGER},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </update>
+<!--  更新全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Repayment" >
+    update t_repayment
+    set sc_id = #{scattered.scId,jdbcType=INTEGER},
+      due_time = #{dueTime,jdbcType=DATE},
+      nex_time = #{nexTime,jdbcType=DATE},
+      practical_time = #{practicalTime,jdbcType=DATE},
+      repay_money = #{repayMoney},
+      surplus_monry = #{surplusMonry},
+      repay_user_id = #{repayUserId,jdbcType=INTEGER},
+      payee_user_id = #{payeeUser.userId,jdbcType=INTEGER},
+      periods = #{periods,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where rep_id = #{repId,jdbcType=INTEGER}
+  </update>
+</mapper>
