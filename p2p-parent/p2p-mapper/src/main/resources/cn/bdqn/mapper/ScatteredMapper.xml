@@ -69,7 +69,7 @@
   </delete>
 
 <!--  添加用户-->
-  <insert id="insert" parameterType="cn.bdqn.domain.Scattered" >
+  <insert id="insert" parameterType="cn.bdqn.domain.Record" >
     insert into t_scattered (sc_id, user_id, rent_money, 
       residue_money, periods,rate, state,
       annotation)
@@ -80,7 +80,7 @@
 
 
 <!--  选择性添加用户-->
-  <insert id="insertSelective" parameterType="cn.bdqn.domain.Scattered" >
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Record" >
     insert into t_scattered
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scId != null" >
@@ -137,7 +137,7 @@
   </insert>
 
 <!--  选择性更新-->
-  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Scattered" >
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Record" >
     update t_scattered
     <set >
       <if test="user.userId != null" >
@@ -166,7 +166,7 @@
   </update>
 
 <!--  更新全部-->
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.bdqn.domain.Scattered" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.bdqn.domain.Record" >
     update t_scattered
     set user_id = #{user.userId,jdbcType=INTEGER},
       rent_money = #{rentMoney},
@@ -178,7 +178,7 @@
     where sc_id = #{scId,jdbcType=INTEGER}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Scattered" >
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Record" >
     update t_scattered
     set user_id = #{user.userId,jdbcType=INTEGER},
       rent_money = #{rentMoney },

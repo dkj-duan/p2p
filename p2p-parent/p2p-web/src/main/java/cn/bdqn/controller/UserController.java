@@ -75,9 +75,9 @@ public class UserController {
             users.setUserRegisterTime(new Date());
             Random random = new Random();
 
-            users.setUserName("Y225"+ random.nextInt(5000));
+            users.setUserName("Y225-"+ random.nextInt(5000));
             users.setUserPwd(MD5Util.encode(users.getUserPwd()));
-            users.setUserImg("moren.jpg");
+            users.setUserImg(".jpg");
             //添加用户的方法
             userService.save(users);
             //创建用户资金表

@@ -149,7 +149,7 @@
                 if (name != null && name.trim() != "" && card != null && card.trim() != "") {
                     $.post(
                         "${pageContext.request.contextPath}/user/updateCard",
-                        "name="+name+"&card="+card,
+                        "name=" + name + "&card=" + card,
                         function (query) {
                             if (query.query) {
                                 layui.use("layer", function () {
@@ -179,8 +179,6 @@
                         },
                         "JSON"
                     );
-
-
                 } else {
                     layui.use("layer", function () {
                         var layer = layui.layer;
@@ -230,11 +228,9 @@
         });
     </script>
     <style>
-
         .sss {
             position: relative;
         }
-
         .layui-btn {
             position: absolute;
             top: 75px;
@@ -270,7 +266,7 @@
             margin-left: 30%;
         }
 
-        #form1,#form11 {
+        #form1, #form11 {
             margin-left: 34%;
         }
 
@@ -283,7 +279,7 @@
             padding-bottom: 5px;
         }
 
-        #sub1,#sub11 {
+        #sub1, #sub11 {
             border-radius: 5px 5px 5px 5px;
             font-size: 15px;
             width: 100px;
@@ -294,7 +290,7 @@
             background: #FF7F27;
         }
 
-        .btn11,.btn111 {
+        .btn11, .btn111 {
             border-radius: 5px 5px 5px 5px;
             padding: 6px;
             font-size: 15px;
@@ -421,13 +417,14 @@
             </c:if>
         </li>
         <form id="form11" action="" method="post" style="display: none">
-            <span style="margin-left: 40px">姓名：</span><input autocomplete="off" class="input" id="pwd11" type="text"  name="name"/>
+            <span style="margin-left: 40px">姓名：</span><input autocomplete="off" class="input" id="pwd11" type="text"
+                                                             name="name"/>
             <br/>
-            <span >身份证号：</span><input class="input" autocomplete="off" id="pwd22" type="text" name="card"/>
+            <span>身份证号：</span><input class="input" autocomplete="off" id="pwd22" type="text" name="card"/>
             <br/>
             <input style="cursor:pointer " class="btn111" type="button" value="取消"/> <input style="cursor:pointer "
-                                                                                           id="sub11" type="button"
-                                                                                           value="修改"/>
+                                                                                            id="sub11" type="button"
+                                                                                            value="修改"/>
         </form>
         <hr/>
         <li><span class="login">登录密码：</span>

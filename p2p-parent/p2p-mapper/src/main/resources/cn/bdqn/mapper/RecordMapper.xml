@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.bdqn.mapper.RecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.bdqn.domain.Record" >
+    <id column="re_id" property="reId" jdbcType="INTEGER" />
+    <result column="sc_id" property="scId" jdbcType="INTEGER" />
+    <result column="repay_money" property="repayMoney"  />
+    <result column="repay_time" property="repayTime" jdbcType="DATE" />
+    <association property="user" javaType="cn.bdqn.domain.User">
+      <id column="uUser" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    </association>
+    <association property="repayUser" javaType="cn.bdqn.domain.User">
+      <id column="uUser1" property="userId" jdbcType="INTEGER" />
+      <result column="user_Phone1" property="userPhone" jdbcType="VARCHAR" />
+      <result column="user_Pwd1" property="userPwd" jdbcType="VARCHAR" />
+      <result column="user_Name1" property="userName" jdbcType="VARCHAR" />
+      <result column="user_Card1" property="userCard" jdbcType="VARCHAR" />
+      <result column="user_register_time1" property="userRegisterTime" jdbcType="TIMESTAMP" />
+      <result column="user_login_time1" property="userLoginTime" jdbcType="TIMESTAMP" />
+      <result column="user_img1" property="userImg" jdbcType="VARCHAR" />
+    </association>
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    r.re_id, r.repay_user_id, r.user_id,r.sc_id, r.repay_money, r.repay_time,
+    u.user_Id as uUser, u.user_Phone, u.user_Pwd, u.user_Name, u.user_Card, u.user_register_time, u.user_login_time,
+    u.user_img,
+    u1.user_Id as uUser1, u1.user_Phone as user_Phone1, u1.user_Pwd as user_Pwd1 , u1.user_Name as user_Name1,
+     u1.user_Card as user_Card1, u1.user_register_time as user_register_time1, u1.user_login_time as user_login_time1,
+    u1.user_img as user_img1
+  </sql>
+<!--  根据主键查询-->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_record as r,t_user as u,t_user as u1
+    where r.user_id = u.user_Id and r.repay_user_id = u1.user_Id and r.re_id = #{reId,jdbcType=INTEGER}
+  </select>
+
+
+<!--  根据还款人id and 散标id查询-->
+  <select id="selectByRepayUserIdAndScId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_record as r,t_user as u
+    where r.user_id = u.user_Id and r.repay_user_id = u1.user_Id and r.repay_user_id = #{repayUserId} and r.sc_id = #{scId}
+  </select>
+
+  <!--  根据收款人id and 散标id查询-->
+  <select id="selectByUserIdAndScId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_record as r,t_user as u
+    where r.user_id = u.user_Id and r.repay_user_id = u1.user_Id and r.user_id = #{userId} and r.sc_id = #{scId}
+  </select>
+
+<!--  根据主键删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_record
+    where re_id = #{reId,jdbcType=INTEGER}
+  </delete>
+
+<!--  添加一个对象-->
+  <insert id="insert" parameterType="cn.bdqn.domain.Record" >
+    insert into t_record (repay_user_id, user_id,
+      repay_money, repay_time)
+    values (#{repayUser.userId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER},
+      #{repayMoney}, #{repayTime,jdbcType=DATE})
+  </insert>
+<!--  选择性添加-->
+  <insert id="insertSelective" parameterType="cn.bdqn.domain.Record" >
+    insert into t_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reId != null" >
+        re_id,
+      </if>
+      <if test="repayUser.userId != null" >
+        repay_user_id,
+      </if>
+      <if test="user.userId != null" >
+        user_id,
+      </if>
+      <if test="repayMoney != null" >
+        repay_money,
+      </if>
+      <if test="repayTime != null" >
+        repay_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reId != null" >
+        #{reId,jdbcType=INTEGER},
+      </if>
+      <if test="repayUser.userId != null" >
+        #{repayUser.userId,jdbcType=INTEGER},
+      </if>
+      <if test="user.userId != null" >
+        #{user.userId,jdbcType=INTEGER},
+      </if>
+      <if test="repayMoney != null" >
+        #{repayMoney},
+      </if>
+      <if test="repayTime != null" >
+        #{repayTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+<!--  选择性更新-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Record" >
+    update t_record
+    <set >
+      <if test="repayUser.userId != null" >
+        repay_user_id = #{repayUser.userId,jdbcType=INTEGER},
+      </if>
+      <if test="user.userId != null" >
+        user_id = #{user.userId,jdbcType=INTEGER},
+      </if>
+      <if test="repayMoney != null" >
+        repay_money = #{repayMoney},
+      </if>
+      <if test="repayTime != null" >
+        repay_time = #{repayTime,jdbcType=DATE},
+      </if>
+    </set>
+    where re_id = #{reId,jdbcType=INTEGER}
+  </update>
+<!--  更新全部-->
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Record" >
+    update t_record
+    set repay_user_id = #{repayUser.userId,jdbcType=INTEGER},
+      user_id = #{user.userId,jdbcType=INTEGER},
+      repay_money = #{repayMoney},
+      repay_time = #{repayTime,jdbcType=DATE}
+    where re_id = #{reId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -34,7 +34,8 @@ public class RepaymentController {
     private UserService userService;
     @Autowired
     private BalanceService balanceService;
-
+    @Autowired
+    private RecordService recordService;
     @RequestMapping("/addRepayment")
     public String addRepayment(@SessionAttribute("user") User user, ModelMap modelMap, Repayment repayment, Integer loanMoney, Integer scId) throws Exception {
 
@@ -87,9 +88,8 @@ public class RepaymentController {
             BigDecimal interest = new BigDecimal(loanMoney * yue * scattered.getPeriods());
             //计算每个月要还的钱
             DecimalFormat df = new DecimalFormat("0.00");
-             //总共要还的钱
+            //总共要还的钱
             BigDecimal sum = new BigDecimal(df.format(interest.add(new BigDecimal(loanMoney))));
-            System.out.println(sum);
             BigDecimal yueSum = new BigDecimal(df.format(sum.divide(new BigDecimal(scattered.getPeriods()),2,BigDecimal.ROUND_HALF_UP)));
             //添加放款人id
             repayment.setPayeeUser(user);
@@ -102,7 +102,6 @@ public class RepaymentController {
             repayment.setState(1);
             //添加还款对象
             repaymentService.insert(repayment);
-
             //更新散标对象
             scattered.setResidueMoney(scattered.getResidueMoney().subtract(new BigDecimal(loanMoney)));
             //判断是否有剩余金额
@@ -124,6 +123,7 @@ public class RepaymentController {
             throw new MyException("网络错误~");
         }
     }
+
 
     @RequestMapping("/selectByUserId")
     @ResponseBody
@@ -196,6 +196,21 @@ public class RepaymentController {
                         //更新还款状态
                         repayment.setState(2);
                     }
+                    //还款记录对象
+                    Record record = new Record();
+                    //添加还款钱数
+                    record.setRepayMoney(repayment.getRepayMoney());
+                    //添加还款对象
+                    record.setRepayUser(user);
+                    //添加收款人
+                    record.setUser(payeeUser);
+                    //添加散标id
+                    record.setScId(repayment.getScattered().getScId());
+                    //添加还款时间
+                    record.setRepayTime(repayment.getPracticalTime());
+                    //添加还款记录
+                    recordService.insert(record);
+
                     //更新还款对象
                     repaymentService.updateByPrimaryKey(repayment);
                     //更新放款人可用资金
@@ -204,6 +219,7 @@ public class RepaymentController {
                     //更新还款人可用资金
                     userBalance.setMoney(userBalance.getMoney().subtract(repayment.getRepayMoney()));
                     balanceService.updateByPrimaryKey(userBalance);
+
                     modelMap.addAttribute("message","还款成功~");
                     return "redirect:/addUiRepayment";
                 } else {
