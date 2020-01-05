@@ -116,8 +116,10 @@
                                             width: 151,
                                             title: '操作',
                                             templet:function (data) {
-                                                var id = data.repId
-                                                return "<a href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a>"
+                                                var id = data.repId;
+                                                var scId = data.scattered.scId;
+                                                return "<a  style='margin-right: 30px' href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a> " +
+                                                    " <a href='${pageContext.request.contextPath}/record//addUiRepayRecord?scId="+scId+"'>查看</a>";
                                             }
                                         }
 
@@ -405,7 +407,10 @@
                                                 title: '操作',
                                                 templet:function (data) {
                                                     var id = data.repId;
-                                                    return "<a href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a>"
+                                                    var scId = data.scattered.scId;
+
+                                                    return "<a  style='margin-right: 30px' href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a> " +
+                                                        " <a href='${pageContext.request.contextPath}/record//addUiRepayRecord?scId="+scId+"'>查看</a>";
                                                 }
                                             }
 

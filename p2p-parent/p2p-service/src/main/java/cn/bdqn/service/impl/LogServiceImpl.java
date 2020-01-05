@@ -1,13 +1,7 @@
 package cn.bdqn.service.impl;
 
-import cn.bdqn.domain.Balance;
-import cn.bdqn.domain.Earnings;
-import cn.bdqn.domain.Repayment;
-import cn.bdqn.domain.User;
-import cn.bdqn.service.BalanceService;
-import cn.bdqn.service.EarningsService;
-import cn.bdqn.service.LogService;
-import cn.bdqn.service.RepaymentService;
+import cn.bdqn.domain.*;
+import cn.bdqn.service.*;
 import cn.bdqn.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,6 +23,12 @@ public class LogServiceImpl implements LogService {
     @Autowired
     private RepaymentService repaymentService;
 
+    @Autowired
+    private RecordService recordService;
+
+    @Autowired
+    private UserService userService;
+
     List<Earnings> earnings = new ArrayList<>();
 
     //查询还款记录
@@ -43,9 +43,13 @@ public class LogServiceImpl implements LogService {
         for (int i=0;i<repayments.size();i++){
             //判断今天是否等于还款日期
             Repayment repayment = repayments.get(i);
+            //还款记录对象
+            Record record = new Record();
             if (DateUtil.date2String(new Date()).equals(DateUtil.date2String(repayment.getDueTime()))){
                 //放款人对象
                 User user = repayment.getPayeeUser();
+                //获得还款人对象
+                User repayUser = userService.queryByPrimaryKey(repayment.getRepayUserId());
                 //获得放款人可用资金
                 Balance balance = balanceService.queryByUserId(user.getUserId());
                 //获得还款人可用资金
@@ -73,6 +77,19 @@ public class LogServiceImpl implements LogService {
                     //更新还款人可用资金
                     repayBalance.setMoney(repayBalance.getMoney().subtract(repayment.getRepayMoney()));
                     balanceService.updateByPrimaryKey(repayBalance);
+
+                    //添加还款钱数
+                    record.setRepayMoney(repayment.getRepayMoney());
+                    //添加还款对象
+                    record.setRepayUser(repayUser);
+                    //添加收款人
+                    record.setUser(user);
+                    //添加散标id
+                    record.setScId(repayment.getScattered().getScId());
+                    //添加还款时间
+                    record.setRepayTime(repayment.getPracticalTime());
+                    //添加还款记录
+                    recordService.insert(record);
                 }else {
                     System.out.println("还款人用户资金不足~");
                 }
@@ -107,9 +124,13 @@ public class LogServiceImpl implements LogService {
         for (int i=0;i<repayments.size();i++){
             //判断今天是否等于还款日期
             Repayment repayment = repayments.get(i);
+            //还款记录对象
+            Record record = new Record();
             if (DateUtil.date2String(new Date()).equals(DateUtil.date2String(repayment.getDueTime()))){
                 //放款人对象
                 User user = repayment.getPayeeUser();
+                //获得还款人对象
+                User repayUser = userService.queryByPrimaryKey(repayment.getRepayUserId());
                 //获得放款人可用资金
                 Balance balance = balanceService.queryByUserId(user.getUserId());
                 //获得还款人可用资金
@@ -138,6 +159,19 @@ public class LogServiceImpl implements LogService {
                     //更新还款人可用资金
                     repayBalance.setMoney(repayBalance.getMoney().subtract(repayment.getRepayMoney()));
                     balanceService.updateByPrimaryKey(repayBalance);
+
+                    //添加还款钱数
+                    record.setRepayMoney(repayment.getRepayMoney());
+                    //添加还款对象
+                    record.setRepayUser(repayUser);
+                    //添加收款人
+                    record.setUser(user);
+                    //添加散标id
+                    record.setScId(repayment.getScattered().getScId());
+                    //添加还款时间
+                    record.setRepayTime(repayment.getPracticalTime());
+                    //添加还款记录
+                    recordService.insert(record);
                 }else {
                     System.out.println("还款人用户资金不足~");
                 }
