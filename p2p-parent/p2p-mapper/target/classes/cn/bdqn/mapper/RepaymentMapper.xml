@@ -62,6 +62,15 @@
     from t_repayment as r ,t_user as u,t_scattered as s
     where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.state = 1
   </select>
+
+  <!--  查询已还款的订单-->
+  <select id="selectByStateBy2" resultMap="BaseResultMap">
+    select
+    <include refid="join" />
+    from t_repayment as r ,t_user as u,t_scattered as s
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.state = 2
+  </select>
+
 <!--  根据出借人id查询-->
   <select id="selectByUserId" resultMap="BaseResultMap">
     select
@@ -75,8 +84,8 @@
     select
     <include refid="join"/>
     from t_repayment as r ,t_user as u,t_scattered as s
-    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.repay_user_id = #{RepayUserId,jdbcType=INTEGER}
-    and r.state = 1
+    where r.payee_user_id = u.user_Id and r.sc_id = s.sc_id and r.repay_user_id = #{repayUserId,jdbcType=INTEGER}
+    and r.state = #{state}
   </select>
 
 <!--  根据id删除-->

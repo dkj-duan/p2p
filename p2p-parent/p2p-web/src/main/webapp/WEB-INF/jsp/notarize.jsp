@@ -45,30 +45,15 @@
     </script>
     <style type="text/css">
         .ui{
-            margin-left: 40%;
+            margin-left: 37%;
         }
         .ui li{
             margin: 30px;
-            color: red;
-
+            color: black;
         }
         .ui span{
-            color: #0C0C0C;
-            margin-right: 50px;
-        }
-        .subs,.btn{
-            border: none;
-            background: #77bcff;
-            color: white;
-            padding:10px 20px 10px 20px;
-            border-radius: 5px 5px 5px 5px;
-
-        }
-        .subs{
-            margin-left: 3%;
-        }
-        .btn{
-            margin-left: 20%;
+            font-size: 16px;
+            color: grey;
         }
     </style>
 </head>
@@ -134,17 +119,18 @@
 
 
 <div id="xinXi">
-    <form  action="${pageContext.request.contextPath}/repayment//refund" method="post">
-        <ul class="ui">
-            <li ><span>被还款人：</span>${repay.payeeUser.userName}</li>
-            <li><span>还款人手机号：</span>${repay.payeeUser.userPhone}</li>
-            <li><span>还款金额：</span>${repay.repayMoney}</li>
+    <form  action="${pageContext.request.contextPath}/repayment/refund" method="post">
+        <ul class="ui" style="width:300px">
+            <li style="padding-left:40px"><span style="margin-right: 20px">收款人：</span>${repay.payeeUser.userName}</li>
+            <li><span>收款人手机号：</span>${repay.payeeUser.userPhone}</li>
+            <li style="padding-left:25px"><span style="margin-right: 20px">还款金额：</span>${repay.repayMoney}</li>
             <li><input type="hidden" value="${repay.repId}" name="repId"/> </li>
             <li class="last-li">
-                <input class="login-passwd" autocomplete="off" id="J_pass_input" placeholder="请输入密码"
+                <input class="login-passwd layui-input" autocomplete="off" id="J_pass_input" placeholder="请输入密码"
                        type="password" name="pwd" data-is="isEmail">
             </li>
-            <input class="subs" type="submit" value="还款"/><input class="btn" type="button" value="取消"/>
+            <input class="subs layui-btn layui-btn-radius layui-btn-normal" type="submit" style="margin-left: 10%" value="还款"/>
+            <input class="btn layui-btn layui-btn-radius layui-btn-normal" type="button" style="margin-left: 30%"  value="取消"/>
         </ul>
     </form>
 </div>

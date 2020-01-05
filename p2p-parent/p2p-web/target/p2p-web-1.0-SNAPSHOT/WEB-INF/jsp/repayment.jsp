@@ -14,7 +14,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>代还款页面</title>
+    <title>散标订单信息</title>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/logo.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base_02fd8b5.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common_wdg_9a82ab2.css">
@@ -33,7 +33,6 @@
         $(function () {
             $(".ul1 li:odd").css("background", "rgba(192,192,192,0.2)");
 
-
                 layui.use('layer', function() { //独立版的layer无需执行这一句
                     var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
                     if (${message!=null}){
@@ -42,8 +41,8 @@
                 });
 
                 $.post(
-                    "${pageContext.request.contextPath}/repayment//selectByUserId",
-                    "",
+                        "${pageContext.request.contextPath}/repayment//selectByUserId",
+                    "state=1",
                     function (date) {
                         if (date != null && date.length > 0) {
                             layui.use("table", function () {
@@ -74,7 +73,7 @@
                                         [{
                                             field: 'userName',
                                             width: 150,
-                                            title: '被还款人',
+                                            title: '收款人',
                                             templet: function (data) {
                                                 return data.payeeUser.userName;
                                             }
@@ -173,10 +172,303 @@
                     "JSON"
                 );
 
+
+                $(".jqLi").click(function () {
+
+                    $.post(
+                        "${pageContext.request.contextPath}/repayment//selectByUserId",
+                        "state=2",
+                        function (date) {
+                            if (date != null && date.length > 0) {
+                                layui.use("table", function () {
+                                    var table = layui.table;
+                                    var s = date;
+                                    table.render({
+                                        elem: '#layui_table_id', //指定表格元素
+                                        data: s,
+                                        cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                        ,
+                                        skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                        ,
+                                        even: true //隔行换色
+                                        ,
+                                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                            layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                            ,
+                                            groups: 3 //只显示 1 个连续页码
+                                            ,
+                                            first: "首页" //不显示首页
+                                            ,
+                                            last: "尾页" //不显示尾页
+                                        },
+                                        limit: "5",
+                                        method: 'post' //提交方式
+                                        ,
+                                        cols: [
+                                            [{
+                                                field: 'userName',
+                                                width: 150,
+                                                title: '收款人',
+                                                templet: function (data) {
+                                                    return data.payeeUser.userName;
+                                                }
+                                            }, {
+                                                field: 'dueTime',
+                                                width: 150,
+                                                title: '还款日',
+                                                templet:function () {
+
+                                                    return "已还清";
+                                                }
+                                            }, {
+                                                field: 'nexTime',
+                                                width: 150,
+                                                title: '下一还款日',
+                                                templet: function () {
+
+                                                    return "已还清";
+                                                }
+
+                                            }, {
+                                                field: 'repayMoney',
+                                                width: 150,
+                                                title: '本期还款金额',
+                                                templet:function () {
+
+                                                    return "已还清";
+                                                }
+                                            }, {
+                                                field: 'surplusMonry',
+                                                width: 151,
+                                                title: '剩余还款钱数',
+                                                templet:function () {
+
+                                                    return "已还清";
+                                                }
+                                            }, {
+                                                field: 'periods',
+                                                width: 151,
+                                                title: '剩余还款期数',
+                                                templet:function () {
+
+                                                    return "已还清";
+                                                }
+                                            }, {
+                                                field: 'practicalTime',
+                                                width: 151,
+                                                title: '最后一次还款日期',
+                                                templet:function (values) {
+                                                    if (values.practicalTime==null){
+                                                        return "暂无还款";
+                                                    }else {
+                                                        return layui.util.toDateString(values.practicalTime, 'yyyy-MM-dd');
+                                                    }
+                                                }
+                                            }, {
+                                                field: 'practicalTime',
+                                                width: 151,
+                                                title: '操作',
+                                                templet:function (data) {
+                                                    var id = data.scattered.scId;
+                                                    return "<a href='${pageContext.request.contextPath}/record//addUiRepayRecord?scId="+id+"'>查看</a>"
+                                                }
+                                            }
+
+                                            ]
+                                        ]
+                                    });
+                                });
+                            } else {
+                                layui.use("table", function () {
+                                    var table = layui.table;
+                                    var s = [{"message": "你暂时没有投标"}];
+                                    table.render({
+                                        elem: '#layui_table_id', //指定表格元素
+                                        data: s,
+                                        cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                        ,
+                                        skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                        ,
+                                        even: true //隔行换色
+                                        ,
+                                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                            layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                            ,
+                                            groups: 3 //只显示 1 个连续页码
+                                            ,
+                                            first: "首页" //不显示首页
+                                            ,
+                                            last: "尾页" //不显示尾页
+                                        },
+                                        limit: "5",
+                                        method: 'post' //提交方式
+                                        ,
+                                        cols: [
+                                            [{
+                                                field: 'message',
+                                                width: 300,
+                                                title: '提示'
+                                            }, {
+                                                field: 'message',
+                                                width: 400,
+                                                title: '提示'
+                                            }, {
+                                                field: 'message',
+                                                width: 510,
+                                                title: '提示'
+                                            }]
+                                        ]
+                                    });
+                                });
+                            }
+                        },
+                        "JSON"
+                    );
+                });
+
+                $(".jqLi1").click(function () {
+
+                    $.post(
+                        "${pageContext.request.contextPath}/repayment//selectByUserId",
+                        "state=1",
+                        function (date) {
+                            if (date != null && date.length > 0) {
+                                layui.use("table", function () {
+                                    var table = layui.table;
+                                    var s = date;
+                                    table.render({
+                                        elem: '#layui_table_id', //指定表格元素
+                                        data: s,
+                                        cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                        ,
+                                        skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                        ,
+                                        even: true //隔行换色
+                                        ,
+                                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                            layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                            ,
+                                            groups: 3 //只显示 1 个连续页码
+                                            ,
+                                            first: "首页" //不显示首页
+                                            ,
+                                            last: "尾页" //不显示尾页
+                                        },
+                                        limit: "5",
+                                        method: 'post' //提交方式
+                                        ,
+                                        cols: [
+                                            [{
+                                                field: 'userName',
+                                                width: 150,
+                                                title: '收款人',
+                                                templet: function (data) {
+                                                    return data.payeeUser.userName;
+                                                }
+                                            }, {
+                                                field: 'dueTime',
+                                                width: 150,
+                                                title: '还款日',
+                                                templet: "<a >{{layui.util.toDateString(d.dueTime, 'yyyy-MM-dd')}}</a>"
+                                            }, {
+                                                field: 'nexTime',
+                                                width: 150,
+                                                title: '下一还款日',
+                                                templet: "<a >{{layui.util.toDateString(d.nexTime, 'yyyy-MM-dd')}}</a>"
+
+                                            }, {
+                                                field: 'repayMoney',
+                                                width: 150,
+                                                title: '本期还款金额'
+                                            }, {
+                                                field: 'surplusMonry',
+                                                width: 151,
+                                                title: '剩余还款钱数'
+                                            }, {
+                                                field: 'periods',
+                                                width: 151,
+                                                title: '剩余还款期数'
+                                            }, {
+                                                field: 'practicalTime',
+                                                width: 151,
+                                                title: '实际还款日',
+                                                templet:function (values) {
+                                                    if (values.practicalTime==null){
+                                                        return "暂无还款";
+                                                    }else {
+                                                        return layui.util.toDateString(values.practicalTime, 'yyyy-MM-dd');
+                                                    }
+                                                }
+                                            }, {
+                                                field: 'practicalTime',
+                                                width: 151,
+                                                title: '操作',
+                                                templet:function (data) {
+                                                    var id = data.repId;
+                                                    return "<a href='${pageContext.request.contextPath}/repayment//selectByRepId?repId="+id+"'>还款</a>"
+                                                }
+                                            }
+
+                                            ]
+                                        ]
+                                    });
+                                });
+                            } else {
+                                layui.use("table", function () {
+                                    var table = layui.table;
+                                    var s = [{"message": "你暂时没有投标"}];
+                                    table.render({
+                                        elem: '#layui_table_id', //指定表格元素
+                                        data: s,
+                                        cellMinWidth: 50 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                                        ,
+                                        skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+                                        ,
+                                        even: true //隔行换色
+                                        ,
+                                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                                            layout: ['prev', 'page', 'next', 'skip'] //自定义分页布局
+                                            ,
+                                            groups: 3 //只显示 1 个连续页码
+                                            ,
+                                            first: "首页" //不显示首页
+                                            ,
+                                            last: "尾页" //不显示尾页
+                                        },
+                                        limit: "5",
+                                        method: 'post' //提交方式
+                                        ,
+                                        cols: [
+                                            [{
+                                                field: 'message',
+                                                width: 300,
+                                                title: '提示'
+                                            }, {
+                                                field: 'message',
+                                                width: 400,
+                                                title: '提示'
+                                            }, {
+                                                field: 'message',
+                                                width: 510,
+                                                title: '提示'
+                                            }]
+                                        ]
+                                    });
+                                });
+                            }
+                        },
+                        "JSON"
+                    );
+                });
             $("#touXiang").css({"border-radius": "15px 15px 15px 15px", "display": "inline-block"});
 
         });
     </script>
+    <style type="text/css">
+        .tou li{
+            margin-left: 30%;
+        }
+    </style>
 </head>
 
 <body>
@@ -241,9 +533,21 @@
     session.removeAttribute("message");
 %>
 
+
 <div id="xinXi">
+
+    <ul class="tou">
+        <li class="jqLi" id="jqLi">
+            <a style="cursor:pointer " onclick="return true">已还款</a>
+        </li>
+        <li class="jqLi1">
+            <a style="cursor:pointer" onclick="return true">还款中</a>
+        </li>
+    </ul>
+
     <table class="layui-table" id="layui_table_id"></table>
 </div>
+
 <!--底部导航栏-->
 <div class="werenrendai-footer">
 

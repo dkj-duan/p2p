@@ -1,6 +1,7 @@
 package cn.bdqn.mapper;
 
 import cn.bdqn.domain.Repayment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -47,10 +48,10 @@ public interface RepaymentMapper {
 
     /**
      * 根据还款人id查询
-     * @param RepayUserId
+     * @param repayUserId
      * @return
      */
-    public List<Repayment> selectByRepayUserId(Integer RepayUserId);
+    public List<Repayment> selectByRepayUserId(@Param("repayUserId") Integer repayUserId,@Param("state") Integer state);
 
     /**
      * 选择性更新对象
@@ -69,4 +70,11 @@ public interface RepaymentMapper {
      * @return
      */
     public List<Repayment> selectByState();
+
+
+    /**
+     * 查询已还款的散标订单
+     * @return
+     */
+    public List<Repayment> selectByStateBy2();
 }

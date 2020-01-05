@@ -42,8 +42,8 @@ public class RepaymentServiceImpl implements RepaymentService {
     }
 
     @Override
-    public List<Repayment> queryByRepayUserId(Integer RepayUserId) {
-        return repaymentMapper.selectByRepayUserId(RepayUserId);
+    public List<Repayment> queryByRepayUserId(Integer RepayUserId,Integer state) {
+        return repaymentMapper.selectByRepayUserId(RepayUserId,state);
     }
 
     @Override
@@ -54,12 +54,16 @@ public class RepaymentServiceImpl implements RepaymentService {
 
     @Override
     public void updateByPrimaryKey(Repayment record) {
-
         repaymentMapper.updateByPrimaryKey(record);
     }
 
     @Override
     public List<Repayment> queryByState() {
         return repaymentMapper.selectByState();
+    }
+
+    @Override
+    public List<Repayment> queryByStateBy2() {
+        return repaymentMapper.selectByStateBy2();
     }
 }

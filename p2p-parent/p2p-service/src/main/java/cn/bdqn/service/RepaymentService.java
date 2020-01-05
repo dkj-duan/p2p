@@ -49,7 +49,7 @@ public interface RepaymentService {
      * @param RepayUserId
      * @return
      */
-    public List<Repayment> queryByRepayUserId(Integer RepayUserId);
+    public List<Repayment> queryByRepayUserId(Integer RepayUserId,Integer state);
 
     /**
      * 选择性更新对象
@@ -68,4 +68,10 @@ public interface RepaymentService {
      * @return
      */
     public List<Repayment> queryByState();
+
+    /**
+     * 查询已还款的散标订单
+     * @return
+     */
+    public List<Repayment> queryByStateBy2();
 }

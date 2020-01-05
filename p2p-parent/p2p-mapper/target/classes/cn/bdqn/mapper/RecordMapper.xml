@@ -49,7 +49,7 @@
   <select id="selectByRepayUserIdAndScId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_record as r,t_user as u
+    from t_record as r,t_user as u,t_user as u1
     where r.user_id = u.user_Id and r.repay_user_id = u1.user_Id and r.repay_user_id = #{repayUserId} and r.sc_id = #{scId}
   </select>
 
@@ -57,7 +57,7 @@
   <select id="selectByUserIdAndScId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_record as r,t_user as u
+    from t_record as r,t_user as u,t_user as u1
     where r.user_id = u.user_Id and r.repay_user_id = u1.user_Id and r.user_id = #{userId} and r.sc_id = #{scId}
   </select>
 
@@ -69,9 +69,10 @@
 
 <!--  添加一个对象-->
   <insert id="insert" parameterType="cn.bdqn.domain.Record" >
-    insert into t_record (repay_user_id, user_id,
+    insert into t_record (repay_user_id, user_id,sc_id,
       repay_money, repay_time)
     values (#{repayUser.userId,jdbcType=INTEGER}, #{user.userId,jdbcType=INTEGER},
+    #{scId},
       #{repayMoney}, #{repayTime,jdbcType=DATE})
   </insert>
 <!--  选择性添加-->
@@ -86,6 +87,9 @@
       </if>
       <if test="user.userId != null" >
         user_id,
+      </if>
+      <if test="scId ！= null">
+        sc_id
       </if>
       <if test="repayMoney != null" >
         repay_money,
@@ -104,6 +108,9 @@
       <if test="user.userId != null" >
         #{user.userId,jdbcType=INTEGER},
       </if>
+      <if test="scId != null">
+        #{scId},
+      </if>
       <if test="repayMoney != null" >
         #{repayMoney},
       </if>
@@ -112,32 +119,32 @@
       </if>
     </trim>
   </insert>
-<!--  选择性更新-->
-  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Record" >
-    update t_record
-    <set >
-      <if test="repayUser.userId != null" >
-        repay_user_id = #{repayUser.userId,jdbcType=INTEGER},
-      </if>
-      <if test="user.userId != null" >
-        user_id = #{user.userId,jdbcType=INTEGER},
-      </if>
-      <if test="repayMoney != null" >
-        repay_money = #{repayMoney},
-      </if>
-      <if test="repayTime != null" >
-        repay_time = #{repayTime,jdbcType=DATE},
-      </if>
-    </set>
-    where re_id = #{reId,jdbcType=INTEGER}
-  </update>
-<!--  更新全部-->
-  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Record" >
-    update t_record
-    set repay_user_id = #{repayUser.userId,jdbcType=INTEGER},
-      user_id = #{user.userId,jdbcType=INTEGER},
-      repay_money = #{repayMoney},
-      repay_time = #{repayTime,jdbcType=DATE}
-    where re_id = #{reId,jdbcType=INTEGER}
-  </update>
+<!--&lt;!&ndash;  选择性更新&ndash;&gt;-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.domain.Record" >-->
+<!--    update t_record-->
+<!--    <set >-->
+<!--      <if test="repayUser.userId != null" >-->
+<!--        repay_user_id = #{repayUser.userId,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="user.userId != null" >-->
+<!--        user_id = #{user.userId,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="repayMoney != null" >-->
+<!--        repay_money = #{repayMoney},-->
+<!--      </if>-->
+<!--      <if test="repayTime != null" >-->
+<!--        repay_time = #{repayTime,jdbcType=DATE},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    where re_id = #{reId,jdbcType=INTEGER}-->
+<!--  </update>-->
+<!--&lt;!&ndash;  更新全部&ndash;&gt;-->
+<!--  <update id="updateByPrimaryKey" parameterType="cn.bdqn.domain.Record" >-->
+<!--    update t_record-->
+<!--    set repay_user_id = #{repayUser.userId,jdbcType=INTEGER},-->
+<!--      user_id = #{user.userId,jdbcType=INTEGER},-->
+<!--      repay_money = #{repayMoney},-->
+<!--      repay_time = #{repayTime,jdbcType=DATE}-->
+<!--    where re_id = #{reId,jdbcType=INTEGER}-->
+<!--  </update>-->
 </mapper>

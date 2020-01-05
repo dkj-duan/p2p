@@ -36,6 +36,8 @@ public class RepaymentController {
     private BalanceService balanceService;
     @Autowired
     private RecordService recordService;
+
+
     @RequestMapping("/addRepayment")
     public String addRepayment(@SessionAttribute("user") User user, ModelMap modelMap, Repayment repayment, Integer loanMoney, Integer scId) throws Exception {
 
@@ -125,12 +127,18 @@ public class RepaymentController {
     }
 
 
+    /**
+     * 查询需要还款的列表
+     * @param user
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/selectByUserId")
     @ResponseBody
-    public List<Repayment> selectByUserId(@SessionAttribute("user")User user)throws Exception{
+    public List<Repayment> selectByUserId(@SessionAttribute("user")User user,Integer state)throws Exception{
 
         try {
-            List<Repayment> repayments = repaymentService.queryByRepayUserId(user.getUserId());
+            List<Repayment> repayments = repaymentService.queryByRepayUserId(user.getUserId(),state);
             return repayments;
         }catch (Exception e){
             e.printStackTrace();
@@ -138,8 +146,10 @@ public class RepaymentController {
         }
     }
 
+    
+
     /**
-     * 根据还款id查询
+     * 根据还款id查询每月要还的钱数
      * @param repId
      * @param modelMap
      * @return
@@ -173,6 +183,7 @@ public class RepaymentController {
             if (user.getUserPwd().equals(MD5Util.encode(pwd))) {
                 //获得还款对象
                 Repayment repayment = repaymentService.queryByPrimaryKey(repId);
+
                 //获得被还款的对象
                 User payeeUser = userService.queryByPrimaryKey(repayment.getPayeeUser().getUserId());
                 //获得还款用户资金对象
@@ -195,6 +206,8 @@ public class RepaymentController {
                     if (repayment.getPeriods() == 0) {
                         //更新还款状态
                         repayment.setState(2);
+                        //剩余还款金额设置为0
+                        repayment.setSurplusMonry(new BigDecimal(0));
                     }
                     //还款记录对象
                     Record record = new Record();

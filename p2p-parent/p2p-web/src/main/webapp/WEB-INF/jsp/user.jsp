@@ -69,7 +69,7 @@
                                     cols: [
                                         [{
                                             field: 'userName',
-                                            width: 240,
+                                            width: 150,
                                             title: '借款人用户名',
                                             templet: function (data) {
                                                 return data.dueUser.userName;
@@ -83,14 +83,14 @@
                                             }
                                         }, {
                                             field: 'periods',
-                                            width: 242,
+                                            width: 220,
                                             title: '分期数',
                                             templet: function (data) {
                                                 return data.scattered.periods;
                                             }
                                         }, {
                                             field: 'rate',
-                                            width: 242,
+                                            width: 200,
                                             title: '利率',
                                             templet: function (data) {
                                                 return data.scattered.rate;
@@ -100,7 +100,16 @@
                                             field: 'loanMoney',
                                             width: 242,
                                             title: '借出金额'
-                                        }
+                                        },
+                                            {
+                                                field: 'loanMoney',
+                                                width: 150,
+                                                title: '操作',
+                                                templet:function (data) {
+                                                    var id = data.scattered.scId
+                                                    return "<a href='${pageContext.request.contextPath}/record//addRecord?scId="+id+"'>详细</a>"
+                                                }
+                                            }
 
                                         ]
                                     ]
