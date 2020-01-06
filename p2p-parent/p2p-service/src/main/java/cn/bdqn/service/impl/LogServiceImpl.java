@@ -147,6 +147,9 @@ public class LogServiceImpl implements LogService {
                     repayment.setSurplusMonry(repayment.getSurplusMonry().subtract(repayment.getRepayMoney()));
                     //计算剩余期数
                     repayment.setPeriods(repayment.getPeriods()-1);
+                    if(repayment.getPeriods()==1){
+                        repayment.setRepayMoney(repayment.getSurplusMonry());
+                    }
                     if (repayment.getPeriods()==0){
                         //更新还款状态
                         repayment.setState(2);

@@ -203,11 +203,12 @@ public class RepaymentController {
                     repayment.setSurplusMonry(repayment.getSurplusMonry().subtract(repayment.getRepayMoney()));
                     //计算剩余期数
                     repayment.setPeriods(repayment.getPeriods() - 1);
+                    if(repayment.getPeriods()==1){
+                        repayment.setRepayMoney(repayment.getSurplusMonry());
+                    }
                     if (repayment.getPeriods() == 0) {
                         //更新还款状态
                         repayment.setState(2);
-                        //剩余还款金额设置为0
-                        repayment.setSurplusMonry(new BigDecimal(0));
                     }
                     //还款记录对象
                     Record record = new Record();
