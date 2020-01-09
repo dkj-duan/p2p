@@ -34,12 +34,7 @@
 						<input id="WIDtotal_amount" autocomplete="off" name="WIDtotal_amount" readonly="readonly" />
 					</dd>
 					<hr class="one_line">
-					<dt>商品描述：</dt>
-					<dd>
-						<input id="WIDbody" autocomplete="off" name="WIDbody" />
-					</dd>
-					<hr class="one_line">
-					<dt></dt>
+						<input type="hidden" id="WIDbody" autocomplete="off" name="WIDbody" />
 					<dd id="btn-dd">
 						<span class="new-btn-login-sp">
 							<button class="new-btn-login" type="submit"

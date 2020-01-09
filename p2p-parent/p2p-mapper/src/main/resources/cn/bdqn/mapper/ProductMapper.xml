@@ -33,7 +33,11 @@
         ,
         <include refid="Blob_Column_List" />
         from t_product
-        where `type` = #{type,jdbcType=INTEGER}
+        <where>
+          <if test="type != null">
+            `type` = #{type,jdbcType=INTEGER}
+          </if>
+        </where>
     </select>
 
 <!--    根据主键id查询-->

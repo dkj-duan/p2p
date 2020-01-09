@@ -459,31 +459,25 @@
                                     cols: [
                                         [{
                                             field: 'orderNumber',
-                                            width: 240,
+                                            width: 310,
                                             title: '充值单号'
                                         }, {
                                             field: 'money',
-                                            width: 241,
+                                            width: 300,
                                             title: '充值金额',
                                             templet: function (data) {
                                                 return data.money+"元";
                                             }
                                         }, {
                                             field: 'state',
-                                            width: 242,
+                                            width: 300,
                                             title: '充值状态',
                                         }, {
                                             field: 'storageTime',
-                                            width: 242,
+                                            width: 300,
                                             title: '充值时间',
                                             templet: "<a >{{layui.util.toDateString(d.storageTime, 'yyyy-MM-dd HH:mm:ss')}}</a>"
                                         }
-                                            , {
-                                            field: 'annotation',
-                                            width: 242,
-                                            title: '充值说明'
-                                        }
-
                                         ]
                                     ]
                                 });

@@ -58,7 +58,7 @@
                             </li>
                             <li class="rand_code_show">
                                 <input  class="code" autocomplete="off" name="checkCode" id="captcha_code" type="text"
-                                       placeholder="图形验证码">
+                                        placeholder="图形验证码">
                                 <div class="error-info code-error"></div>
                                 <a href="#" class="rand-code">
                                     <img id="login-rand-image" align="absmiddle" src="${pageContext.request.contextPath }/checkCodeServlet" name="randImage"
@@ -99,7 +99,7 @@
                             </li>
                             <li class="rand_code_show">
                                 <input  class="code" autocomplete="off" name="checkCode" id="captcha_code" type="text"
-                                       placeholder="图形验证码">
+                                        placeholder="图形验证码">
                                 <div class="error-info code-error"></div>
                                 <a href="#" class="rand-code">
                                     <img id="login-rand-image" align="absmiddle" src="${pageContext.request.contextPath }/checkCodeServlet" name="randImage"

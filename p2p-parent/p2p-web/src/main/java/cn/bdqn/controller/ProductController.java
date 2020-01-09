@@ -154,4 +154,22 @@ public class ProductController {
         }
 
     }
+
+    /**
+     * 根据类型查找对应标
+     * @param type
+     * @return
+     */
+    @RequestMapping("/selectAjaxByType")
+    @ResponseBody
+    public List<Product> selectAjaxByType(Integer type)throws Exception{
+
+        try{
+            List<Product> products = productService.queryByAll(type);
+            return products;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new MyException("出错了");
+        }
+    }
 }
