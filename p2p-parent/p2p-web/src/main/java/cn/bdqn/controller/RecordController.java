@@ -4,7 +4,6 @@ import cn.bdqn.domain.Record;
 import cn.bdqn.domain.User;
 import cn.bdqn.exception.MyException;
 import cn.bdqn.service.RecordService;
-import com.sun.org.apache.regexp.internal.RE;
 import net.sf.jsqlparser.statement.execute.Execute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
