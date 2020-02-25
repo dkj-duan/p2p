@@ -324,10 +324,8 @@
                 });
                 form.render();
             });
-        });
 
 
-        $(function () {
             $(".dd1").click(function () {
                 $("#fff").show("3000");
                 $("#uuuu").hide("3000");
@@ -340,6 +338,8 @@
             });
 
         });
+
+
     </script>
 </head>
 <body class="layui-layout-body">
@@ -489,6 +489,16 @@
             </form>
         </div>
 
+
+<%--            用户页面--%>
+
+            <div id="user">
+                <table class="layui-hide" id="userTable" lay-filter="test"></table>
+                <script type="text/html" id="user_1">
+                    <a class="layui-btn layui-btn-xs layui-btn-xs" lay-event="detail">查看</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                </script>
+            </div>
 
         <%--            薪享--%>
         <div id="uuuu" style="display: none">
